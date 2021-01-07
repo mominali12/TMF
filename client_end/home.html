@@ -354,7 +354,7 @@
                 // alert(obj.received);
             }
         }
-
+        //TODO: #1 @osaaama01 look at issue#1
         function submit()
         {
             var keys=[], arrayObj=[];
@@ -367,18 +367,18 @@
             $("#mtable tbody tr").each(function(){
                 var obj={}, i=0;
                 $(this).children("td").each(function(){
-                obj[keys[i]]=$(this).text();
+                // obj[keys[i]]=$(this).text();
 
-                console.log($(this.children[length]));
+                // console.log($(this).children().first().value);
                 
-                if($(this.childElementCount)===0)
+                //to get drop down val AND (date value iff set)
+                if($(this).children().first().val())
                 {
-                    console.log("Hello Madsajdnadbabsvshsdb");
-                    console.log($(this).text());
+                    obj[keys[i]] = $(this).children().first().val();
                 }
-                else
+                else //get text inside cell
                 {
-                    console.log($(this.children));
+                    obj[keys[i]] = $(this).text();
                 }
                 i++;
                 })
