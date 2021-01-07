@@ -36,6 +36,7 @@ class Controller
     async GetOrders(req,res)
     {
       const orders = await HomeService.getHomeData();
+      orders.push({'store_logo' :process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER + '.png'});
       console.log(orders);
       res.status(200).json(orders);
     }

@@ -25,8 +25,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <h1>
-        Store Name
+    <h1 id="storename">
+        <img src="" alt="Home Page">
     </h1>
 
     <div class="container-fluid p-4">
@@ -164,7 +164,6 @@
     <script type="text/javascript">
         var text = '{ "CUSTOMER":"CUSTOMER", "PRODUCT":"PRODUCT", "Codes":"Codes", "CodeDate":"CodeDate", "Design":"Design", "DesignDate":"DesignDate", "DesignApproval":"DesignApproval", "DesignApprovalDate":"DesignApprovalDate", "SenttoPrinter":"SenttoPrinter", "SentDate":"SentDate", "ProofApproval":"ProofApproval", "ProofApprovalDate":"ProofApprovalDate", "Shipping":"Shipping", "ShipDate":"ShipDate", "Received":"Received", "ReceivedDate":"ReceivedDate", "Completed":"Completed", "Files":"Files", "Notes":"Notes"}';
         var obj = JSON.parse(text);
-        
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// ADD ROW MODAL BUTTON ///////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -285,11 +284,12 @@
 
         function load_data(obj)
         {
+
             var employee_data='';
             employee_data += '<tr>';
             employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
             employee_data += '<td contenteditable="true">'+obj.customer_name+'</td>';
-            employee_data += '<td contenteditable="true">'+obj.product_nam+'</td>';
+            employee_data += '<td contenteditable="true">'+obj.product_name+'</td>';
             // employee_data += '<td>'+obj.codes+'</td>';
             employee_data += '<td>'+make_drop_down()+'</td>';
             
@@ -348,7 +348,9 @@
 
         Http.onreadystatechange = (e) => {
             var Data = JSON.parse(Http.responseText);
-            for(var i = 0; i < Data.length; i++) {
+            $('#storename img')[0].src = Data[Data.length-1].store_logo;
+            $('#storename img')[0].alt = Data[Data.length-1].store_logo;
+            for(var i = 0; i < Data.length - 1; i++) {
                 var obj = Data[i];
                 load_data(obj);              
                 // alert(obj.received);
