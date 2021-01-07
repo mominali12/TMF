@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Order-Management</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <h1>
+        Store Name
+    </h1>
+
+    <div class="container-fluid p-4">
+        
+        <!-- <div class="row">
+            
+        </div> -->
+        
+        <div class="row">
+            <div class="col-md-4 p-4">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#colModal">
+                    Add/Remove Column
+                </button>
+                <button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#rowModal">
+                    Add Row
+                </button>
+                <button type="button" class="btn btn-success ml-4" onclick="submit()">
+                    Save
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table id="mtable" class="table table-striped table-inverse table-responsive">
+                    <thead>
+                        <tr>
+                            <th> </th>
+                            <th>CUSTOMER</th>
+                            <th>PRODUCT</th>
+                            <th>Codes</th>
+                            <th>Code Date</th>
+                            <th>Design</th>
+                            <th>Design Date</th>
+                            <th>Design Approval</th>
+                            <th>Design Approval Date</th>
+                            <th>Sent to Printer</th>
+                            <th>Sent Date</th>
+                            <th>Proof Approval</th>
+                            <th>Proof Approval Date</th>
+                            <th>Shipping</th>
+                            <th>Ship Date</th>
+                            <th>Received</th>
+                            <th>Received Date</th>
+                            <th>Completed</th>
+                            <th>Files</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+            </div>
+        </div>
+    </div>
+
+      
+    <!--////////////////////////////////////////////////////////////////////////////////////////////-->  
+    <!--////////////////////////////////////// ADD ROW MODAL ///////////////////////////////////////-->  
+    <!--////////////////////////////////////////////////////////////////////////////////////////////-->  
+
+    <!-- The Modal -->
+    <div class="modal" id="rowModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add row</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <label for="customer_name">Customer Name</label>
+                    <input id="row_modal_customer_name" class="form-control" id="customer_name" placeholder="Customer Name">
+                    <label for="product_name">Product</label>
+                    <input id="row_modal_product_name" class="form-control" id="product_name" placeholder="Product">
+                </div>
+            
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="add_row_modal" type="button" class="btn btn-success" data-dismiss="modal">Add Row</button>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->  
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->  
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->  
+
+    
+
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////-->  
+    <!--///////////////////////////////////// ADD or REMOVE COLUMN MODAL /////////////////////////////////////-->  
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////-->  
+
+    <!-- The Modal -->
+    <div class="modal" id="colModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add column</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <label for="column_name">Column title</label>
+                    <input id="col_modal_column_name" class="form-control" id="customer_name" placeholder="Column Name">
+
+                    <label for="general_dropdown">Column type</label>
+                    <select class="form-control" name="general_dropdown" id="col_modal_select">
+                        <option value="date">Date</option>
+                        <option value="dropdown">Dropdown</option>
+                    </select>
+                </div>
+            
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="add_col_modal" type="button" class="btn btn-success" data-dismiss="modal">Add Column</button>
+                    <button id="del_col_modal" type="button" class="btn btn-danger" data-dismiss="modal">Delete Column</button>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->  
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->  
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->  
+ 
+    <script type="text/javascript">
+        var text = '{ "CUSTOMER":"CUSTOMER", "PRODUCT":"PRODUCT", "Codes":"Codes", "CodeDate":"CodeDate", "Design":"Design", "DesignDate":"DesignDate", "DesignApproval":"DesignApproval", "DesignApprovalDate":"DesignApprovalDate", "SenttoPrinter":"SenttoPrinter", "SentDate":"SentDate", "ProofApproval":"ProofApproval", "ProofApprovalDate":"ProofApprovalDate", "Shipping":"Shipping", "ShipDate":"ShipDate", "Received":"Received", "ReceivedDate":"ReceivedDate", "Completed":"Completed", "Files":"Files", "Notes":"Notes"}';
+        var obj = JSON.parse(text);
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// ADD ROW MODAL BUTTON ///////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $('#add_row_modal').click(function () {
+            if($('#row_modal_customer_name').val())
+            {
+                if($('#row_modal_product_name').val())
+                {
+                    $('#mtable tbody').append($("#mtable tbody tr:last").clone());
+                    $('#mtable tbody tr:last td:nth-child(2)').html($('#row_modal_customer_name').val());
+                    $('#mtable tbody tr:last td:nth-child(3)').html($('#row_modal_product_name').val());
+                }
+                else
+                {
+                    alert("Please enter product name");
+                }
+            }
+            else
+            {
+                alert("Please enter customer name");
+            }
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////// ADD COL ON CLICK FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $('#add_col_modal').click(function () {
+            if ($('#col_modal_column_name').val()) {
+                $('#mtable tr:first').append($("<th>"));
+                $('#mtable tr').not(':first').append($("<td>"));    
+                $('#mtable thead tr>th:last').html($('#col_modal_column_name').val());
+                if($('#col_modal_select').val().localeCompare('date') === 0)
+                {
+                    $('#mtable tbody tr').each(function () { $(this).children('td:last').append(make_date_selector()) });
+                }
+                else
+                {
+                    $('#mtable tbody tr').each(function () { $(this).children('td:last').append(make_drop_down()) });
+                }
+            } else { alert('Enter Column Name'); }
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// DELETE ROW FUNCTION ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function delete_row(e){
+            $(e).closest("tr").remove();
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// DELETE COL FUNCTION ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $('#del_col_modal').click(function delete_col() { 
+            var tble = document.getElementById('mtable'); 
+            var row = tble.rows; // Getting the rows 
+            var check = false;
+            for (var i = 0; i < row[0].cells.length; i++) { 
+  
+                // Getting the text of columnName 
+                var str = row[0].cells[i].innerHTML;
+                str = str.toLowerCase();
+                var userinput = $('#col_modal_column_name').val()
+                userinput = userinput.toLowerCase()
+
+                // If 'userinput' matches with the columnName  
+                if (str.localeCompare(userinput) === 0) 
+                {  
+                    check=true;
+                    for (var j = 0; j < row.length; j++) 
+                    {
+                        // Deleting the ith cell of each row 
+                        row[j].deleteCell(i); 
+                    } 
+                }
+            } 
+            if (check)
+            {
+                alert("Column is removed from the table."); 
+            }
+            else
+            {
+                alert("Column not found"); 
+            }
+        });
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// make_drop_down FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        function make_drop_down()
+        {
+            var dropdown = '<select class="form-control" name="general_dropdown" id="cars"'+'>'+
+                '<option value="Not Started">Not Started</option'+'>'+
+                '<option value="In Progress">In Progress</option'+'>'+
+                '<option value="Delayed">Delayed</option'+'>'+
+                '<option value="Completed">Completed</option'+'>'+
+            '</select>';
+            return dropdown;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////// make_date_selector FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        function make_date_selector()
+        {
+            var datepicker = '<input type="date" data-date-format="mm/dd/yyyy">';
+            return datepicker
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// load_data FUNC /////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function load_data(obj)
+        {
+            var employee_data='';
+            employee_data += '<tr>';
+            employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
+            employee_data += '<td contenteditable="true">'+obj.customer_name+'</td>';
+            employee_data += '<td contenteditable="true">'+obj.PRODUCT+'</td>';
+            // employee_data += '<td>'+obj.codes+'</td>';
+            employee_data += '<td>'+make_drop_down()+'</td>';
+            
+            // employee_data += '<td>'+obj.code_date+'</td>';
+            employee_data += '<td>'+make_date_selector()+'</td>';
+
+            // employee_data += '<td>'+obj.design+'</td>';
+            employee_data += '<td>'+make_drop_down()+'</td>';
+
+            // employee_data += '<td>'+obj.design_datce+'</td>';
+            employee_data += '<td>'+make_date_selector()+'</td>';
+            
+            // employee_data += '<td>'+obj.design_approval+'</td>';
+            employee_data += '<td>'+make_drop_down()+'</td>';
+
+            // employee_data += '<td>'+obj.design_approval_date+'</td>';
+            employee_data += '<td>'+make_date_selector()+'</td>';
+
+            // employee_data += '<td>'+obj.send_to_printer+'</td>';
+            employee_data += '<td>'+make_drop_down()+'</td>';
+
+            // employee_data += '<td>'+obj.send_to_printer_date+'</td>';
+            employee_data += '<td>'+make_date_selector()+'</td>';
+
+            // employee_data += '<td>'+obj.proof_approval+'</td>';
+            employee_data += '<td>'+make_drop_down()+'</td>';
+
+            // employee_data += '<td>'+obj.proof_approval_date+'</td>';
+            employee_data += '<td>'+make_date_selector()+'</td>';
+
+            // employee_data += '<td>'+obj.shipping+'</td>';
+            employee_data += '<td>'+make_drop_down()+'</td>';
+
+            // employee_data += '<td>'+obj.ship_Date+'</td>';
+            employee_data += '<td>'+make_date_selector()+'</td>';
+
+            // employee_data += '<td>'+obj.received+'</td>';
+            employee_data += '<td>'+make_drop_down()+'</td>';
+
+            // employee_data += '<td>'+obj.received_Date+'</td>';
+            employee_data += '<td>'+make_date_selector()+'</td>';
+
+            // employee_data += '<td>'+obj.completed+'</td>';
+            employee_data += '<td>'+make_drop_down()+'</td>';
+            employee_data += '<td>'+obj.Files+'</td>';
+            employee_data += '<td>'+obj.notes+'</td>';
+            
+            $('#mtable').append(employee_data);
+            // console.log(employee_data);
+        }
+
+        const Http = new XMLHttpRequest();
+        const url='http://localhost:3000/home/orders';
+        Http.open("GET", url);
+        Http.send();
+
+        Http.onreadystatechange = (e) => {
+            var Data = JSON.parse(Http.responseText);
+            for(var i = 0; i < Data.length; i++) {
+                var obj = Data[i];
+                load_data(obj);              
+                // alert(obj.received);
+            }
+        }
+
+        function submit()
+        {
+            var keys=[], arrayObj=[];
+            $("#mtable thead tr th").each(function(){
+                keys.push($(this).text());
+            });
+            
+            console.log("keys: ",keys);
+
+            $("#mtable tbody tr").each(function(){
+                var obj={}, i=0;
+                $(this).children("td").each(function(){
+                obj[keys[i]]=$(this).text();
+                console.log($(this.children))
+                i++;
+                })
+                arrayObj.push(obj);
+            });
+            $('body').append(JSON.stringify({yourObj: arrayObj}));
+            // return;//remove this line
+            var data = JSON.stringify({yourObj: arrayObj})
+            $.post("http://localhost:3000/home/orders/save",data,
+            function(data,status){
+                alert("Data: " + data + "\nStatus: " + status);
+            });
+            // $.ajax({
+            //     type: "POST",
+            //     url: 'http://localhost:3000/home/orders/save',
+            //     data: JSON.stringify({yourObj: arrayObj}),
+            //     contentType: "application/j-son;charset=UTF-8",
+            //     dataType: "json",
+            //     success: function (response) {
+            //     alert(response.d);
+            //     }
+            // })
+        }
+    </script>
+
+</body>
+
+</html>
