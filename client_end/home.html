@@ -289,7 +289,7 @@
             employee_data += '<tr>';
             employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
             employee_data += '<td contenteditable="true">'+obj.customer_name+'</td>';
-            employee_data += '<td contenteditable="true">'+obj.PRODUCT+'</td>';
+            employee_data += '<td contenteditable="true">'+obj.product_name+'</td>';
             // employee_data += '<td>'+obj.codes+'</td>';
             employee_data += '<td>'+make_drop_down()+'</td>';
             
@@ -368,7 +368,18 @@
                 var obj={}, i=0;
                 $(this).children("td").each(function(){
                 obj[keys[i]]=$(this).text();
-                console.log($(this.children))
+
+                console.log($(this.children[length]));
+                
+                if($(this.childElementCount)===0)
+                {
+                    console.log("Hello Madsajdnadbabsvshsdb");
+                    console.log($(this).text());
+                }
+                else
+                {
+                    console.log($(this.children));
+                }
                 i++;
                 })
                 arrayObj.push(obj);
