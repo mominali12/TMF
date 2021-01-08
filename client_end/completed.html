@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css">
 
@@ -22,7 +22,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
@@ -31,11 +31,12 @@
         crossorigin="anonymous"></script>
 
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script>    
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script>
+
 
     <div class="container-fluid p-4">
         <h1 id="storename">
-            <img alt="Home Page" style="width: 300px;height: 250px;">
+            <img src="osama" alt="Home Page" style="width: 300px;height: 250px;">
         </h1>
         <!-- <div class="row">
             
@@ -83,18 +84,17 @@
                             <th>Design</th>
                             <th>Design Date</th>
                             <th>Design Approval</th>
-                            <th>Design Approval Date</th>
-                            <th>Sent to Printer</th>
-                            <th>Sent Date</th>
-                            <th>Proof Approval</th>
-                            <th>Proof Approval Date</th>
+                            <th>Approval Date</th>
+                            <th>Printing</th>
+                            <th>Printed Date</th>
+                            <th>Stapling</th>
+                            <th>Stapling Date</th>
                             <th>Shipping</th>
                             <th>Ship Date</th>
                             <th>Received</th>
                             <th>Received Date</th>
                             <th>Completed</th>
                             <th>Files</th>
-                            <th>Notes</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -220,11 +220,11 @@
                 $('#mtable thead tr>th:last').html($('#col_modal_column_name').val());
                 if($('#col_modal_select').val().localeCompare('date') === 0)
                 {
-                    $('#mtable tbody tr').each(function () { $(this).children('td:last').append(make_date_selector('')) });
+                    $('#mtable tbody tr').each(function () { $(this).children('td:last').append(make_date_selector()) });
                 }
                 else
                 {
-                    $('#mtable tbody tr').each(function () { $(this).children('td:last').append(make_drop_down('')) });
+                    $('#mtable tbody tr').each(function () { $(this).children('td:last').append(make_drop_down()) });
                 }
             } else { alert('Enter Column Name'); }
         });
@@ -381,10 +381,10 @@
             employee_data += '<td>'+make_date_selector(obj.send_to_printer_date)+'</td>';
 
             // employee_data += '<td>'+obj.proof_approval+'</td>';
-            employee_data += '<td>'+make_drop_down(obj.proof_approval)+'</td>';
+            employee_data += '<td>'+make_drop_down(obj.stapling)+'</td>';
 
             // employee_data += '<td>'+obj.proof_approval_date+'</td>';
-            employee_data += '<td>'+make_date_selector(obj.proof_approval_date)+'</td>';
+            employee_data += '<td>'+make_date_selector(obj.stapling_Date)+'</td>';
 
             // employee_data += '<td>'+obj.shipping+'</td>';
             employee_data += '<td>'+make_drop_down(obj.shipping)+'</td>';
@@ -401,7 +401,7 @@
             // employee_data += '<td>'+obj.completed+'</td>';
             employee_data += '<td>'+make_drop_down(obj.completed)+'</td>';
             employee_data += '<td>'+obj.Files+'</td>';
-            employee_data += '<td>'+obj.notes+'</td>';
+            // employee_data += '<td>'+obj.notes+'</td>';
             
             $('#mtable').append(employee_data);
             // console.log(employee_data);
