@@ -35,6 +35,7 @@ class Controller
 
     async GetOrders(req,res)
     {
+      
       const orders = await HomeService.getHomeData();
       // console.log(orders);
       res.status(200).json(orders);
