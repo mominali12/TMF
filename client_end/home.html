@@ -75,7 +75,7 @@
                 <table id="mtable" class="table table-striped table-inverse table-responsive">
                     <thead>
                         <tr>
-                            <th> </th>
+                            <th>▬</th>
                             <th>CUSTOMER</th>
                             <th>PRODUCT</th>
                             <th>Codes</th>
@@ -256,12 +256,19 @@
                 // If 'userinput' matches with the columnName  
                 if (str.localeCompare(userinput) === 0) 
                 {  
-                    check=true;
-                    for (var j = 0; j < row.length; j++) 
+                    if(userinput.localeCompare("▬"))
                     {
-                        // Deleting the ith cell of each row 
-                        row[j].deleteCell(i); 
-                    } 
+                        continue;
+                    }
+                    else
+                    {
+                        check=true;
+                        for (var j = 0; j < row.length; j++) 
+                        {
+                            // Deleting the ith cell of each row 
+                            row[j].deleteCell(i); 
+                        } 
+                    }
                 }
             } 
             if (check)
@@ -356,55 +363,41 @@
             employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
             employee_data += '<td contenteditable="true">'+obj.customer_name+'</td>';
             employee_data += '<td contenteditable="true">'+obj.product_name+'</td>';
-            // employee_data += '<td>'+obj.codes+'</td>';
             employee_data += '<td>'+make_drop_down(obj.codes)+'</td>';
             
-            // employee_data += '<td>'+obj.code_date+'</td>';
             employee_data += '<td>'+make_date_selector(obj.code_date)+'</td>';
 
-            // employee_data += '<td>'+obj.design+'</td>';
             employee_data += '<td>'+make_drop_down(obj.design)+'</td>';
 
-            // employee_data += '<td>'+obj.design_datce+'</td>';
             employee_data += '<td>'+make_date_selector(obj.design_date)+'</td>';
             
-            // employee_data += '<td>'+obj.design_approval+'</td>';
             employee_data += '<td>'+make_drop_down(obj.design_approval)+'</td>';
 
-            // employee_data += '<td>'+obj.design_approval_date+'</td>';
             employee_data += '<td>'+make_date_selector(obj.design_approval_date)+'</td>';
 
-            // employee_data += '<td>'+obj.send_to_printer+'</td>';
             employee_data += '<td>'+make_drop_down(obj.send_to_printer)+'</td>';
 
-            // employee_data += '<td>'+obj.send_to_printer_date+'</td>';
             employee_data += '<td>'+make_date_selector(obj.send_to_printer_date)+'</td>';
 
-            // employee_data += '<td>'+obj.proof_approval+'</td>';
             employee_data += '<td>'+make_drop_down(obj.proof_approval)+'</td>';
 
-            // employee_data += '<td>'+obj.proof_approval_date+'</td>';
             employee_data += '<td>'+make_date_selector(obj.proof_approval_date)+'</td>';
 
-            // employee_data += '<td>'+obj.shipping+'</td>';
             employee_data += '<td>'+make_drop_down(obj.shipping)+'</td>';
 
-            // employee_data += '<td>'+obj.ship_Date+'</td>';
             employee_data += '<td>'+make_date_selector(obj.ship_Date)+'</td>';
 
-            // employee_data += '<td>'+obj.received+'</td>';
             employee_data += '<td>'+make_drop_down(obj.received)+'</td>';
 
-            // employee_data += '<td>'+obj.received_Date+'</td>';
             employee_data += '<td>'+make_date_selector(obj.received_Date)+'</td>';
 
-            // employee_data += '<td>'+obj.completed+'</td>';
             employee_data += '<td>'+make_drop_down(obj.completed)+'</td>';
+
             employee_data += '<td>'+obj.Files+'</td>';
+
             employee_data += '<td>'+obj.notes+'</td>';
             
             $('#mtable').append(employee_data);
-            // console.log(employee_data);
         }
 
         const Http = new XMLHttpRequest();
@@ -423,7 +416,7 @@
             }
             $('#mtable').DataTable();
         }
-        //TODO: #1 @osaaama01 look at issue#1
+
         function submit()
         {
             var keys=[], arrayObj=[];
@@ -436,9 +429,6 @@
             $("#mtable tbody tr").each(function(){
                 var obj={}, i=0;
                 $(this).children("td").each(function(){
-                // obj[keys[i]]=$(this).text();
-
-                // console.log($(this).children().first().value);
                 
                 //to get drop down val AND (date value iff set)
                 if($(this).children().first().val())
@@ -454,22 +444,16 @@
                 arrayObj.push(obj);
             });
             
-            // $('body').append(JSON.stringify({yourObj: arrayObj}));
             var data = {yourObj: arrayObj}
             $.post("http://localhost:3000/home/orders/save",data,
             function(data,status){
                 alert("Data: " + data + "\nStatus: " + status);
             });
-            // $.ajax({
-            //     type: "POST",
-            //     url: 'http://localhost:3000/home/orders/save',
-            //     data: JSON.stringify({yourObj: arrayObj}),
-            //     contentType: "application/j-son;charset=UTF-8",
-            //     dataType: "json",
-            //     success: function (response) {
-            //     alert(response.d);
-            //     }
-            // })
+        }
+
+        function ondropdownchange(col)
+        {
+
         }
     </script>
 

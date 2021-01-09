@@ -65,6 +65,7 @@ class Controller
 
     async GetOrders(req,res)
     {
+      
       const orders = await HomeService.getHomeData();
       //orders.push({orders[0][0]): typeof(orders[0][0])});
       var column_types = {};
