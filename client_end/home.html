@@ -34,12 +34,10 @@
     <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script>    
 
     <div class="container-fluid p-4">
-        <h1 id="storename">
-            <img alt="Home Page" style="width: 300px;height: 250px;">
-        </h1>
-        <!-- <div class="row">
-            
-        </div> -->
+        
+        <div class="row">
+            <img id="storename" alt="Home Page">
+        </div>
         
         <div class="row">
             <div class="col-md-4 p-4">
@@ -358,6 +356,16 @@
         function load_data(obj)
         {
 
+            console.log(obj); 
+            /*
+            *looping over columns
+            */
+            var cols = Object.keys(obj)
+            cols.forEach(function(item)
+            {
+                console.log(item);
+            });
+
             var employee_data='';
             employee_data += '<tr>';
             employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
@@ -407,8 +415,8 @@
 
         Http.onreadystatechange = (e) => {
             var Data = JSON.parse(Http.responseText);
-            $('#storename img')[0].src = Data[Data.length-1].store_logo_path;
-            $('#storename img')[0].alt = Data[Data.length-1].store_logo;
+            $('#storename')[0].src = Data[Data.length-1].store_logo_path;
+            $('#storename')[0].alt = Data[Data.length-1].store_logo;
             for(var i = 0; i < Data.length - 1; i++) {
                 var obj = Data[i];
                 load_data(obj);              
