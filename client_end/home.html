@@ -425,15 +425,41 @@
             $('#mtable').DataTable();
         }
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// check datatype of col /////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function check_dtype(element)
+        {
+            var type = element.prop("tagName");
+            if(type.localeCompare("TD")===0)
+            {
+                return "text";
+            }
+            else if(type.localeCompare("SELECT")===0)
+            {
+                return "dropdown"
+            }
+            else if(type.localeCompare("INPUT")===0)
+            {
+                return "date"
+            }
+
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// Submit data of table //////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         function submit()
         {
-            var keys=[], arrayObj=[];
+            var keys=[], arrayObj=[], datatypes=[];
             $("#mtable thead tr th").each(function(){
                 keys.push($(this).text());
             });
             
             console.log("keys: ",keys);
-
+            rows_count=0
             $("#mtable tbody tr").each(function(){
                 var obj={}, i=0;
                 $(this).children("td").each(function(){
@@ -442,22 +468,49 @@
                 if($(this).children().first().val())
                 {
                     obj[keys[i]] = $(this).children().first().val();
+                    
+                    //to get datatype of col
+                    //we will take datatype only for first row others have same data type
+                    if(rows_count===0)
+                    {
+                        // console.log("hellos");
+                        datatypes.push(check_dtype($(this).children().first()))
+                        // datatypes.push(typeof($(this).children().first()))
+                    }
+
                 }
                 else //get text inside cell
                 {
                     obj[keys[i]] = $(this).text();
+
+                    //to get datatype of col
+                    if(rows_count===0)
+                    {
+                        datatypes.push(check_dtype($(this)));
+                        // console.log("hellosdasdsdads");
+                        // datatypes.push(typeof($(this)))
+                    }
+
                 }
                 i++;
                 })
+                rows_count++;
                 arrayObj.push(obj);
             });
             
-            var data = {yourObj: arrayObj}
+            console.log("\n-------------------------------------\ndatatypes: \n",datatypes);
+            var data = {table_data: arrayObj, data_types: datatypes}
+            console.log("\n-------------------------------------\nRETURNED DATA \n",data);
+
             $.post("http://localhost:3000/home/orders/save",data,
             function(data,status){
                 alert("Data: " + data + "\nStatus: " + status);
             });
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// Change color of dropdown //////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function ondropdownchange(col)
         {
