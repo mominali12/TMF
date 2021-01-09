@@ -455,7 +455,7 @@
         {
             var keys=[], arrayObj=[], datatypes=[];
             $("#mtable thead tr th").each(function(){
-                keys.push($(this).text());
+                keys.push($(this).text().toString());
             });
             
             console.log("keys: ",keys);

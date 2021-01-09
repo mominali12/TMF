@@ -25,6 +25,8 @@ db.orders.insertMany([
   {'sr_no' : 3,  'customer_name' : "Napeleon Washnfill Inc",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_Date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_Date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_Date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_Date' : new Date('2014-03-01'), 'user_ID' : 2},
 ]);
 
+db.orders.deleteMany({user_ID : 2});
+
 db.orders.find({user_ID : Number('1')});
 // Run a find command to view items sold on April 4th, 2014.
 db.orders.find({ user_ID: 1 });

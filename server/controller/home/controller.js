@@ -33,6 +33,15 @@ class Controller
         res.redirect('/login');
     }
 
+    async SaveData(req,res)
+    {
+      let result = await HomeService.SaveData(req.body);
+      if(result)
+        res.redirect('/home');
+      else
+        res.status(400).send(result);
+    }
+
 
     async GetCompleted (req,res)
     {

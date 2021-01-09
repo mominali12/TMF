@@ -10,13 +10,15 @@ function routes(app)
 
     //app.get('/home/completedorders',(Home.GetCompletedOrders));
 
+    app.post('/home/orders/save',(Home.SaveData));
+
     app.get('/home/completed',(Home.GetCompleted));
     
     app.post('/login/signup',(Login.InsertbyIdandPass));
 
-    app.post('/home/orders/save', (req,res)=>{
-        console.log(req.body)
-    })
+    // app.post('/home/orders/save', (req,res)=>{
+    //     console.log(req.body)
+    // })
 
     app.post('/login/signin',(Login.GetbyIdandPass));
 
