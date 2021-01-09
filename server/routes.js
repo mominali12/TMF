@@ -7,6 +7,10 @@ function routes(app)
     app.get(['/','/home'],(Home.GetHome));
     
     app.get('/home/orders',(Home.GetOrders));
+
+    //app.get('/home/completedorders',(Home.GetCompletedOrders));
+
+    app.get('/home/completed',(Home.GetCompleted));
     
     app.post('/login/signup',(Login.InsertbyIdandPass));
 
