@@ -365,14 +365,14 @@
         function load_data(obj)
         {
 
-            console.log(obj); 
+            console.log("\n=================\nLOADING DATA\n========================\n",obj); 
             /*
             *looping over columns
             */
             var cols = Object.keys(obj)
             cols.forEach(function(item)
             {
-                console.log(item);
+                // console.log(item);
             });
 
             var employee_data='';
@@ -402,15 +402,15 @@
 
             employee_data += '<td>'+make_drop_down(obj.shipping)+'</td>';
 
-            employee_data += '<td>'+make_date_selector(obj.ship_Date)+'</td>';
+            employee_data += '<td>'+make_date_selector(obj.ship_date)+'</td>';
 
             employee_data += '<td>'+make_drop_down(obj.received)+'</td>';
 
-            employee_data += '<td>'+make_date_selector(obj.received_Date)+'</td>';
+            employee_data += '<td>'+make_date_selector(obj.received_date)+'</td>';
 
             employee_data += '<td>'+make_drop_down(obj.completed)+'</td>';
 
-            employee_data += '<td>'+obj.Files+'</td>';
+            employee_data += '<td>'+obj.files+'</td>';
 
             employee_data += '<td>'+obj.notes+'</td>';
             
@@ -424,6 +424,7 @@
 
         Http.onreadystatechange = (e) => {
             var Data = JSON.parse(Http.responseText);
+            console.log("===============\nDATA received ===============\n",Data);
             $('#storename')[0].src = Data[Data.length-1].store_logo_path;
             $('#storename')[0].alt = Data[Data.length-1].store_logo;
             for(var i = 0; i < Data.length - 1; i++) {
