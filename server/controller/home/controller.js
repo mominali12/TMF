@@ -77,11 +77,11 @@ class Controller
       const orders = await HomeService.getHomeData();
       //orders.push({orders[0][0]): typeof(orders[0][0])});
       var column_types = {};
-      console.log(orders[0]);
-      for(let k in orders[0].toJSON())
-      {
-        console.log(k + ':' +typeof(orders[0][k]));
-      }      
+      //console.log(orders[0]);
+      // for(let k in orders[0].toJSON())
+      // {
+      //   console.log(k + ':' +typeof(orders[0][k]));
+      // }      
         //column_types[k] = typeof(k.value);
       //console.log(column_types);
       orders.push({'store_logo_path' : "assets/" + process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER + '.png',
