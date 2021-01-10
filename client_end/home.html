@@ -479,7 +479,16 @@
                 keys[i] = keys[i].replace(/ /g,"_");
                 //Do something
             }
-            
+
+            var cust_index = keys.indexOf("Customer");
+            var prod_index = keys.indexOf("Product");
+            if (cust_index !== -1) {
+                keys[cust_index] = "customer_name";
+            }
+            if (prod_index !== -1) {
+                keys[prod_index] = "product_name";
+            }
+
             keys = keys.map(name => name.toLowerCase());
 
             console.log("keys: ",keys);
