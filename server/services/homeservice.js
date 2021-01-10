@@ -4,7 +4,7 @@ class HomeDatabase
 {
     async getHomeData()
     {
-      return await Orders.find({user_ID : Number(process.env.ACTIVE_USER_ID)});
+      return await Orders.find({user_id : Number(process.env.ACTIVE_USER_ID)});
     }
 
     async SaveData(data)
@@ -14,7 +14,7 @@ class HomeDatabase
       try
       {
         const opts = { session };
-        await Orders.deleteMany({ user_ID:data.table_data.user_ID });
+        await Orders.deleteMany({ user_id:data.table_data.user_id });
         console.log(data.table_data);
         await Orders.insertMany(data.table_data);
         //await session.commitTransaction();s

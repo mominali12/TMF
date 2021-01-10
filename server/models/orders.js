@@ -15,16 +15,16 @@ const OrdersSchema = mongoose.Schema({
   proof_approval : String,
   proof_approval_date : Date,
   shipping : String,
-  Ship_Date : Date,
-  Received : String,
-  Received_Date : Date,
-  Completed : String,
-  Notes : String,
-  Printing : String,
-  Printing_Date : Date,
-  Stapling : String,
-  Stapling_Date : Date,
-  User_ID :{type: Number, required:true}
+  ship_Date : Date,
+  received : String,
+  received_Date : Date,
+  completed : String,
+  notes : String,
+  printing : String,
+  printing_Date : Date,
+  stapling : String,
+  stapling_Date : Date,
+  user_id :{type: Number, required:true}
 });
 
 OrdersSchema.index({ sr_no: -1 });
