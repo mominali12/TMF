@@ -15,15 +15,15 @@ const OrdersSchema = mongoose.Schema({
   proof_approval : String,
   proof_approval_date : Date,
   shipping : String,
-  ship_Date : Date,
+  ship_date : Date,
   received : String,
-  received_Date : Date,
+  received_date : Date,
   completed : String,
   notes : String,
   printing : String,
-  printing_Date : Date,
+  printing_date : Date,
   stapling : String,
-  stapling_Date : Date,
+  stapling_date : Date,
   user_id :{type: Number, required:true}
 });
 

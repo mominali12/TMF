@@ -220,7 +220,8 @@
         ///////////////////////////////////////// ADD COL ON CLICK FUNC ////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        $('#add_col_modal').click(function () {
+        $('#add_col_modal').click(function ()
+        {
             if ($('#col_modal_column_name').val()) {
                 $('#mtable tr:first').append($("<th>"));
                 $('#mtable tr').not(':first').append($("<td>"));    
@@ -233,7 +234,8 @@
                 {
                     $('#mtable tbody tr').each(function () { $(this).children('td:last').append(make_drop_down('')) });
                 }
-            } else { alert('Enter Column Name'); }
+            } else { alert('Enter Column Name');
+        }
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -355,7 +357,7 @@
             {
                 var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="'+datef+'">';
             }
-            return datepicker
+            return datepicker;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -369,7 +371,7 @@
             /*
             *looping over columns
             */
-            var cols = Object.keys(obj)
+            var cols = Object.keys(obj);
             cols.forEach(function(item)
             {
                 // console.log(item);
@@ -447,11 +449,11 @@
             }
             else if(type.localeCompare("SELECT")===0)
             {
-                return "dropdown"
+                return "dropdown";
             }
             else if(type.localeCompare("INPUT")===0)
             {
-                return "date"
+                return "date";
             }
 
         }
@@ -468,7 +470,7 @@
             });
             
             console.log("keys: ",keys);
-            rows_count=0
+            rows_count=0;
             $("#mtable tbody tr").each(function(){
                 var obj={}, i=0;
                 $(this).children("td").each(function(){
@@ -483,7 +485,7 @@
                     if(rows_count===0)
                     {
                         // console.log("hellos");
-                        datatypes.push(check_dtype($(this).children().first()))
+                        datatypes.push(check_dtype($(this).children().first()));
                         // datatypes.push(typeof($(this).children().first()))
                     }
 
@@ -508,7 +510,7 @@
             });
             
             console.log("\n-------------------------------------\ndatatypes: \n",datatypes);
-            var data = {table_data: arrayObj, data_types: datatypes}
+            var data = {table_data: arrayObj, data_types: datatypes};
             console.log("\n-------------------------------------\nRETURNED DATA \n",data);
 
             $.post("http://localhost:3000/home/orders/save",data,
