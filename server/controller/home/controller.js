@@ -76,7 +76,7 @@ class Controller
     {
       const orders = await HomeService.getHomeData();
       //orders.push({orders[0][0]): typeof(orders[0][0])});
-      var column_types = {};
+      //var column_types = {};
       //console.log(orders[0]);
       // for(let k in orders[0].toJSON())
       // {
