@@ -289,14 +289,15 @@
             } 
             if(allowed)
             {
-                if (check)
-                {
-                    alert("Column is removed from the table."); 
-                }
-                else
-                {
-                    alert("Column not found"); 
-                }
+                
+            }
+            if (check)
+            {
+                alert("Column is removed from the table."); 
+            }
+            else
+            {
+                alert("Column not found"); 
             }
         });
 
@@ -377,7 +378,7 @@
         function load_data(obj)
         {
 
-            console.log("\n=================\nLOADING DATA\n========================\n",obj); 
+            // console.log("\n=================\nLOADING DATA\n========================\n",obj); 
             /*
             *looping over columns
             */
@@ -430,7 +431,7 @@
 
             employee_data += '<td>'+obj.files+'</td>';
 
-            employee_data += '<td>'+obj.notes+'</td>';
+            employee_data += '<td>'+obj.notes+'</td></tr>';
             
             $('#mtable').append(employee_data);
         }
@@ -440,8 +441,9 @@
         Http.open("GET", url);
         Http.send();
 
-        Http.onreadystatechange = (e) => {
+        Http.onload = (e) => {
             var Data = JSON.parse(Http.responseText);
+            console.log("\n=================\nLOADED DATA\n========================\n",Data); 
             user_identity = Data[0].user_id;
             $('#storename')[0].src = Data[Data.length-1].store_logo_path;
             $('#storename')[0].alt = Data[Data.length-1].store_logo;
@@ -449,7 +451,7 @@
                 var obj = Data[i];
                 load_data(obj);              
             }
-            $('#mtable').DataTable();
+            // $('#mtable').DataTable();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -480,7 +482,7 @@
 
         function submit()
         {
-            var keys=[], arrayObj=[], datatypes=[];
+            var keys=[], arrayObj=[], datatypes={};
             $("#mtable thead tr th").each(function(){
                 keys.push($(this).text());
             });
@@ -517,7 +519,7 @@
                     //we will take datatype only for first row others have same data type
                     if(rows_count===0)
                     {
-                        datatypes.push(check_dtype($(this).children().first()));
+                        datatypes[keys[i]]=(check_dtype($(this).children().first()));
                     }
 
                 }
@@ -528,7 +530,7 @@
                     //to get datatype of col
                     if(rows_count===0)
                     {
-                        datatypes.push(check_dtype($(this)));
+                        datatypes[keys[i]]=(check_dtype($(this)));
                     }
                 }
                 i++;
