@@ -78,7 +78,7 @@
                     <thead>
                         <tr>
                             <th>▬</th>
-                            <th>customer_name</th>
+                            <th>Customer</th>
                             <th>Product</th>
                             <th>Codes</th>
                             <th>Code Date</th>
@@ -254,6 +254,7 @@
             var tble = document.getElementById('mtable'); 
             var row = tble.rows; // Getting the rows 
             var check = false;
+            var allowed = true;
             for (var i = 0; i < row[0].cells.length; i++) { 
   
                 // Getting the text of columnName 
@@ -265,9 +266,15 @@
                 // If 'userinput' matches with the columnName  
                 if (str.localeCompare(userinput) === 0) 
                 {  
-                    if(userinput.localeCompare("▬"))
+                    if(userinput.localeCompare("▬")===0)
                     {
-                        continue;
+                        break;
+                    }
+                    if(userinput.localeCompare("customer")===0)
+                    {
+                        alert("Customer's column can't be deleted,\nPlease choose some other column");
+                        allowed=false;
+                        break;
                     }
                     else
                     {
@@ -280,13 +287,16 @@
                     }
                 }
             } 
-            if (check)
+            if(allowed)
             {
-                alert("Column is removed from the table."); 
-            }
-            else
-            {
-                alert("Column not found"); 
+                if (check)
+                {
+                    alert("Column is removed from the table."); 
+                }
+                else
+                {
+                    alert("Column not found"); 
+                }
             }
         });
 
@@ -534,7 +544,7 @@
 
             $.post("http://localhost:3000/home/orders/save",data,
             function(data,status){
-                alert("Data: " + data + "\nStatus: " + status);
+                alert("Data is saved !")
             });
         }
 
