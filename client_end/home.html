@@ -440,7 +440,7 @@
         Http.open("GET", url);
         Http.send();
 
-        Http.onreadystatechange = (e) => {
+        Http.onload = (e) => {
             var Data = JSON.parse(Http.responseText);
             user_identity = Data[0].user_id;
             $('#storename')[0].src = Data[Data.length-1].store_logo_path;
@@ -449,8 +449,10 @@
                 var obj = Data[i];
                 load_data(obj);              
             }
-            $('#mtable').DataTable();
+            //$('#mtable').DataTable();
         }
+
+        Http.on
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// check datatype of col /////////////////////////////////////////////////////

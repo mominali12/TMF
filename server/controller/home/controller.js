@@ -37,7 +37,7 @@ class Controller
     {
       let result = await HomeService.SaveData(req.body);
       if(result)
-        res.redirect('/home');
+        res.status(200).redirect('/home');
       else
         res.status(400).send(result);
     }
