@@ -15,7 +15,7 @@ class HomeDatabase
       {
         const opts = { session };
         await Orders.deleteMany({ user_id:data.table_data[0].user_id });
-        console.log(data.table_data);
+        //console.log(data.table_data);
         await Orders.insertMany(data.table_data);
         //await session.commitTransaction();s
         //session.endSession();
