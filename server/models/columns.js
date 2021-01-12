@@ -1,9 +1,9 @@
 const mongoose = require ('mongoose');
 
 const ColumnsSchema = mongoose.Schema({
-  sr_no :{type: Number, required:true},
-  column_name: { type: String, required: true },
-  show:  String ,
+  sr_no : Number,
+  column_name:  String,
+  column_type: String,
 });
 
 ColumnsSchema.index({ sr_no: -1 });

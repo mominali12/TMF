@@ -42,7 +42,6 @@ class Controller
         res.status(400).send(result);
     }
 
-
     async GetCompleted (req,res)
     {
       //console.log("Hello" + process.env.ACTIVE_USER);
@@ -75,19 +74,21 @@ class Controller
     async GetOrders(req,res)
     {
       const orders = await HomeService.getHomeData();
-      //orders.push({orders[0][0]): typeof(orders[0][0])});
-      //var column_types = {};
-      //console.log(orders[0]);
-      // for(let k in orders[0].toJSON())
-      // {
-      //   console.log(k + ':' +typeof(orders[0][k]));
-      // }      
-        //column_types[k] = typeof(k.value);
-      //console.log(column_types);
+      const types = await HomeService.getColumnTypes();
+      let final = {'orders':orders, 'types':types};
       orders.push({'store_logo_path' : "assets/" + process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER + '.png',
                    'store_logo' : process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER});
-      // console.log(orders);
-      res.status(200).json(orders);
+      res.status(200).json(final);
+    }
+
+    async GetCompletedOrders(req,res)
+    {
+      const orders = await HomeService.getCompletedData();
+      const types = await HomeService.getCompletedColumnTypes();
+      let final = {'orders':orders, 'types':types};
+      orders.push({'store_logo_path' : "assets/" + process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER + '.png',
+                   'store_logo' : process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER});
+      res.status(200).json(final);
     }
 }
 

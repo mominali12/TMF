@@ -13,6 +13,8 @@ function routes(app)
     app.post('/home/orders/save',(Home.SaveData));
 
     app.get('/home/completed',(Home.GetCompleted));
+
+    app.get('/home/completedorders',(Home.GetCompletedOrders));
     
     app.post('/login/signup',(Login.InsertbyIdandPass));
 
