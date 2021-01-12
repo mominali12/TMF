@@ -1,18 +1,14 @@
-.tablewrapp select {
-    width: 120px;
-    /* overflow: hidden;
-    white-space: pre;
-    text-overflow: ellipsis;
-    -webkit-appearance: none; */
-}
-
-
-/* .tablewrapp option {
+    .tablewrapp select {
+        width: 120px;
+        /* overflow: hidden; */
+        /* white-space: pre; */
+        /* text-overflow: ellipsis; */
+        /* -webkit-appearance: none; */
+    }
+    /* .tablewrapp option {
     border: solid 1px #DDDDDD;
 } */
-
-
-/* table.dataTable {
+    /* table.dataTable {
     clear: both;
     margin-top: 6px !important;
     margin-bottom: 6px !important;

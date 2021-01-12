@@ -70,10 +70,16 @@
         </div>
 
         <div class="row">
+
+            <select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)">
+                <option value="Not Started">Not Started</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Delayed">Delayed</option>
+                <option selected="selected" value="Completed">Completed</option></select>
             <div class="col-md-12 table-responsive">
                 <table id="mtable" class="table table-striped table-inverse tablewrapp">
-                    <thead>
-                        <tr>
+                    <thead id="mtableheader">
+                        <!-- <tr>
                             <th>▬</th>
                             <th>Customer</th>
                             <th>Product</th>
@@ -94,7 +100,7 @@
                             <th>Completed</th>
                             <th>Files</th>
                             <th>Notes</th>
-                        </tr>
+                        </tr> -->
                     </thead>
                     <tbody></tbody>
             </div>
@@ -286,8 +292,54 @@
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////// make completed_drop_down FUNC ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function completed_drop_down(selectedval) {
+            if (selectedval.localeCompare("Completed") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option selected="selected" value="Completed">Completed</option' + '>' + '</select>';
+            } else if (selectedval.localeCompare("In Progress") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option selected="selected" value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            } else if (selectedval.localeCompare("Delayed") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option selected="selected" value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            } else {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option selected="selected" value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            }
+            return dropdown;
+        }
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////// Completed col dropdown FUNC ///////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function ondropdownchange(col) {
+            if ($(col).find(":selected").text().localeCompare("Completed") === 0) {
+                submit();
+                $(col).closest("tr").remove();
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// make_drop_down FUNC ////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         function make_drop_down(selectedval) {
 
             if (selectedval.localeCompare("Completed") === 0) {
@@ -348,10 +400,6 @@
 
         function load_data(obj) {
 
-            // console.log("\n=================\nLOADING DATA\n========================\n",obj); 
-            /*
-             *looping over columns
-             */
             var cols = Object.keys(obj)
             cols.forEach(function(item) {
                 // console.log(item);
@@ -396,7 +444,7 @@
             employee_data += '<td>' + make_date_selector(obj.received_date) + '</td>';
 
             console.log("completed")
-            employee_data += '<td>' + make_drop_down(obj.completed) + '</td>';
+            employee_data += '<td>' + completed_drop_down(obj.completed) + '</td>';
 
             employee_data += '<td>' + obj.files + '</td>';
 
@@ -405,6 +453,7 @@
             $('#mtable').append(employee_data);
         }
 
+        // TODO #7
         const Http = new XMLHttpRequest();
         const url = 'http://localhost:3000/home/orders';
         Http.open("GET", url);
@@ -413,9 +462,38 @@
         Http.onload = (e) => {
             var Data = JSON.parse(Http.responseText);
             console.log("\n=================\nLOADED DATA\n========================\n", Data);
+
+            //setting userID
             user_identity = Data[0].user_id;
+
+            //setting logo path
             $('#storename')[0].src = Data[Data.length - 1].store_logo_path;
             $('#storename')[0].alt = Data[Data.length - 1].store_logo;
+
+            //getting table headers
+            var cols = Object.keys(Data[0])
+            for (let i = 0; i < cols.length; i++) {
+                cols[i] = cols[i].replaceAll("_", " ");
+                cols[i] = cols[i].toUpperCase();
+            }
+
+            //making table headers
+            var tblheaders = "<tr>";
+            for (let i = 2; i < cols.length - 1; i++) {
+                if (i === 2) {
+                    tblheaders += "<th>" + "▬" + "</th>"
+                }
+                tblheaders += "<th>" + cols[i] + "</th>"
+            }
+            tblheaders += "</tr>";
+            $('#mtableheader').append(tblheaders);
+
+
+            // TODO #6 @osaaama01
+            /*Need columns data types from backend 
+             *So that we can make columns accordingly.
+             */
+            //looping over table's data
             for (var i = 0; i < Data.length - 1; i++) {
                 var obj = Data[i];
                 load_data(obj);
@@ -453,7 +531,6 @@
 
             for (let i = 0; i < keys.length; i++) {
                 keys[i] = keys[i].replace(/ /g, "_");
-                //Do something
             }
 
             var cust_index = keys.indexOf("Customer");
@@ -512,14 +589,6 @@
                 function(data, status) {
                     alert("Data is saved !");
                 });
-        }
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////// Change color of dropdown //////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        function ondropdownchange(col) {
-
         }
     </script>
 
