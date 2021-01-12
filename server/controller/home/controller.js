@@ -92,7 +92,7 @@ class Controller
 
     async GetCompletedOrders(req,res)
     {
-      const orders = await HomeService.getCompletedData();
+      const orders = await HomeService.getCompletedHomeData();
       const types = await HomeService.getCompletedColumnTypes();
       let final = {'orders':orders, 'types':types};
       orders.push({'store_logo_path' : "assets/" + process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER + '.png',

@@ -27,6 +27,7 @@ db.orders.insertMany([
 
 db.orders.deleteMany({user_id : 2});
 
+
 db.orders.find({user_id : Number('1')});
 // Run a find command to view items sold on April 4th, 2014.
 db.orders.find({ user_id: 1 });

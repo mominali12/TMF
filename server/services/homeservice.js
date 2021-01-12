@@ -10,7 +10,7 @@ class HomeDatabase
 
     async getCompletedHomeData()
     {
-      return await Orders.find({user_id : Number(process.env.ACTIVE_USER_ID), completed:"Completed"});
+      return await Orders.find({$and:[{user_id : Number(process.env.ACTIVE_USER_ID)}, {completed:"Completed"}]});
     }
 
     async getColumnTypes()
@@ -30,15 +30,15 @@ class HomeDatabase
       try
       {
         const opts = { session };
-        await Orders.deleteMany({ user_id:data.table_data[0].user_id, completed : 'Completed' });
-        await Columns.deleteMany({user_id:data.table_data[0],order_type : 'C'},()=>{});
+        await Orders.deleteMany({$and:{ user_id:data.table_data[0].user_id,completed : 'Completed' }});
+        await Columns.deleteMany({$and:{user_id:data.table_data[0].user_id,order_type : 'C'}},()=>{});
         // console.log(data.table_data);
         // console.log(data.data_types);
         await Orders.insertMany(data.table_data);
         let count = 0;
         for(let k in data.data_types)
         {
-          await Columns.create({'sr_no':count,'column_name':k,'column_type':data.data_types[k],'order_type':'C','user_id':data.table_data[0].user_id});
+          await Columns.create({'sr_no':count,'column_name':k,'column_type':data.data_types[k],'order_type':'C','user_id':Number(data.table_data[0].user_id)});
           count++;
         }
         return true;
@@ -60,16 +60,16 @@ class HomeDatabase
       session.startTransaction();
       try
       {
-        let doc = await Orders.deleteMany({ user_id:data.table_data[0].user_id, completed :{ $ne: 'Completed' }},{session:session});
-        assert.ok(doc);
-        await Columns.deleteMany({user_id:data.table_data[0],order_type : 'I'},()=>{});
+        await Orders.deleteMany({ user_id:data.table_data[0].user_id, completed :{ $ne: 'Completed' }});
+        //assert.ok(doc);
+        await Columns.deleteMany({user_id:data.table_data[0].user_id,order_type : 'I'},()=>{});
         // console.log(data.table_data);
         // console.log(data.data_types);
         await Orders.insertMany(data.table_data);
         let count = 0;
         for(let k in data.data_types)
         {
-          await Columns.create({'sr_no':count,'column_name':k,'column_type':data.data_types[k],'order_type':'I','user_id':data.table_data[0].user_id});
+          await Columns.create({'sr_no':count,'column_name':k,'column_type':data.data_types[k],'order_type':'I','user_id':Number(data.table_data[0].user_id)});
           count++;
         }
         await session.commitTransaction();
