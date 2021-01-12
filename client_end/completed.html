@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css"> -->
+    <!-- //TODO #8 -->
+    <link type="text/css" rel="stylesheet" href="../tablestyle.css">
 
 </head>
 
@@ -25,10 +27,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script>
+    <!-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script> -->
 
-    <!-- TODO : #5 @momin Please-->
     <div class="container-fluid p-4">
 
         <div class="row">
@@ -70,30 +71,31 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <table id="mtable" class="table table-striped table-inverse table-responsive">
-                    <thead>
-                        <tr>
+            <div class="col-md-12 table-responsive">
+                <table id="mtable" class="table table-striped table-inverse tablewrapp">
+                    <thead id="mtableheader">
+                        <!-- <tr>
                             <th>▬</th>
-                            <th>CUSTOMER</th>
-                            <th>PRODUCT</th>
+                            <th>Customer</th>
+                            <th>Product</th>
                             <th>Codes</th>
                             <th>Code Date</th>
                             <th>Design</th>
                             <th>Design Date</th>
                             <th>Design Approval</th>
-                            <th>Approval Date</th>
-                            <th>Printing</th>
-                            <th>Printed Date</th>
-                            <th>Stapling</th>
-                            <th>Stapling Date</th>
+                            <th>Design Approval Date</th>
+                            <th>Send to Printer</th>
+                            <th>Send to Printer Date</th>
+                            <th>Proof Approval</th>
+                            <th>Proof Approval Date</th>
                             <th>Shipping</th>
                             <th>Ship Date</th>
                             <th>Received</th>
                             <th>Received Date</th>
                             <th>Completed</th>
                             <th>Files</th>
-                        </tr>
+                            <th>Notes</th>
+                        </tr> -->
                     </thead>
                     <tbody></tbody>
             </div>
@@ -185,8 +187,6 @@
             location.replace("http://localhost:3000/");
         });
 
-        var text = '{ "CUSTOMER":"CUSTOMER", "PRODUCT":"PRODUCT", "Codes":"Codes", "CodeDate":"CodeDate", "Design":"Design", "DesignDate":"DesignDate", "DesignApproval":"DesignApproval", "DesignApprovalDate":"DesignApprovalDate", "SenttoPrinter":"SenttoPrinter", "SentDate":"SentDate", "ProofApproval":"ProofApproval", "ProofApprovalDate":"ProofApprovalDate", "Shipping":"Shipping", "ShipDate":"ShipDate", "Received":"Received", "ReceivedDate":"ReceivedDate", "Completed":"Completed", "Files":"Files", "Notes":"Notes"}';
-        var obj = JSON.parse(text);
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// ADD ROW MODAL BUTTON ///////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -216,11 +216,11 @@
                 $('#mtable thead tr>th:last').html($('#col_modal_column_name').val());
                 if ($('#col_modal_select').val().localeCompare('date') === 0) {
                     $('#mtable tbody tr').each(function() {
-                        $(this).children('td:last').append(make_date_selector())
+                        $(this).children('td:last').append(make_date_selector(''))
                     });
                 } else {
                     $('#mtable tbody tr').each(function() {
-                        $(this).children('td:last').append(make_drop_down())
+                        $(this).children('td:last').append(make_drop_down(''))
                     });
                 }
             } else {
@@ -244,6 +244,7 @@
             var tble = document.getElementById('mtable');
             var row = tble.rows; // Getting the rows 
             var check = false;
+            var allowed = true;
             for (var i = 0; i < row[0].cells.length; i++) {
 
                 // Getting the text of columnName 
@@ -254,21 +255,13 @@
 
                 // If 'userinput' matches with the columnName  
                 if (str.localeCompare(userinput) === 0) {
-                    if (userinput.localeCompare("▬")) {
-                        continue;
-                    } else {
-                        check = true;
-                        for (var j = 0; j < row.length; j++) {
-                            // Deleting the ith cell of each row 
-                            row[j].deleteCell(i);
-                        }
+                    if (userinput.localeCompare("▬") === 0) {
+                        break;
                     }
-                }
-
-                // If 'userinput' matches with the columnName  
-                if (str.localeCompare(userinput) === 0) {
-                    if (userinput.localeCompare("▬")) {
-                        continue;
+                    if (userinput.localeCompare("customer") === 0) {
+                        alert("Customer's column can't be deleted,\nPlease choose some other column");
+                        allowed = false;
+                        break;
                     } else {
                         check = true;
                         for (var j = 0; j < row.length; j++) {
@@ -278,17 +271,64 @@
                     }
                 }
             }
-            if (check) {
-                alert("Column is removed from the table.");
-            } else {
-                alert("Column not found");
+            if (allowed) {
+                if (check) {
+                    alert("Column is removed from the table.");
+                } else {
+                    alert("Column not found");
+                }
             }
         });
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////// make completed_drop_down FUNC ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function completed_drop_down(selectedval) {
+            if (selectedval.localeCompare("Completed") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option selected="selected" value="Completed">Completed</option' + '>' + '</select>';
+            } else if (selectedval.localeCompare("In Progress") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option selected="selected" value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            } else if (selectedval.localeCompare("Delayed") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option selected="selected" value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            } else {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option selected="selected" value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            }
+            return dropdown;
+        }
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////// Completed col dropdown FUNC ///////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function ondropdownchange(col) {
+            if ($(col).find(":selected").text().localeCompare("Completed") !== 0) {
+                submit();
+                $(col).closest("tr").remove();
+            }
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// make_drop_down FUNC ////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         function make_drop_down(selectedval) {
 
             if (selectedval.localeCompare("Completed") === 0) {
@@ -376,9 +416,9 @@
 
             employee_data += '<td>' + make_date_selector(obj.send_to_printer_date) + '</td>';
 
-            employee_data += '<td>' + make_drop_down(obj.stapling) + '</td>';
+            // employee_data += '<td>' + make_drop_down(obj.stapling) + '</td>';
 
-            employee_data += '<td>' + make_date_selector(obj.stapling_date) + '</td>';
+            // employee_data += '<td>' + make_date_selector(obj.stapling_date) + '</td>';
 
             employee_data += '<td>' + make_drop_down(obj.shipping) + '</td>';
 
@@ -388,27 +428,62 @@
 
             employee_data += '<td>' + make_date_selector(obj.received_date) + '</td>';
 
-            employee_data += '<td>' + make_drop_down(obj.completed) + '</td>';
+            employee_data += '<td>' + completed_drop_down(obj.completed) + '</td>';
 
             employee_data += '<td>' + obj.files + '</td>';
 
             $('#mtable').append(employee_data);
         }
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// Get data from DB /////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         const Http = new XMLHttpRequest();
         const url = 'http://localhost:3000/home/orders';
         Http.open("GET", url);
         Http.send();
-        // TODO: #3
-        Http.onreadystatechange = (e) => {
+
+        Http.onload = (e) => {
             var Data = JSON.parse(Http.responseText);
+            console.log("\n=================\nLOADED DATA\n========================\n", Data);
+
+            //setting userID
+            user_identity = Data[0].user_id;
+
+            //setting logo path
             $('#storename')[0].src = '../' + Data[Data.length - 1].store_logo_path;
             $('#storename')[0].alt = Data[Data.length - 1].store_logo;
+
+            //getting table headers
+            var cols = Object.keys(Data[0])
+            for (let i = 0; i < cols.length; i++) {
+                cols[i] = cols[i].replaceAll("_", " ");
+                cols[i] = cols[i].toUpperCase();
+            }
+
+            //making table headers
+            var tblheaders = "<tr>";
+            for (let i = 2; i < cols.length - 1; i++) {
+                if (i === 2) {
+                    tblheaders += "<th>" + "▬" + "</th>"
+                }
+                tblheaders += "<th>" + cols[i] + "</th>"
+            }
+            tblheaders += "</tr>";
+            $('#mtableheader').append(tblheaders);
+
+
+            // TODO #6 @osaaama01
+            /*Need columns data types from backend 
+             *So that we can make columns accordingly.
+             */
+            //looping over table's data
             for (var i = 0; i < Data.length - 1; i++) {
                 var obj = Data[i];
                 load_data(obj);
             }
-            $('#mtable').DataTable();
+            // $('#mtable').DataTable();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -430,18 +505,32 @@
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// Submit data of table //////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        //TODO: #1 @osaaama01 look at issue#1
         function submit() {
             var keys = [],
                 arrayObj = [],
-                datatypes = [];
+                datatypes = {};
             $("#mtable thead tr th").each(function() {
-                keys.push($(this).text().toString());
+                keys.push($(this).text());
             });
 
+            for (let i = 0; i < keys.length; i++) {
+                keys[i] = keys[i].replace(/ /g, "_");
+            }
+
+            var cust_index = keys.indexOf("Customer");
+            var prod_index = keys.indexOf("Product");
+            if (cust_index !== -1) {
+                keys[cust_index] = "customer_name";
+            }
+            if (prod_index !== -1) {
+                keys[prod_index] = "product_name";
+            }
+
+            keys = keys.map(name => name.toLowerCase());
+
             console.log("keys: ", keys);
-            rows_count = 0
+
+            rows_count = 0;
             $("#mtable tbody tr").each(function() {
                 var obj = {},
                     i = 0;
@@ -449,30 +538,26 @@
 
                     //to get drop down val AND (date value iff set)
                     if ($(this).children().first().val()) {
+                        obj['sr_no'] = rows_count;
                         obj[keys[i]] = $(this).children().first().val();
-
                         //to get datatype of col
                         //we will take datatype only for first row others have same data type
                         if (rows_count === 0) {
-                            // console.log("hellos");
-                            datatypes.push(check_dtype($(this).children().first()))
-                                // datatypes.push(typeof($(this).children().first()))
+                            datatypes[keys[i]] = (check_dtype($(this).children().first()));
                         }
 
                     } else //get text inside cell
                     {
+                        obj['sr_no'] = rows_count;
                         obj[keys[i]] = $(this).text();
-
                         //to get datatype of col
                         if (rows_count === 0) {
-                            datatypes.push(check_dtype($(this)));
-                            // console.log("hellosdasdsdads");
-                            // datatypes.push(typeof($(this)))
+                            datatypes[keys[i]] = (check_dtype($(this)));
                         }
-
                     }
                     i++;
                 })
+                obj['user_id'] = user_identity;
                 rows_count++;
                 arrayObj.push(obj);
             });
@@ -486,9 +571,68 @@
 
             $.post("http://localhost:3000/home/orders/save", data,
                 function(data, status) {
-                    alert("Data: " + data + "\nStatus: " + status);
+                    alert("Data is saved !");
                 });
         }
+        //TODO: #1 @osaaama01 look at issue#1
+        // function submit() {
+        //     var keys = [],
+        //         arrayObj = [],
+        //         datatypes = [];
+        //     $("#mtable thead tr th").each(function() {
+        //         keys.push($(this).text().toString());
+        //     });
+
+        //     console.log("keys: ", keys);
+
+        //     rows_count = 0
+        //     $("#mtable tbody tr").each(function() {
+        //         var obj = {},
+        //             i = 0;
+        //         $(this).children("td").each(function() {
+
+        //             //to get drop down val AND (date value iff set)
+        //             if ($(this).children().first().val()) {
+        //                 obj[keys[i]] = $(this).children().first().val();
+
+        //                 //to get datatype of col
+        //                 //we will take datatype only for first row others have same data type
+        //                 if (rows_count === 0) {
+        //                     // console.log("hellos");
+        //                     datatypes.push(check_dtype($(this).children().first()))
+        //                         // datatypes.push(typeof($(this).children().first()))
+        //                 }
+
+        //             } else //get text inside cell
+        //             {
+        //                 obj[keys[i]] = $(this).text();
+
+        //                 //to get datatype of col
+        //                 if (rows_count === 0) {
+        //                     datatypes.push(check_dtype($(this)));
+        //                     // console.log("hellosdasdsdads");
+        //                     // datatypes.push(typeof($(this)))
+        //                 }
+
+        //             }
+        //             i++;
+        //         })
+        //         rows_count++;
+        //         arrayObj.push(obj);
+        //     });
+
+        //     console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
+        //     var data = {
+        //         table_data: arrayObj,
+        //         data_types: datatypes
+        //     }
+        //     console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+
+        //     $.post("http://localhost:3000/home/orders/save", data,
+        //         function(data, status) {
+        //             alert("Data: " + data + "\nStatus: " + status);
+        //         });
+        // }
     </script>
 
 </body>
