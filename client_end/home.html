@@ -223,7 +223,7 @@
             if ($('#col_modal_column_name').val()) {
                 $('#mtable tr:first').append($("<th>"));
                 $('#mtable tr').not(':first').append($("<td>"));
-                $('#mtable thead tr>th:last').html($('#col_modal_column_name').val());
+                $('#mtable thead tr>th:last').html($('#col_modal_column_name').val().toUpperCase());
                 if ($('#col_modal_select').val().localeCompare('date') === 0) {
                     $('#mtable tbody tr').each(function() {
                         $(this).children('td:last').append(make_date_selector(''))
