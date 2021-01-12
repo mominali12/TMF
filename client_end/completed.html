@@ -184,7 +184,7 @@
 
     <script type="text/javascript">
         $("#open_page_nav").click(function() {
-            location.replace("http://localhost:3000/");
+            location.replace("http://localhost:3000/home");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -440,7 +440,7 @@
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         const Http = new XMLHttpRequest();
-        const url = 'http://localhost:3000/home/orders';
+        const url = 'http://localhost:3000/home/completedorders';
         Http.open("GET", url);
         Http.send();
 
@@ -449,14 +449,21 @@
             console.log("\n=================\nLOADED DATA\n========================\n", Data);
 
             //setting userID
-            user_identity = Data[0].user_id;
+            user_identity = Data.orders[0].user_id;
 
             //setting logo path
-            $('#storename')[0].src = '../' + Data[Data.length - 1].store_logo_path;
-            $('#storename')[0].alt = Data[Data.length - 1].store_logo;
+            $('#storename')[0].src = '../' + Data.orders[Data.orders.length - 1].store_logo_path;
+            $('#storename')[0].alt = Data.orders[Data.orders.length - 1].store_logo;
 
             //getting table headers
-            var cols = Object.keys(Data[0])
+            // var cols = Object.keys(Data.orders[0])
+
+            // var cols = []
+            // for (let i = 0; i < Data.types.length; i++) {
+            //     cols.push(Data.types[i].column_name)
+            //     alert(Data.types[i].column_name)
+            // }
+
             for (let i = 0; i < cols.length; i++) {
                 cols[i] = cols[i].replaceAll("_", " ");
                 cols[i] = cols[i].toUpperCase();
@@ -479,8 +486,8 @@
              *So that we can make columns accordingly.
              */
             //looping over table's data
-            for (var i = 0; i < Data.length - 1; i++) {
-                var obj = Data[i];
+            for (var i = 0; i < Data.orders.length - 1; i++) {
+                var obj = Data.orders[i];
                 load_data(obj);
             }
             // $('#mtable').DataTable();
@@ -569,7 +576,7 @@
             }
             console.log("\n-------------------------------------\nRETURNED DATA \n", data);
 
-            $.post("http://localhost:3000/home/orders/save", data,
+            $.post("http://localhost:3000/home/orders/savecompleted", data,
                 function(data, status) {
                     alert("Data is saved !");
                 });

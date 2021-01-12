@@ -170,6 +170,7 @@
                     <select class="form-control" name="general_dropdown" id="col_modal_select">
                         <option value="date">Date</option>
                         <option value="dropdown">Dropdown</option>
+                        <option value="text">Text</option>
                     </select>
                 </div>
 
@@ -227,6 +228,10 @@
                     $('#mtable tbody tr').each(function() {
                         $(this).children('td:last').append(make_date_selector(''))
                     });
+                } else if ($('#col_modal_select').val().localeCompare('text') === 0) {
+                    $('#mtable tbody tr').each(function() {
+                        $(this).children('td:last').append(make_text_field(''))
+                    });
                 } else {
                     $('#mtable tbody tr').each(function() {
                         $(this).children('td:last').append(make_drop_down(''))
@@ -269,6 +274,11 @@
                     }
                     if (userinput.localeCompare("customer name") === 0) {
                         alert("Customer's column can't be deleted,\nPlease choose some other column");
+                        allowed = false;
+                        break;
+                    }
+                    if (userinput.localeCompare("completed") === 0) {
+                        alert("Completed column can't be deleted,\nPlease choose some other column");
                         allowed = false;
                         break;
                     } else {
@@ -390,61 +400,35 @@
             return datepicker
         }
 
+
+        function make_text_field(txt) {
+            return '<td contenteditable="true">' + txt + '</td>';
+        }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// load_data FUNC /////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        function load_data(obj) {
-
-            var cols = Object.keys(obj)
-            cols.forEach(function(item) {
-                // console.log(item);
-            });
+        function load_data(obj, cols) {
 
             var employee_data = '';
             employee_data += '<tr>';
             employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
-            employee_data += '<td contenteditable="true">' + obj.customer_name + '</td>';
-            employee_data += '<td contenteditable="true">' + obj.product_name + '</td>';
-            employee_data += '<td>' + make_drop_down(obj.codes) + '</td>';
 
-            employee_data += '<td>' + make_date_selector(obj.code_date) + '</td>';
-            console.log("design")
-            employee_data += '<td>' + make_drop_down(obj.design) + '</td>';
-
-            employee_data += '<td>' + make_date_selector(obj.design_date) + '</td>';
-
-            console.log("design_approval")
-            employee_data += '<td>' + make_drop_down(obj.design_approval) + '</td>';
-
-            employee_data += '<td>' + make_date_selector(obj.design_approval_date) + '</td>';
-
-            console.log("send_to_printer")
-            employee_data += '<td>' + make_drop_down(obj.send_to_printer) + '</td>';
-
-            employee_data += '<td>' + make_date_selector(obj.send_to_printer_date) + '</td>';
-
-            console.log("proof_approval")
-            employee_data += '<td>' + make_drop_down(obj.proof_approval) + '</td>';
-
-            employee_data += '<td>' + make_date_selector(obj.proof_approval_date) + '</td>';
-
-            console.log("shipping")
-            employee_data += '<td>' + make_drop_down(obj.shipping) + '</td>';
-
-            employee_data += '<td>' + make_date_selector(obj.ship_date) + '</td>';
-
-            console.log("received")
-            employee_data += '<td>' + make_drop_down(obj.received) + '</td>';
-
-            employee_data += '<td>' + make_date_selector(obj.received_date) + '</td>';
-
-            console.log("completed")
-            employee_data += '<td>' + completed_drop_down(obj.completed) + '</td>';
-
-            employee_data += '<td>' + obj.files + '</td>';
-
-            employee_data += '<td>' + obj.notes + '</td></tr>';
+            Object.keys(cols).forEach(function(key) {
+                // alert(key);
+                // alert(obj[key]);
+                if (key.localeCompare("▬") !== 0) {
+                    if (key.localeCompare("completed") === 0) {
+                        employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
+                    } else if (cols[key].localeCompare("text") === 0) {
+                        employee_data += make_text_field(obj[key]);
+                    } else if (cols[key].localeCompare("date") === 0) {
+                        employee_data += '<td>' + make_date_selector(obj[key]) + '</td>';
+                    } else {
+                        employee_data += '<td>' + make_drop_down(obj[key]) + '</td>';
+                    }
+                }
+            });
 
             $('#mtable').append(employee_data);
         }
@@ -463,26 +447,32 @@
             console.log("\n=================\nLOADED DATA\n========================\n", Data);
 
             //setting userID
-            user_identity = Data[0].user_id;
+            user_identity = Data.orders[0].user_id;
 
             //setting logo path
-            $('#storename')[0].src = Data[Data.length - 1].store_logo_path;
-            $('#storename')[0].alt = Data[Data.length - 1].store_logo;
+            $('#storename')[0].src = Data.orders[Data.orders.length - 1].store_logo_path;
+            $('#storename')[0].alt = Data.orders[Data.orders.length - 1].store_logo;
 
             //getting table headers
-            var cols = Object.keys(Data[0])
-            for (let i = 0; i < cols.length; i++) {
-                cols[i] = cols[i].replaceAll("_", " ");
-                cols[i] = cols[i].toUpperCase();
+            // var cols = Object.keys(Data.orders[0])
+
+            var cols = {};
+            for (let i = 0; i < Data.types.length; i++) {
+                cols[Data.types[i].column_name] = Data.types[i].column_type
+            }
+
+
+            const col_keys = Object.keys(cols);
+
+            for (let i = 0; i < col_keys.length; i++) {
+                col_keys[i] = col_keys[i].replaceAll("_", " ");
+                col_keys[i] = col_keys[i].toUpperCase();
             }
 
             //making table headers
             var tblheaders = "<tr>";
-            for (let i = 2; i < cols.length - 1; i++) {
-                if (i === 2) {
-                    tblheaders += "<th>" + "▬" + "</th>"
-                }
-                tblheaders += "<th>" + cols[i] + "</th>"
+            for (let i = 0; i < col_keys.length; i++) {
+                tblheaders += "<th>" + col_keys[i] + "</th>"
             }
             tblheaders += "</tr>";
             $('#mtableheader').append(tblheaders);
@@ -493,9 +483,9 @@
              *So that we can make columns accordingly.
              */
             //looping over table's data
-            for (var i = 0; i < Data.length - 1; i++) {
-                var obj = Data[i];
-                load_data(obj);
+            for (var i = 0; i < Data.orders.length; i++) {
+                var obj = Data.orders[i];
+                load_data(obj, cols);
             }
             // $('#mtable').DataTable();
         }
@@ -527,6 +517,8 @@
             $("#mtable thead tr th").each(function() {
                 keys.push($(this).text());
             });
+
+            console.log("\n--------------------\nheaders !!!!!!!!!!!!!!!!!\n", keys);
 
             for (let i = 0; i < keys.length; i++) {
                 keys[i] = keys[i].replace(/ /g, "_");
