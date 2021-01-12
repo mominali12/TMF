@@ -42,7 +42,16 @@ class Controller
         res.status(400).send(result);
     }
 
-    async GetCompleted (req,res)
+    async SaveCompletedData(req,res)
+    {
+      let result = await HomeService.SaveCompletedData(req.body);
+      if(result)
+        res.status(200).redirect('/home');
+      else
+        res.status(400).send(result);
+    }
+
+    async GetCompletedHome (req,res)
     {
       //console.log("Hello" + process.env.ACTIVE_USER);
       if(process.env.ACTIVE_USER != "")

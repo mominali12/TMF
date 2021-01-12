@@ -8,13 +8,15 @@ function routes(app)
     
     app.get('/home/orders',(Home.GetOrders));
 
-    //app.get('/home/completedorders',(Home.GetCompletedOrders));
-
     app.post('/home/orders/save',(Home.SaveData));
 
-    app.get('/home/completed',(Home.GetCompleted));
+
+    app.get('/home/completed',(Home.GetCompletedHome));
 
     app.get('/home/completedorders',(Home.GetCompletedOrders));
+    
+    app.post('/home/orders/savecompleted',(Home.SaveCompletedData));
+    
     
     app.post('/login/signup',(Login.InsertbyIdandPass));
 
