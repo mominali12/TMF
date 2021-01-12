@@ -60,8 +60,8 @@ class HomeDatabase
       session.startTransaction();
       try
       {
-        const opts = { session };
-        await Orders.deleteMany({ user_id:data.table_data[0].user_id, completed :{ $ne: 'Completed' }});
+        let doc = await Orders.deleteMany({ user_id:data.table_data[0].user_id, completed :{ $ne: 'Completed' }},{session:session});
+        assert.ok(doc);
         await Columns.deleteMany({user_id:data.table_data[0],order_type : 'I'},()=>{});
         // console.log(data.table_data);
         // console.log(data.data_types);
@@ -72,6 +72,8 @@ class HomeDatabase
           await Columns.create({'sr_no':count,'column_name':k,'column_type':data.data_types[k],'order_type':'I','user_id':data.table_data[0].user_id});
           count++;
         }
+        await session.commitTransaction();
+        session.endSession();
         return true;
       }
       catch (error)
