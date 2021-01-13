@@ -6,10 +6,20 @@
         /* -webkit-appearance: none; */
     }
     
+    .tablewrapp th {
+        white-space: nowrap;
+        font-weight: lighter;
+        text-align: center;
+    }
+    
+    .tablewrapp td {
+        text-align: center;
+    }
+    
     select option,
     select {
         background-color: white;
-        color: white;
+        color: #2c2c2c
     }
     
     select option[value="Not Started"],
