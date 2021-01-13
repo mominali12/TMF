@@ -70,12 +70,6 @@
         </div>
 
         <div class="row">
-            <!-- 
-            <select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)">
-                <option value="Not Started">Not Started</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Delayed">Delayed</option>
-                <option selected="selected" value="Completed">Completed</option></select> -->
             <div class="col-md-12 table-responsive">
                 <table id="mtable" class="table table-bordered tablewrapp">
                     <thead id="mtableheader" class="thead-light">
@@ -414,7 +408,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function make_fileinput_field(txt) {
-            return '<input id="file-input" type="file" name="name"  value="' + txt + '">';
+            return '<input id="file-input" type="file" name="name" class="custom-file-upload" value="' + txt + '">';
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
