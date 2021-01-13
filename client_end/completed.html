@@ -455,27 +455,44 @@
             $('#storename')[0].src = '../' + Data.orders[Data.orders.length - 1].store_logo_path;
             $('#storename')[0].alt = Data.orders[Data.orders.length - 1].store_logo;
 
-            //getting table headers
-            // var cols = Object.keys(Data.orders[0])
+            var cols = {};
+            for (let i = 0; i < Data.types.length; i++) {
+                cols[Data.types[i].column_name] = Data.types[i].column_type
+            }
 
-            // var cols = []
-            // for (let i = 0; i < Data.types.length; i++) {
-            //     cols.push(Data.types[i].column_name)
-            //     alert(Data.types[i].column_name)
-            // }
+            const col_keys = Object.keys(cols);
 
-            for (let i = 0; i < cols.length; i++) {
-                cols[i] = cols[i].replaceAll("_", " ");
-                cols[i] = cols[i].toUpperCase();
+            for (let i = 0; i < col_keys.length; i++) {
+                col_keys[i] = col_keys[i].replaceAll("_", " ");
+                col_keys[i] = col_keys[i].toUpperCase();
             }
 
             //making table headers
+            // var tblheaders = "<tr>";
+            // for (let i = 0; i < col_keys.length; i++) {
+            //     tblheaders += "<th>" + col_keys[i] + "</th>"
+            // }
+            // tblheaders += "</tr>";
+            // $('#mtableheader').append(tblheaders);
+
+            // for (let i = 0; i < cols.length; i++) {
+            //     cols[i] = cols[i].replaceAll("_", " ");
+            //     cols[i] = cols[i].toUpperCase();
+            // }
+
+            //making table headers
+            var temp = Object.keys(Data.orders[0])
+            for (let i = 0; i < temp.length; i++) {
+                temp[i] = temp[i].replaceAll("_", " ");
+                temp[i] = temp[i].toUpperCase();
+            }
+
             var tblheaders = "<tr>";
-            for (let i = 2; i < cols.length - 1; i++) {
+            for (let i = 2; i < temp.length - 2; i++) {
                 if (i === 2) {
                     tblheaders += "<th>" + "▬" + "</th>"
                 }
-                tblheaders += "<th>" + cols[i] + "</th>"
+                tblheaders += "<th>" + temp[i] + "</th>"
             }
             tblheaders += "</tr>";
             $('#mtableheader').append(tblheaders);
