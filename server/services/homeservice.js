@@ -5,7 +5,7 @@ class HomeDatabase
 {
     async getHomeData()
     {
-      return await Orders.find({user_id : Number(process.env.ACTIVE_USER_ID), completed:{$ne : "Completed"}});
+      return await Orders.find({$and:[{user_id : Number(process.env.ACTIVE_USER_ID)}, {completed:{$ne : "Completed"}}]});
     }
 
     async getCompletedHomeData()
