@@ -23,6 +23,17 @@ class HomeDatabase
       return await Columns.find({user_id : Number(process.env.ACTIVE_USER_ID),order_type:'C'});
     }
 
+    async getGraphData1()
+    {
+      return await Orders.aggregate(
+        [ 
+            { "$match": { 'user_id':  Number(process.env.ACTIVE_USER_ID) }},
+            { "$group":  { "_id": "$customer_name", "count": { "$sum": 1 } } },
+            { '$replaceWith': { 'label': "$_id" , 'y' : '$count'} }
+            
+        ]);
+    }
+
     async SaveCompletedData(data)
     {
       const session = await Orders.startSession();
