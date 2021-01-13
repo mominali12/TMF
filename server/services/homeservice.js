@@ -30,8 +30,8 @@ class HomeDatabase
       try
       {
         const opts = { session };
-        await Orders.deleteMany({$and:{ user_id:data.table_data[0].user_id,completed : 'Completed' }});
-        await Columns.deleteMany({$and:{user_id:data.table_data[0].user_id,order_type : 'C'}},()=>{});
+        await Orders.deleteMany({$and:[{ user_id:data.table_data[0].user_id},{completed : 'Completed' }]});
+        await Columns.deleteMany({$and:[{user_id:data.table_data[0].user_id},{order_type : 'C'}]},()=>{});
         // console.log(data.table_data);
         // console.log(data.data_types);
         await Orders.insertMany(data.table_data);
@@ -60,9 +60,9 @@ class HomeDatabase
       session.startTransaction();
       try
       {
-        await Orders.deleteMany({ user_id:data.table_data[0].user_id, completed :{ $ne: 'Completed' }});
+        await Orders.deleteMany({$and:[{ user_id:data.table_data[0].user_id},{completed :{ $ne: 'Completed' }}]});
         //assert.ok(doc);
-        await Columns.deleteMany({user_id:data.table_data[0].user_id,order_type : 'I'},()=>{});
+        await Columns.deleteMany({$and:[{user_id:data.table_data[0].user_id},{order_type : 'I'}]},()=>{});
         // console.log(data.table_data);
         // console.log(data.data_types);
         await Orders.insertMany(data.table_data);
