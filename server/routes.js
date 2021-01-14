@@ -6,6 +6,7 @@ function routes(app)
 {
 
     app.get(['/graph'],(Home.GetGraph));
+    app.get(['/graphdata'],(Home.GetGraphData1));
 
     app.get(['/','/home'],(Home.GetHome));
     
@@ -26,6 +27,12 @@ function routes(app)
     app.post('/login/signin',(Login.GetbyIdandPass));
 
     app.get('/login', (Login.GetLoginPage));
+
+    app.get('/logout', (req,res)=>
+    {
+        process.env.ACTIVE_USER = "";
+        res.redirect('/login');
+    });
 }
 
 module.exports = routes;
