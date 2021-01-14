@@ -51,7 +51,7 @@ db.columns.insertMany([
 {"sr_no":15,"column_name":"received","column_type":"dropdown","order_type":"C","user_id":1},
 {"sr_no":16,"column_name":"received_date","column_type":"date","order_type":"C","user_id":1},
 {"sr_no":17,"column_name":"completed","column_type":"dropdown","order_type":"C","user_id":1},
-{"sr_no":18,"column_name":"files","column_type":"text","order_type":"C","user_id":1}
+{"sr_no":18,"column_name":"file","column_type":"text","order_type":"C","user_id":1}
 ]);
 
 db.columns.drop();
