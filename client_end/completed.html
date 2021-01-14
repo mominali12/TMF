@@ -57,7 +57,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 p-4">
+            <div class="col-md-6 p-4">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#colModal">
                     Add/Remove Column
                 </button>
@@ -72,8 +72,8 @@
 
         <div class="row">
             <div class="col-md-12 table-responsive">
-                <table id="mtable" class="table table-striped table-inverse tablewrapp">
-                    <thead id="mtableheader">
+                <table id="mtable" class="table table-bordered tablewrapp">
+                    <thead id="mtableheader" class="thead-light">
                         <!-- <tr>
                             <th>▬</th>
                             <th>Customer</th>
@@ -390,6 +390,14 @@
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////// make_fileinput_field FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function make_fileinput_field(txt) {
+            return '<input id="file-input" type="file" name="name" class="custom-file-upload" value="' + txt + '">';
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// load_data FUNC /////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -406,6 +414,8 @@
                 if (key.localeCompare("▬") !== 0) {
                     if (key.localeCompare("completed") === 0) {
                         employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
+                    } else if (key.localeCompare("file") === 0) {
+                        employee_data += '<td>' + make_fileinput_field(obj[key]) + '</td>';
                     } else if (cols[key].localeCompare("text") === 0) {
                         employee_data += make_text_field(obj[key]);
                     } else if (cols[key].localeCompare("date") === 0) {
