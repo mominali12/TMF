@@ -35,20 +35,30 @@ class Controller
 
     async SaveData(req,res)
     {
-      let result = await HomeService.SaveData(req.body);
-      if(result)
-        res.status(200).redirect('/home');
+      if(process.env.ACTIVE_USER != "")
+      {
+        let result = await HomeService.SaveData(req.body);
+        if(result)
+          res.status(200).redirect('/home');
+        else
+          res.status(400).send(result);
+      }
       else
-        res.status(400).send(result);
+        res.redirect('/login');
     }
 
     async SaveCompletedData(req,res)
     {
-      let result = await HomeService.SaveCompletedData(req.body);
-      if(result)
-        res.status(200).redirect('/home');
+      if(process.env.ACTIVE_USER != "")
+      {
+        let result = await HomeService.SaveCompletedData(req.body);
+        if(result)
+          res.status(200).redirect('/home');
+        else
+          res.status(400).send(result);
+      }
       else
-        res.status(400).send(result);
+        res.redirect('/login');
     }
 
     async GetCompletedHome (req,res)
@@ -56,7 +66,6 @@ class Controller
       //console.log("Hello" + process.env.ACTIVE_USER);
       if(process.env.ACTIVE_USER != "")
       {
-        
         fs.readFile(path.join(__dirname, '/../../../client_end/completed.html'), null,function (error, data)
         {
           //console.log(path.join(__dirname, '/../../../client_side/login_signup.html'));
@@ -82,22 +91,32 @@ class Controller
 
     async GetOrders(req,res)
     {
+      if(process.env.ACTIVE_USER != "")
+      {
       const orders = await HomeService.getHomeData();
       const types = await HomeService.getColumnTypes();
       let final = {'orders':orders, 'types':types};
       orders.push({'store_logo_path' : "assets/" + process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER + '.png',
                    'store_logo' : process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER});
       res.status(200).json(final);
+      }
+      else
+        res.redirect('/login');
     }
 
     async GetCompletedOrders(req,res)
     {
-      const orders = await HomeService.getCompletedHomeData();
-      const types = await HomeService.getCompletedColumnTypes();
-      let final = {'orders':orders, 'types':types};
-      orders.push({'store_logo_path' : "assets/" + process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER + '.png',
-                   'store_logo' : process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER});
-      res.status(200).json(final);
+      if(process.env.ACTIVE_USER != "")
+      {
+        const orders = await HomeService.getCompletedHomeData();
+        const types = await HomeService.getCompletedColumnTypes();
+        let final = {'orders':orders, 'types':types};
+        orders.push({'store_logo_path' : "assets/" + process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER + '.png',
+                    'store_logo' : process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER});
+        res.status(200).json(final);
+      }
+      else
+        res.redirect('/login');
     }
 
     async GetGraph(req,res)
@@ -130,8 +149,12 @@ class Controller
 
     async GetGraphData1(req,res)
     {
-      let final = await HomeService.getGraphData1();
-      res.status(200).json(final);
+      if(process.env.ACTIVE_USER != "")
+      {
+        let final = await HomeService.getGraphData1();
+        res.status(200).json(final);
+      }
+      
     }
 }
 
