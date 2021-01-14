@@ -386,6 +386,15 @@
 
             var datef = datef.getFullYear() + "-" + (month) + "-" + (day);
 
+            if (date.length < 24) {
+                datef = new Date(date);
+                var day = ("0" + datef.getDate()).slice(-2);
+                var month = ("0" + (datef.getMonth() + 1)).slice(-2);
+                var datef = datef.getFullYear() + "-" + (month) + "-" + (day);
+                var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + datef + '">';
+                return datepicker;
+            }
+
             if (date.localeCompare('') === 0) {
                 var datepicker = '<input type="date" data-date-format="mm/dd/yyyy">';
             } else {

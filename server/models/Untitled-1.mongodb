@@ -54,8 +54,6 @@ db.columns.insertMany([
 {"sr_no":18,"column_name":"file","column_type":"text","order_type":"C","user_id":1}
 ]);
 
-db.columns.drop();
-
 db.columns.insertMany([{
   "sr_no": 0,
   "column_name": "▬",
