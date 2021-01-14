@@ -564,7 +564,18 @@
                         obj[keys[i]] = $(this).text();
                         //to get datatype of col
                         if (rows_count === 0) {
-                            datatypes[keys[i]] = (check_dtype($(this)));
+                            console.log(keys[i]);
+                            if ($(this).children().length > 0) {
+                                //for ▬ 
+                                if ($(this).children().first().text().localeCompare("-") === 0) {
+                                    datatypes[keys[i]] = "text";
+                                } else {
+                                    //for empty date 
+                                    datatypes[keys[i]] = (check_dtype($(this).children().first()));
+                                }
+                            } else {
+                                datatypes[keys[i]] = (check_dtype($(this)));
+                            }
                         }
                     }
                     i++;

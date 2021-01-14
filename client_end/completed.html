@@ -213,10 +213,14 @@
             if ($('#col_modal_column_name').val()) {
                 $('#mtable tr:first').append($("<th>"));
                 $('#mtable tr').not(':first').append($("<td>"));
-                $('#mtable thead tr>th:last').html($('#col_modal_column_name').val());
+                $('#mtable thead tr>th:last').html($('#col_modal_column_name').val().toUpperCase());
                 if ($('#col_modal_select').val().localeCompare('date') === 0) {
                     $('#mtable tbody tr').each(function() {
                         $(this).children('td:last').append(make_date_selector(''))
+                    });
+                } else if ($('#col_modal_select').val().localeCompare('text') === 0) {
+                    $('#mtable tbody tr').each(function() {
+                        $(this).children('td:last').append(make_text_field(''))
                     });
                 } else {
                     $('#mtable tbody tr').each(function() {
@@ -547,7 +551,18 @@
                         obj[keys[i]] = $(this).text();
                         //to get datatype of col
                         if (rows_count === 0) {
-                            datatypes[keys[i]] = (check_dtype($(this)));
+                            console.log(keys[i]);
+                            if ($(this).children().length > 0) {
+                                //for ▬ 
+                                if ($(this).children().first().text().localeCompare("-") === 0) {
+                                    datatypes[keys[i]] = "text";
+                                } else {
+                                    //for empty date 
+                                    datatypes[keys[i]] = (check_dtype($(this).children().first()));
+                                }
+                            } else {
+                                datatypes[keys[i]] = (check_dtype($(this)));
+                            }
                         }
                     }
                     i++;
@@ -569,65 +584,6 @@
                     alert("Data is saved !");
                 });
         }
-        //TODO: #1 @osaaama01 look at issue#1
-        // function submit() {
-        //     var keys = [],
-        //         arrayObj = [],
-        //         datatypes = [];
-        //     $("#mtable thead tr th").each(function() {
-        //         keys.push($(this).text().toString());
-        //     });
-
-        //     console.log("keys: ", keys);
-
-        //     rows_count = 0
-        //     $("#mtable tbody tr").each(function() {
-        //         var obj = {},
-        //             i = 0;
-        //         $(this).children("td").each(function() {
-
-        //             //to get drop down val AND (date value iff set)
-        //             if ($(this).children().first().val()) {
-        //                 obj[keys[i]] = $(this).children().first().val();
-
-        //                 //to get datatype of col
-        //                 //we will take datatype only for first row others have same data type
-        //                 if (rows_count === 0) {
-        //                     // console.log("hellos");
-        //                     datatypes.push(check_dtype($(this).children().first()))
-        //                         // datatypes.push(typeof($(this).children().first()))
-        //                 }
-
-        //             } else //get text inside cell
-        //             {
-        //                 obj[keys[i]] = $(this).text();
-
-        //                 //to get datatype of col
-        //                 if (rows_count === 0) {
-        //                     datatypes.push(check_dtype($(this)));
-        //                     // console.log("hellosdasdsdads");
-        //                     // datatypes.push(typeof($(this)))
-        //                 }
-
-        //             }
-        //             i++;
-        //         })
-        //         rows_count++;
-        //         arrayObj.push(obj);
-        //     });
-
-        //     console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
-        //     var data = {
-        //         table_data: arrayObj,
-        //         data_types: datatypes
-        //     }
-        //     console.log("\n-------------------------------------\nRETURNED DATA \n", data);
-
-        //     $.post("http://localhost:3000/home/orders/save", data,
-        //         function(data, status) {
-        //             alert("Data: " + data + "\nStatus: " + status);
-        //         });
-        // }
     </script>
 
 </body>

@@ -10,12 +10,9 @@ use('CPM');
 // Make sure you run it against proper database and collection.
 db.orders.drop();
 
-<<<<<<< HEAD
-=======
 db.columns.drop();
 
 // Insert a few documents into the sales collection.
->>>>>>> 49f4ca1201b04086788b438efc570eeba7d3f4c7
 db.orders.insertMany([
   {'sr_no' : 1,  'customer_name' : "Napeleon Washnfill Inc",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
   {'sr_no' : 2,  'customer_name' : "Ford",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
@@ -57,13 +54,9 @@ db.columns.insertMany([
 {"sr_no":18,"column_name":"files","column_type":"text","order_type":"C","user_id":1}
 ]);
 
-<<<<<<< HEAD
-db.columns.insertMany([{
-  
-=======
+db.columns.drop();
 
 db.columns.insertMany([{
->>>>>>> 49f4ca1201b04086788b438efc570eeba7d3f4c7
   "sr_no": 0,
   "column_name": "▬",
   "column_type": "text",
@@ -76,10 +69,6 @@ db.columns.insertMany([{
   "order_type": "I",
   "user_id": 1
 },{
-<<<<<<< HEAD
-  
-=======
->>>>>>> 49f4ca1201b04086788b438efc570eeba7d3f4c7
   "sr_no": 2,
   "column_name": "product_name",
   "column_type": "text",
@@ -163,53 +152,30 @@ db.columns.insertMany([{
   "column_type": "dropdown",
   "order_type": "I",
   "user_id": 1
-<<<<<<< HEAD
-},
-{
-=======
 },{
->>>>>>> 49f4ca1201b04086788b438efc570eeba7d3f4c7
   "sr_no": 16,
   "column_name": "received_date",
   "column_type": "date",
   "order_type": "I",
   "user_id": 1
-<<<<<<< HEAD
-},
-{
-=======
 },{
->>>>>>> 49f4ca1201b04086788b438efc570eeba7d3f4c7
   "sr_no": 17,
   "column_name": "completed",
   "column_type": "dropdown",
   "order_type": "I",
   "user_id": 1
-<<<<<<< HEAD
-},
-{
-=======
 },{
->>>>>>> 49f4ca1201b04086788b438efc570eeba7d3f4c7
   "sr_no": 18,
   "column_name": "notes",
   "column_type": "text",
   "order_type": "I",
   "user_id": 1
-<<<<<<< HEAD
-},
-{
-=======
 },{
->>>>>>> 49f4ca1201b04086788b438efc570eeba7d3f4c7
   "sr_no": 19,
   "column_name": "printing",
   "column_type": "text",
   "order_type": "I",
   "user_id": 1
-<<<<<<< HEAD
-}])
-=======
 },
 {
   "sr_no": 0,
@@ -218,7 +184,6 @@ db.columns.insertMany([{
   "order_type": "I",
   "user_id": 1
 }]);
->>>>>>> 49f4ca1201b04086788b438efc570eeba7d3f4c7
 
 db.orders.deleteMany({user_id : 2});
 
