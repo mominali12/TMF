@@ -5,7 +5,7 @@ let fs = require('fs');
 function routes(app)
 {
 
-    app.get(['/','/graph'],(Home.GetGraph));
+    app.get(['/graph'],(Home.GetGraph));
 
     app.get(['/','/home'],(Home.GetHome));
     

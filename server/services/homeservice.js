@@ -62,9 +62,9 @@ class HomeDatabase {
             await Orders.deleteMany({ $and: [{ user_id: data.table_data[0].user_id }, { completed: { $ne: 'Completed' } }] });
             //assert.ok(doc);
             await Columns.deleteMany({ $and: [{ user_id: Number(data.table_data[0].user_id) }, { order_type: 'I' }] }, () => {});
-            // console.log(data.table_data);
-            // console.log(data.data_types);
-            await Orders.insertMany(data.table_data);
+            console.log(data.table_data);
+            console.log(data.data_types);
+            await Orders.insertMany(data.table_data,{strict : false});
             let count = 0;
             for (let k in data.data_types) {
                 await Columns.create({ 'sr_no': count, 'column_name': k, 'column_type': data.data_types[k], 'order_type': 'I', 'user_id': Number(data.table_data[0].user_id) });

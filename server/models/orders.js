@@ -1,6 +1,6 @@
 const mongoose = require ('mongoose');
 
-const OrdersSchema = mongoose.Schema({
+const OrdersSchema = new mongoose.Schema({
   sr_no :{type: Number, required:true},
   customer_name :{type: String, required:true},
   product_name: String,
@@ -25,7 +25,7 @@ const OrdersSchema = mongoose.Schema({
   stapling : String,
   stapling_date : Date,
   user_id :{type: Number, required:true}
-});
+},{strict: false});
 
 OrdersSchema.index({ sr_no: -1 });
 
