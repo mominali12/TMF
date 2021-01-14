@@ -3,8 +3,8 @@
         white-space: nowrap;
         /* overflow: hidden; */
         /* white-space: pre; */
-        /* text-overflow: ellipsis; */
-        /* -webkit-appearance: none; */
+        text-overflow: ellipsis;
+        -webkit-appearance: none;
     }
     
     .table>tbody>tr>td {

@@ -74,28 +74,6 @@
             <div class="col-md-12 table-responsive">
                 <table id="mtable" class="table table-bordered tablewrapp">
                     <thead id="mtableheader" class="thead-light">
-                        <!-- <tr>
-                            <th>▬</th>
-                            <th>Customer</th>
-                            <th>Product</th>
-                            <th>Codes</th>
-                            <th>Code Date</th>
-                            <th>Design</th>
-                            <th>Design Date</th>
-                            <th>Design Approval</th>
-                            <th>Design Approval Date</th>
-                            <th>Send to Printer</th>
-                            <th>Send to Printer Date</th>
-                            <th>Proof Approval</th>
-                            <th>Proof Approval Date</th>
-                            <th>Shipping</th>
-                            <th>Ship Date</th>
-                            <th>Received</th>
-                            <th>Received Date</th>
-                            <th>Completed</th>
-                            <th>Files</th>
-                            <th>Notes</th>
-                        </tr> -->
                     </thead>
                     <tbody></tbody>
             </div>
@@ -320,6 +298,26 @@
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////// dropdown color change FUNC ///////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function ondropdownchangecolor(col) {
+            if ($(col).find(":selected").text().localeCompare("Completed") === 0) {
+                $(col).closest("td").css("background-color", "rgb(0, 176, 80)");;
+            }
+            if ($(col).find(":selected").text().localeCompare("In Progress") === 0) {
+                $(col).closest("td").css("background-color", "rgb(255, 192, 0)");;
+            }
+            if ($(col).find(":selected").text().localeCompare("Delayed") === 0) {
+                $(col).closest("td").css("background-color", "rgb(255, 0, 0)");;
+            }
+            if ($(col).find(":selected").text().localeCompare("Not Started") === 0) {
+                $(col).closest("td").css("background-color", "rgb(0, 112, 192)");;
+            }
+        }
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////// Completed col dropdown FUNC ///////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -327,6 +325,8 @@
             if ($(col).find(":selected").text().localeCompare("Completed") !== 0) {
                 submit();
                 $(col).closest("tr").remove();
+            } else {
+                ondropdownchangecolor();
             }
         }
 
@@ -337,25 +337,25 @@
         function make_drop_down(selectedval) {
 
             if (selectedval.localeCompare("Completed") === 0) {
-                var dropdown = '<select class="form-control" name="general_dropdown" id="cars"' + '>' +
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onload="ondropdownchangecolor(this)" onchange="ondropdownchangecolor(this)"' + '>' +
                     '<option value="Not Started">Not Started</option' + '>' +
                     '<option value="In Progress">In Progress</option' + '>' +
                     '<option value="Delayed">Delayed</option' + '>' +
                     '<option selected="selected" value="Completed">Completed</option' + '>' + '</select>';
             } else if (selectedval.localeCompare("In Progress") === 0) {
-                var dropdown = '<select class="form-control" name="general_dropdown" id="cars"' + '>' +
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchangecolor(this)"' + '>' +
                     '<option value="Not Started">Not Started</option' + '>' +
                     '<option selected="selected" value="In Progress">In Progress</option' + '>' +
                     '<option value="Delayed">Delayed</option' + '>' +
                     '<option value="Completed">Completed</option' + '>' + '</select>';
             } else if (selectedval.localeCompare("Delayed") === 0) {
-                var dropdown = '<select class="form-control" name="general_dropdown" id="cars"' + '>' +
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchangecolor(this)"' + '>' +
                     '<option value="Not Started">Not Started</option' + '>' +
                     '<option value="In Progress">In Progress</option' + '>' +
                     '<option selected="selected" value="Delayed">Delayed</option' + '>' +
                     '<option value="Completed">Completed</option' + '>' + '</select>';
             } else {
-                var dropdown = '<select class="form-control" name="general_dropdown" id="cars"' + '>' +
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchangecolor(this)"' + '>' +
                     '<option selected="selected" value="Not Started">Not Started</option' + '>' +
                     '<option value="In Progress">In Progress</option' + '>' +
                     '<option value="Delayed">Delayed</option' + '>' +
