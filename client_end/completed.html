@@ -162,18 +162,53 @@
     <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
     <script type="text/javascript">
+        var user_identity = "";
+        var tbl_cols = {};
+
         $("#open_page_nav").click(function() {
             location.replace("http://localhost:3000/home");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////// ADD ROW MODAL BUTTON ///////////////////////////////////////////////
+        /////////////////////////////////////////// ADD ROW ON CLICK FUNC //////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $('#add_row_modal').click(function() {
+            // if ($('#row_modal_customer_name').val()) {
+            //     if ($('#row_modal_product_name').val()) {
+            //         $('#mtable tbody').append($("#mtable tbody tr:last").clone());
+            //         $('#mtable tbody tr:last td:nth-child(2)').html($('#row_modal_customer_name').val());
+            //         $('#mtable tbody tr:last td:nth-child(3)').html($('#row_modal_product_name').val());
+            //     } else {
+            //         alert("Please enter product name");
+            //     }
+            // } else {
+            //     alert("Please enter customer name");
+            // }
             if ($('#row_modal_customer_name').val()) {
                 if ($('#row_modal_product_name').val()) {
-                    $('#mtable tbody').append($("#mtable tbody tr:last").clone());
+                    var employee_data = '';
+                    employee_data += '<tr>';
+                    employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
+                    var counter = 0;
+                    Object.keys(tbl_cols).forEach(function(key) {
+                        if (key.localeCompare("▬") !== 0) {
+                            if (key.localeCompare("completed") === 0) {
+                                employee_data += '<td>' + completed_drop_down('') + '</td>';
+                            } else if (key.localeCompare("file") === 0) {
+                                employee_data += '<td>' + make_fileinput_field('') + '</td>';
+                            } else if (tbl_cols[key].localeCompare("text") === 0) {
+                                employee_data += make_text_field('');
+                            } else if (tbl_cols[key].localeCompare("date") === 0) {
+                                employee_data += '<td>' + make_date_selector('') + '</td>';
+                            } else {
+                                employee_data += '<td>' + make_drop_down('') + '</td>';
+                            }
+                        }
+                    });
+                    $('#mtable').append(employee_data);
+
+                    // $('#mtable tbody').append($("#mtable tbody tr:last").clone());
                     $('#mtable tbody tr:last td:nth-child(2)').html($('#row_modal_customer_name').val());
                     $('#mtable tbody tr:last td:nth-child(3)').html($('#row_modal_product_name').val());
                 } else {
@@ -448,6 +483,33 @@
             $('#mtable').append(employee_data);
         }
 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// apply CSS FUNC /////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        function applycss_tocells() {
+            $("#mtable tbody tr").each(function() {
+                $(this).children("td").each(function() {
+
+                    //to get drop down val AND (date value iff set)
+                    if ($(this).children().first().val()) {
+                        if ($(this).children().first().val().localeCompare("Not Started") === 0) {
+                            $(this).css("background-color", "rgb(0, 112, 192)");
+                        } else if ($(this).children().first().val().localeCompare("In Progress") === 0) {
+                            $(this).css("background-color", "rgb(255, 192, 0)");
+
+                        } else if ($(this).children().first().val().localeCompare("Delayed") === 0) {
+                            $(this).css("background-color", "rgb(255, 0, 0)");
+
+                        } else if ($(this).children().first().val().localeCompare("Completed") === 0) {
+                            $(this).css("background-color", "rgb(0, 176, 80)");
+
+                        }
+                    }
+                });
+            });
+        }
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// Get data from DB /////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -473,6 +535,9 @@
                 cols[Data.types[i].column_name] = Data.types[i].column_type
             }
 
+            //storing cols details in global_var to use for adding rows
+            tbl_cols = cols;
+
             const col_keys = Object.keys(cols);
 
             for (let i = 0; i < col_keys.length; i++) {
@@ -497,6 +562,7 @@
                 var obj = Data.orders[i];
                 load_data(obj, cols);
             }
+            applycss_tocells();
             // $('#mtable').DataTable();
         }
 

@@ -168,22 +168,42 @@
     <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
     <script type="text/javascript">
-        var user_identity = ""
+        var user_identity = "";
+        var tbl_cols = {};
 
         $("#completed_page_nav").click(function() {
             location.replace("http://localhost:3000/home/completed");
         });
 
-        // var text = '{ "CUSTOMER":"CUSTOMER", "PRODUCT":"PRODUCT", "Codes":"Codes", "CodeDate":"CodeDate", "Design":"Design", "DesignDate":"DesignDate", "DesignApproval":"DesignApproval", "DesignApprovalDate":"DesignApprovalDate", "SenttoPrinter":"SenttoPrinter", "SentDate":"SentDate", "ProofApproval":"ProofApproval", "ProofApprovalDate":"ProofApprovalDate", "Shipping":"Shipping", "ShipDate":"ShipDate", "Received":"Received", "ReceivedDate":"ReceivedDate", "Completed":"Completed", "Files":"Files", "Notes":"Notes"}';
-        // var obj = JSON.parse(text);
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////// ADD ROW MODAL BUTTON ///////////////////////////////////////////////
+        /////////////////////////////////////////// ADD ROW ON CLICK FUNC //////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $('#add_row_modal').click(function() {
             if ($('#row_modal_customer_name').val()) {
                 if ($('#row_modal_product_name').val()) {
-                    $('#mtable tbody').append($("#mtable tbody tr:last").clone());
+                    var employee_data = '';
+                    employee_data += '<tr>';
+                    employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
+                    var counter = 0;
+                    Object.keys(tbl_cols).forEach(function(key) {
+                        if (key.localeCompare("▬") !== 0) {
+                            if (key.localeCompare("completed") === 0) {
+                                employee_data += '<td>' + completed_drop_down('') + '</td>';
+                            } else if (key.localeCompare("file") === 0) {
+                                employee_data += '<td>' + make_fileinput_field('') + '</td>';
+                            } else if (tbl_cols[key].localeCompare("text") === 0) {
+                                employee_data += make_text_field('');
+                            } else if (tbl_cols[key].localeCompare("date") === 0) {
+                                employee_data += '<td>' + make_date_selector('') + '</td>';
+                            } else {
+                                employee_data += '<td>' + make_drop_down('') + '</td>';
+                            }
+                        }
+                    });
+                    $('#mtable').append(employee_data);
+
+                    // $('#mtable tbody').append($("#mtable tbody tr:last").clone());
                     $('#mtable tbody tr:last td:nth-child(2)').html($('#row_modal_customer_name').val());
                     $('#mtable tbody tr:last td:nth-child(3)').html($('#row_modal_product_name').val());
                 } else {
@@ -416,7 +436,6 @@
             return '<td contenteditable="true">' + txt + '</td>';
         }
 
-
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////// make_fileinput_field FUNC ////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -436,8 +455,6 @@
             employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
 
             Object.keys(cols).forEach(function(key) {
-                // alert(key);
-                // alert(obj[key]);
                 if (key.localeCompare("▬") !== 0) {
                     if (key.localeCompare("completed") === 0) {
                         employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
@@ -482,7 +499,6 @@
             });
         }
 
-
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// Get data from DB /////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -512,6 +528,8 @@
                 cols[Data.types[i].column_name] = Data.types[i].column_type
             }
 
+            //storing cols details in global_var to use for adding rows
+            tbl_cols = cols;
 
             const col_keys = Object.keys(cols);
 
