@@ -32,13 +32,6 @@
     <div class="container-fluid p-4">
 
         <div class="row">
-
-            <select class="form-control" name="general_dropdown" id="cars" onload="ondropdownchangecolor(this)" onchange="ondropdownchangecolor(this)">
-                <option value="Not Started">Not Started</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Delayed">Delayed</option>
-                <option selected="selected" value="Completed">Completed</option'></select>
-
             <div class="col-md-4 p-4">
                 <img id="storename" alt="Home Page">
             </div>
@@ -170,6 +163,7 @@
     <script type="text/javascript">
         var user_identity = "";
         var tbl_cols = {};
+        var completed_orders_ = {};
 
         $("#completed_page_nav").click(function() {
             location.replace("http://localhost:3000/home/completed");
@@ -223,17 +217,27 @@
                 $('#mtable tr:first').append($("<th>"));
                 $('#mtable tr').not(':first').append($("<td>"));
                 $('#mtable thead tr>th:last').html($('#col_modal_column_name').val().toUpperCase());
+                /*
+                 *adding column to completed orders array
+                 */
+                var orders_arr = completed_orders_;
+                Object.keys(orders_arr).forEach(function(key) {
+                    orders_arr[key][$('#col_modal_column_name').val().toLowerCase()] = "";
+                });
+                completed_orders_ = orders_arr;
+                console.log("\n COLUMN ADDED\n COMPLETED ORDERS UPDATED !", completed_orders_);
+
                 if ($('#col_modal_select').val().localeCompare('date') === 0) {
                     $('#mtable tbody tr').each(function() {
-                        $(this).children('td:last').append(make_date_selector(''))
+                        $(this).children('td:last').append(make_date_selector(''));
                     });
                 } else if ($('#col_modal_select').val().localeCompare('text') === 0) {
                     $('#mtable tbody tr').each(function() {
-                        $(this).children('td:last').append(make_text_field(''))
+                        $(this).children('td:last').append(make_text_field(''));
                     });
                 } else {
                     $('#mtable tbody tr').each(function() {
-                        $(this).children('td:last').append(make_drop_down(''))
+                        $(this).children('td:last').append(make_drop_down(''));
                     });
                 }
             } else {
@@ -286,6 +290,16 @@
                             // Deleting the ith cell of each row 
                             row[j].deleteCell(i);
                         }
+                        /*
+                         *removing column to completed orders array
+                         */
+                        var orders_arr = completed_orders_;
+                        Object.keys(orders_arr).forEach(function(key) {
+                            delete orders_arr[key][userinput];
+                        });
+                        completed_orders_ = orders_arr;
+
+                        console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
                     }
                 }
             }
@@ -503,6 +517,20 @@
         /////////////////////////////////////////// Get data from DB /////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // TODO #7
+
+        //loading completed orders
+        const Http_completedorders = new XMLHttpRequest();
+        const url_completedorders = 'http://localhost:3000/home/completedorders';
+        Http_completedorders.open("GET", url_completedorders);
+        Http_completedorders.send();
+
+        Http_completedorders.onload = (e) => {
+            var Data_completedorders = JSON.parse(Http_completedorders.responseText);
+            console.log("\nCOMPLETED ORDERS KA DATA LOAD HOGAYA HAI !\n", Data_completedorders)
+            completed_orders_ = Data_completedorders.orders;
+        }
+
+        //loading open orders
         const Http = new XMLHttpRequest();
         const url = 'http://localhost:3000/home/orders';
         Http.open("GET", url);
@@ -649,7 +677,8 @@
             console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
             var data = {
                 table_data: arrayObj,
-                data_types: datatypes
+                data_types: datatypes,
+                completed_orders: completed_orders_
             }
             console.log("\n-------------------------------------\nRETURNED DATA \n", data);
 

@@ -61,9 +61,9 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#colModal">
                     Add/Remove Column
                 </button>
-                <button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#rowModal">
+                <!-- <button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#rowModal">
                     Add Row
-                </button>
+                </button> -->
                 <button type="button" class="btn btn-success ml-4" onclick="submit()">
                     Save
                 </button>
@@ -164,6 +164,7 @@
     <script type="text/javascript">
         var user_identity = "";
         var tbl_cols = {};
+        var open_orders_ = {};
 
         $("#open_page_nav").click(function() {
             location.replace("http://localhost:3000/home");
@@ -174,17 +175,6 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $('#add_row_modal').click(function() {
-            // if ($('#row_modal_customer_name').val()) {
-            //     if ($('#row_modal_product_name').val()) {
-            //         $('#mtable tbody').append($("#mtable tbody tr:last").clone());
-            //         $('#mtable tbody tr:last td:nth-child(2)').html($('#row_modal_customer_name').val());
-            //         $('#mtable tbody tr:last td:nth-child(3)').html($('#row_modal_product_name').val());
-            //     } else {
-            //         alert("Please enter product name");
-            //     }
-            // } else {
-            //     alert("Please enter customer name");
-            // }
             if ($('#row_modal_customer_name').val()) {
                 if ($('#row_modal_product_name').val()) {
                     var employee_data = '';
@@ -228,6 +218,16 @@
                 $('#mtable tr:first').append($("<th>"));
                 $('#mtable tr').not(':first').append($("<td>"));
                 $('#mtable thead tr>th:last').html($('#col_modal_column_name').val().toUpperCase());
+                /*
+                 *adding column to completed orders array
+                 */
+                var orders_arr = open_orders_;
+                Object.keys(orders_arr).forEach(function(key) {
+                    orders_arr[key][$('#col_modal_column_name').val().toLowerCase()] = "";
+                });
+                open_orders_ = orders_arr;
+                console.log("\n COLUMN ADDED\n OPEN ORDERS UPDATED !", open_orders_);
+
                 if ($('#col_modal_select').val().localeCompare('date') === 0) {
                     $('#mtable tbody tr').each(function() {
                         $(this).children('td:last').append(make_date_selector(''))
@@ -286,6 +286,16 @@
                             // Deleting the ith cell of each row 
                             row[j].deleteCell(i);
                         }
+                        /*
+                         *removing column to completed orders array
+                         */
+                        var orders_arr = open_orders_;
+                        Object.keys(orders_arr).forEach(function(key) {
+                            delete orders_arr[key][userinput];
+                        });
+                        open_orders_ = orders_arr;
+
+                        console.log("\n COLUMN REMOVED\n OPEN ORDERS UPDATED !", open_orders_);
                     }
                 }
             }
@@ -463,8 +473,6 @@
             employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
 
             Object.keys(cols).forEach(function(key) {
-                // alert(key);
-                // alert(obj[key]);
                 if (key.localeCompare("▬") !== 0) {
                     if (key.localeCompare("completed") === 0) {
                         employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
@@ -514,6 +522,19 @@
         /////////////////////////////////////////// Get data from DB /////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        //loading open orders
+        const Http_openorders = new XMLHttpRequest();
+        const url_openorders = 'http://localhost:3000/home/orders';
+        Http_openorders.open("GET", url_openorders);
+        Http_openorders.send();
+
+        Http_openorders.onload = (e) => {
+            var Data_openorders = JSON.parse(Http_openorders.responseText);
+            console.log("\OPEN ORDERS KA DATA LOAD HOGAYA HAI !\n", Data_openorders)
+            open_orders_ = Data_openorders.orders;
+        }
+
+        //loading completed orders
         const Http = new XMLHttpRequest();
         const url = 'http://localhost:3000/home/completedorders';
         Http.open("GET", url);
@@ -656,7 +677,8 @@
             console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
             var data = {
                 table_data: arrayObj,
-                data_types: datatypes
+                data_types: datatypes,
+                open_orders: open_orders_
             }
             console.log("\n-------------------------------------\nRETURNED DATA \n", data);
 
