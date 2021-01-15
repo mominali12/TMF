@@ -417,28 +417,37 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function make_date_selector(date) {
-            var bits = date.split(/\D/);
-            var datef = new Date(bits[0], --bits[1], bits[2], bits[3], bits[4]);
+            if (date.localeCompare('') === 0) {
+                var now = new Date();
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var today = now.getFullYear() + "-" + (month) + "-" + (day);
+                alert("akheer ");
 
-            var day = ("0" + datef.getDate()).slice(-2);
-            var month = ("0" + (datef.getMonth() + 1)).slice(-2);
+                var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + today + '">';
+                return datepicker;
+            } else {
 
-            var datef = datef.getFullYear() + "-" + (month) + "-" + (day);
+                var bits = date.split(/\D/);
+                var datef = new Date(bits[0], --bits[1], bits[2], bits[3], bits[4]);
 
-            if (date.length < 24) {
-                datef = new Date(date);
                 var day = ("0" + datef.getDate()).slice(-2);
                 var month = ("0" + (datef.getMonth() + 1)).slice(-2);
+
                 var datef = datef.getFullYear() + "-" + (month) + "-" + (day);
-                var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + datef + '">';
-                return datepicker;
+
+                if (date.length < 24) {
+                    datef = new Date(date);
+                    var day = ("0" + datef.getDate()).slice(-2);
+                    var month = ("0" + (datef.getMonth() + 1)).slice(-2);
+                    var datef = datef.getFullYear() + "-" + (month) + "-" + (day);
+                    var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + datef + '">';
+                    return datepicker;
+                } else {
+                    var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + datef + '">';
+                }
             }
 
-            if (date.localeCompare('') === 0) {
-                var datepicker = '<input type="date" data-date-format="mm/dd/yyyy">';
-            } else {
-                var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + datef + '">';
-            }
             return datepicker
         }
 

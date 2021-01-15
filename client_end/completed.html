@@ -414,34 +414,38 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function make_date_selector(date) {
-            var bits = date.split(/\D/);
-            var datef = new Date(bits[0], --bits[1], bits[2], bits[3], bits[4]);
-
-            var day = ("0" + datef.getDate()).slice(-2);
-            var month = ("0" + (datef.getMonth() + 1)).slice(-2);
-
-            var datef = datef.getFullYear() + "-" + (month) + "-" + (day);
-
-            if (date.length < 24) {
-                datef = new Date(date);
-                var day = ("0" + datef.getDate()).slice(-2);
-                var month = ("0" + (datef.getMonth() + 1)).slice(-2);
-                var datef = datef.getFullYear() + "-" + (month) + "-" + (day);
-                var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + datef + '">';
-                return datepicker;
-            }
-
             if (date.localeCompare('') === 0) {
-                let now = new Date();
-                let day = ("0" + now.getDate()).slice(-2);
-                let month = ("0" + (now.getMonth() + 1)).slice(-2);
-                let today = now.getFullYear() + "-" + (month) + "-" + (day);
+                var now = new Date();
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var today = now.getFullYear() + "-" + (month) + "-" + (day);
+                alert("akheer ");
 
                 var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + today + '">';
+                return datepicker;
             } else {
-                var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + datef + '">';
+
+                var bits = date.split(/\D/);
+                var datef = new Date(bits[0], --bits[1], bits[2], bits[3], bits[4]);
+
+                var day = ("0" + datef.getDate()).slice(-2);
+                var month = ("0" + (datef.getMonth() + 1)).slice(-2);
+
+                var datef = datef.getFullYear() + "-" + (month) + "-" + (day);
+
+                if (date.length < 24) {
+                    datef = new Date(date);
+                    var day = ("0" + datef.getDate()).slice(-2);
+                    var month = ("0" + (datef.getMonth() + 1)).slice(-2);
+                    var datef = datef.getFullYear() + "-" + (month) + "-" + (day);
+                    var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + datef + '">';
+                    return datepicker;
+                } else {
+                    var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + datef + '">';
+                }
             }
-            return datepicker
+            return datepicker;
+
         }
 
 
