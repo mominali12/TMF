@@ -35,17 +35,17 @@ class HomeDatabase {
         session.startTransaction();
         try {
             const opts = { session };
-            await Orders.deleteMany({ user_id: data.table_data[0].user_id });
-            console.log(data.table_data);
-            console.log(data.completed_orders);
-            console.log(data.data_types);
+            await Orders.deleteMany({ user_id: process.env.ACTIVE_USER_ID });
+            //console.log(data.table_data);
+            //console.log(data.completed_orders);
+            //console.log(data.data_types);
             await Orders.insertMany(data.table_data);
             await Orders.insertMany(data.completed_orders);
 
-            await Columns.deleteMany({ $and: [{ user_id: data.table_data[0].user_id }, { order_type: 'C' }] }, () => {});
+            await Columns.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { order_type: 'C' }] }, () => {});
             let count = 0;
             for (let k in data.data_types) {
-                await Columns.create({ 'sr_no': count, 'column_name': k, 'column_type': data.data_types[k], 'order_type': 'C', 'user_id': Number(data.table_data[0].user_id) });
+                await Columns.create({ 'sr_no': count, 'column_name': k, 'column_type': data.data_types[k], 'order_type': 'C', 'user_id': process.env.ACTIVE_USER_ID });
                 count++;
             }
             return true;
@@ -65,18 +65,18 @@ class HomeDatabase {
         session.startTransaction();
         try
         {
-            await Orders.deleteMany({ user_id: data.table_data[0].user_id });
+            await Orders.deleteMany({ user_id: process.env.ACTIVE_USER_ID });
             console.log(data.table_data);
             console.log(data.completed_orders);
             console.log(data.data_types);
             await Orders.insertMany(data.table_data);
             await Orders.insertMany(data.completed_orders);
 
-            await Columns.deleteMany({ $and: [{ user_id: Number(data.table_data[0].user_id) }, { order_type: 'I' }] }, () => {});
+            await Columns.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { order_type: 'I' }] }, () => {});
             let count = 0;
             for (let k in data.data_types)
             {
-                await Columns.create({ 'sr_no': count, 'column_name': k, 'column_type': data.data_types[k], 'order_type': 'I', 'user_id': Number(data.table_data[0].user_id) });
+                await Columns.create({ 'sr_no': count, 'column_name': k, 'column_type': data.data_types[k], 'order_type': 'I', 'user_id': process.env.ACTIVE_USER_ID });
                 count++;
             }
             await session.commitTransaction();
@@ -90,6 +90,61 @@ class HomeDatabase {
             throw error;
         }
 
+    }
+
+    async FirstTimeColumnsLoad()
+    {
+        const column = await Columns.findOne({user_id: process.env.ACTIVE_USER_ID}).exec();
+        if(column === null || column === undefined)
+        {
+        await Columns.insertMany([
+        {"sr_no":0,"column_name":"▬","column_type":"text","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":1,"column_name":"customer_name","column_type":"text","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":2,"column_name":"product_name","column_type":"text","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":3,"column_name":"codes","column_type":"dropdown","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":4,"column_name":"code_date","column_type":"date","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":5,"column_name":"design","column_type":"dropdown","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":6,"column_name":"design_date","column_type":"date","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":7,"column_name":"design_approval","column_type":"dropdown","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":8,"column_name":"design_approval_date","column_type":"date","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":9,"column_name":"printing","column_type":"dropdown","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":10,"column_name":"printing_date","column_type":"date","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":11,"column_name":"stapling","column_type":"dropdown","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":12,"column_name":"stapling_date","column_type":"date","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":13,"column_name":"shipping","column_type":"dropdown","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":14,"column_name":"ship_date","column_type":"date","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":15,"column_name":"received","column_type":"dropdown","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":16,"column_name":"received_date","column_type":"date","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":17,"column_name":"completed","column_type":"dropdown","order_type":"C","user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no":18,"column_name":"file","column_type":"text","order_type":"C","user_id":process.env.ACTIVE_USER_ID}
+        ]);
+
+        await Columns.insertMany([
+        {"sr_no": 0,  "column_name": "▬",  "column_type": "text",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 1,  "column_name": "customer_name",  "column_type": "text",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 2,  "column_name": "product_name",  "column_type": "text",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 3,  "column_name": "codes",  "column_type": "dropdown",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 4,  "column_name": "code_date",  "column_type": "date",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 5,  "column_name": "design",  "column_type": "dropdown",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 6,  "column_name": "design_date",  "column_type": "date",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 7,  "column_name": "design_approval",  "column_type": "dropdown",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 8,  "column_name": "design_approval_date",  "column_type": "date",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 9,  "column_name": "send_to_printer",  "column_type": "dropdown",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 10,  "column_name": "send_to_printer_date",  "column_type": "date",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 11,  "column_name": "proof_approval",  "column_type": "dropdown",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 12,  "column_name": "proof_approval_date",  "column_type": "date",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 13,  "column_name": "shipping",  "column_type": "dropdown",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 14,  "column_name": "ship_date",  "column_type": "date",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 15,  "column_name": "received",  "column_type": "dropdown",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 16,  "column_name": "received_date",  "column_type": "date",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 17,  "column_name": "completed",  "column_type": "dropdown",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 18,  "column_name": "notes",  "column_type": "text",  "order_type": "I", "user_id":process.env.ACTIVE_USER_ID},
+        {"sr_no": 19,  "column_name": "file",  "column_type": "text",  "order_type": "I",  "user_id":process.env.ACTIVE_USER_ID}
+    ]);
+
+        return true;
+        }
+        return false;
     }
 
 }

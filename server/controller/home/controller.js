@@ -71,6 +71,7 @@ class Controller {
     async GetOrders(req, res) {
         if (process.env.ACTIVE_USER != "") {
             const orders = await HomeService.getHomeData();
+            const firsttimeload = await HomeService.FirstTimeColumnsLoad();
             const types = await HomeService.getColumnTypes();
             let final = { 'orders': orders, 'types': types };
             orders.push({
