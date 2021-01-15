@@ -83,19 +83,20 @@ class Controller {
             res.redirect('/login');
     }
 
-    async GetCompletedOrders(req, res) {
-        if (process.env.ACTIVE_USER != "") {
-            const orders = await HomeService.getCompletedHomeData();
-            const types = await HomeService.getCompletedColumnTypes();
-            let final = { 'orders': orders, 'types': types };
-            orders.push({
-                'store_logo_path': "assets/" + process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER + '.png',
-                'store_logo': process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER,
-                'user_id': process.env.ACTIVE_USER_ID
-            });
-            res.status(200).json(final);
-        } else
-            res.redirect('/login');
+    async GetCompletedOrders(req,res)
+    {
+      if(process.env.ACTIVE_USER != "")
+      {
+        const orders = await HomeService.getCompletedHomeData();
+        const types = await HomeService.getCompletedColumnTypes();
+        let final = {'orders':orders, 'types':types};
+        orders.push({'store_logo_path' : "assets/" + process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER + '.png',
+                   'store_logo' : process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER,
+                   'user_id' : process.env.ACTIVE_USER_ID});
+        res.status(200).json(final);
+      }
+      else
+        res.redirect('/login');
     }
 
     async GetGraph(req, res) {
