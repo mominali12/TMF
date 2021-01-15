@@ -29,16 +29,20 @@ class HomeDatabase {
         ]);
     }
 
-    async SaveCompletedData(data) {
+    async SaveCompletedData(data)
+    {
         const session = await Orders.startSession();
         session.startTransaction();
         try {
             const opts = { session };
-            await Orders.deleteMany({ $and: [{ user_id: data.table_data[0].user_id }, { completed: 'Completed' }] });
-            await Columns.deleteMany({ $and: [{ user_id: data.table_data[0].user_id }, { order_type: 'C' }] }, () => {});
-            // console.log(data.table_data);
-            // console.log(data.data_types);
+            await Orders.deleteMany({ user_id: data.table_data[0].user_id });
+            console.log(data.table_data);
+            console.log(data.completed_orders);
+            console.log(data.data_types);
             await Orders.insertMany(data.table_data);
+            await Orders.insertMany(data.completed_orders);
+
+            await Columns.deleteMany({ $and: [{ user_id: data.table_data[0].user_id }, { order_type: 'C' }] }, () => {});
             let count = 0;
             for (let k in data.data_types) {
                 await Columns.create({ 'sr_no': count, 'column_name': k, 'column_type': data.data_types[k], 'order_type': 'C', 'user_id': Number(data.table_data[0].user_id) });
@@ -55,18 +59,23 @@ class HomeDatabase {
 
     }
 
-    async SaveData(data) {
+    async SaveData(data)
+    {
         const session = await Orders.startSession();
         session.startTransaction();
-        try {
-            await Orders.deleteMany({ $and: [{ user_id: data.table_data[0].user_id }, { completed: { $ne: 'Completed' } }] });
-            //assert.ok(doc);
-            await Columns.deleteMany({ $and: [{ user_id: Number(data.table_data[0].user_id) }, { order_type: 'I' }] }, () => {});
+        try
+        {
+            await Orders.deleteMany({ user_id: data.table_data[0].user_id });
             console.log(data.table_data);
+            console.log(data.completed_orders);
             console.log(data.data_types);
-            await Orders.insertMany(data.table_data,{strict : false});
+            await Orders.insertMany(data.table_data);
+            await Orders.insertMany(data.completed_orders);
+
+            await Columns.deleteMany({ $and: [{ user_id: Number(data.table_data[0].user_id) }, { order_type: 'I' }] }, () => {});
             let count = 0;
-            for (let k in data.data_types) {
+            for (let k in data.data_types)
+            {
                 await Columns.create({ 'sr_no': count, 'column_name': k, 'column_type': data.data_types[k], 'order_type': 'I', 'user_id': Number(data.table_data[0].user_id) });
                 count++;
             }
