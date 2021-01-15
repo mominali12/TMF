@@ -542,7 +542,7 @@
             console.log("\n=================\nLOADED DATA\n========================\n", Data);
 
             //setting userID
-            user_identity = Data.orders[0].user_id;
+            user_identity = Data.orders[Data.orders.length - 1].user_id;
 
             //setting logo path
             $('#storename')[0].src = Data.orders[Data.orders.length - 1].store_logo_path;
