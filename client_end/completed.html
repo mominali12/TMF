@@ -674,6 +674,8 @@
                 arrayObj.push(obj);
             });
 
+            delete open_orders_[open_orders_.length - 1]
+
             console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
             var data = {
                 table_data: arrayObj,
