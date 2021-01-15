@@ -37,11 +37,11 @@ class HomeDatabase {
             const opts = { session };
             await Orders.deleteMany({ user_id: process.env.ACTIVE_USER_ID });
             //console.log(data.table_data);
-            //console.log(data.completed_orders);
+            //console.log(data.open_orders);
             //console.log(data.data_types);
-            if(data.table_data != undefined)
-                await Orders.insertMany(data.table_data);
-            await Orders.insertMany(data.completed_orders);
+            if(data.open_orders != undefined)
+                await Orders.insertMany(data.open_orders,{strict : false});
+            await Orders.insertMany(data.table_data,{strict : false});
 
             await Columns.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { order_type: 'C' }] }, () => {});
             let count = 0;
@@ -70,9 +70,9 @@ class HomeDatabase {
             console.log(data.table_data);
             console.log(data.completed_orders);
             console.log(data.data_types);
-            await Orders.insertMany(data.table_data);
+            await Orders.insertMany(data.table_data,{strict : false});
             if(data.completed_orders != undefined)
-                await Orders.insertMany(data.completed_orders);
+                await Orders.insertMany(data.completed_orders,{strict : false});
             await Columns.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { order_type: 'I' }] }, () => {});
             let count = 0;
             for (let k in data.data_types)
