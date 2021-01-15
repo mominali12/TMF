@@ -165,6 +165,7 @@
         var user_identity = "";
         var tbl_cols = {};
         var open_orders_ = {};
+        var completed__orders_ = {};
 
         $("#open_page_nav").click(function() {
             location.replace("http://localhost:3000/home");
@@ -419,7 +420,6 @@
                 var day = ("0" + now.getDate()).slice(-2);
                 var month = ("0" + (now.getMonth() + 1)).slice(-2);
                 var today = now.getFullYear() + "-" + (month) + "-" + (day);
-                alert("akheer ");
 
                 var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + today + '">';
                 return datepicker;
@@ -523,6 +523,26 @@
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// add missing keys FUNC ////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function fillObject(from, to) {
+            for (var key in from) {
+                if (from.hasOwnProperty(key)) {
+                    if (Object.prototype.toString.call(from[key]) === '[object Object]') {
+                        if (!to.hasOwnProperty(key)) {
+                            to[key] = {};
+                        }
+                        fillObject(from[key], to[key]);
+                    } else if (!to.hasOwnProperty(key)) {
+                        to[key] = from[key];
+                    }
+                }
+            }
+            return to;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// Get data from DB /////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -554,6 +574,9 @@
             //setting logo path
             $('#storename')[0].src = '../' + Data.orders[Data.orders.length - 1].store_logo_path;
             $('#storename')[0].alt = Data.orders[Data.orders.length - 1].store_logo;
+
+            //creating copy of completed orders to fulfill missing cols on save
+            completed__orders_ = Data.orders;
 
             var cols = {};
             for (let i = 0; i < Data.types.length; i++) {
@@ -678,9 +701,16 @@
                 arrayObj.push(obj);
             });
 
+            console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
+
+            console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
+
+            arrayObj = fillObject(completed__orders_, arrayObj);
+
+            console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
+
             delete open_orders_[open_orders_.length - 1]
 
-            console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
             var data = {
                 table_data: arrayObj,
                 data_types: datatypes,

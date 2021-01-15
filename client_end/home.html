@@ -164,6 +164,7 @@
         var user_identity = "";
         var tbl_cols = {};
         var completed_orders_ = {};
+        var open__orders_ = {};
 
         $("#completed_page_nav").click(function() {
             location.replace("http://localhost:3000/home/completed");
@@ -422,7 +423,6 @@
                 var day = ("0" + now.getDate()).slice(-2);
                 var month = ("0" + (now.getMonth() + 1)).slice(-2);
                 var today = now.getFullYear() + "-" + (month) + "-" + (day);
-                alert("akheer ");
 
                 var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + today + '">';
                 return datepicker;
@@ -523,6 +523,27 @@
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// add missing keys FUNC/////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function fillObject(from, to) {
+            for (var key in from) {
+                if (from.hasOwnProperty(key)) {
+                    if (Object.prototype.toString.call(from[key]) === '[object Object]') {
+                        if (!to.hasOwnProperty(key)) {
+                            to[key] = {};
+                        }
+                        fillObject(from[key], to[key]);
+                    } else if (!to.hasOwnProperty(key)) {
+                        to[key] = from[key];
+                    }
+                }
+            }
+            return to;
+        }
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// Get data from DB /////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // TODO #7
@@ -557,8 +578,9 @@
             $('#storename')[0].src = Data.orders[Data.orders.length - 1].store_logo_path;
             $('#storename')[0].alt = Data.orders[Data.orders.length - 1].store_logo;
 
-            //getting table headers
-            // var cols = Object.keys(Data.orders[0])
+            //creating copy of open orders to fulfill missing cols on save
+            open__orders_ = Data.orders;
+            console.log("\n=================\original Cols \n========================\n", open__orders_);
 
             var cols = {};
             for (let i = 0; i < Data.types.length; i++) {
@@ -684,6 +706,12 @@
             });
 
             console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
+
+            console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
+
+            arrayObj = fillObject(open__orders_, arrayObj);
+
+            console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
 
             delete completed_orders_[completed_orders_.length - 1]
             var data = {
