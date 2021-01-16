@@ -222,9 +222,15 @@
                  *adding column to completed orders array
                  */
                 var orders_arr = completed_orders_;
+
+
+                //
                 Object.keys(orders_arr).forEach(function(key) {
-                    orders_arr[key][$('#col_modal_column_name').val().toLowerCase()] = "";
+                    var temp = $('#col_modal_column_name').val().toLowerCase();
+                    temp = temp.replace(/ /g, "_");
+                    orders_arr[key][temp] = "";
                 });
+
                 completed_orders_ = orders_arr;
                 console.log("\n COLUMN ADDED\n COMPLETED ORDERS UPDATED !", completed_orders_);
 
@@ -526,20 +532,30 @@
         /////////////////////////////////////////// add missing keys FUNC/////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        //from=completed to=frontend
         function fillObject(from, to) {
-            for (var key in from) {
-                if (from.hasOwnProperty(key)) {
-                    if (Object.prototype.toString.call(from[key]) === '[object Object]') {
-                        if (!to.hasOwnProperty(key)) {
-                            to[key] = {};
-                        }
-                        fillObject(from[key], to[key]);
-                    } else if (!to.hasOwnProperty(key)) {
-                        to[key] = from[key];
+            if (typeof(from) === undefined || from === null) {
+                return to;
+            } else {
+                var max_len = 0;
+                max_len_obj = {};
+                for (const key in from) {
+                    if (Object.keys(from[key]).length > max_len) {
+                        max_len = Object.keys(from[key]).length;
+                        max_len_obj = from[key]; // completed ka longest json
                     }
                 }
+
+                if (Object.keys(max_len_obj).length > 0) {
+                    for (const frontend_key in to) {
+                        for (const key in max_len_obj) {
+                            if (!to[frontend_key].hasOwnProperty(key))
+                                to[frontend_key][key] = max_len_obj[key];
+                        }
+                    }
+                }
+                return to;
             }
-            return to;
         }
 
 
@@ -573,10 +589,12 @@
 
             //setting userID
             user_identity = Data.orders[Data.orders.length - 1].user_id;
-
             //setting logo path
             $('#storename')[0].src = Data.orders[Data.orders.length - 1].store_logo_path;
             $('#storename')[0].alt = Data.orders[Data.orders.length - 1].store_logo;
+
+            // Removes the last object appended.
+            delete Data.orders[Data.orders.length - 1];
 
             //creating copy of open orders to fulfill missing cols on save
             open__orders_ = Data.orders;
@@ -709,17 +727,45 @@
 
             console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
 
-            arrayObj = fillObject(open__orders_, arrayObj);
+            arrayObj = fillObject(completed_orders_, arrayObj);
+
+            completed_orders_ = fillObject(arrayObj, completed_orders_);
 
             console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
 
-            delete completed_orders_[completed_orders_.length - 1]
+
+            //removing unwanted keys
+            delete completed_orders_[completed_orders_.length - 1];
+
+            Object.keys(arrayObj).forEach(function(key) {
+                delete arrayObj[key].store_logo;
+                delete arrayObj[key].store_logo_path;
+                delete arrayObj[key].__v;
+                delete arrayObj[key]._id;
+            });
+
             var data = {
                 table_data: arrayObj,
                 data_types: datatypes,
                 completed_orders: completed_orders_
             }
             console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+
+            // find the longest json
+            // loop through its keys and check all other json whether that key is there or not
+            // if yes then continue else push longest json [key,value] into json
+
+            //get max length object
+            var max_len = 0;
+            max_len_obj = {};
+            Object.keys(arrayObj).forEach(function(key) {
+                if (arrayObj[key].length > max_len) {
+                    max_len = arrayObj[key].length;
+                    max_len_obj = arrayObj[key];
+                }
+            });
+
+            console.log("\n----------------------------\nmax length obj", max_len_obj);
 
             $.post("http://localhost:3000/home/orders/save", data,
                 function(data, status) {
