@@ -52,7 +52,7 @@
                 </table>
             </div>
             <div class="col-md-4 p-4">
-                <button id="graph_btn" type="button" class="btn pull-right btn-danger">Logout</button>
+                <button id="logout_btn" type="button" class="btn pull-right btn-danger">Logout</button>
             </div>
         </div>
 
@@ -186,6 +186,14 @@
 
         $("#graph_btn").click(function() {
             location.replace("http://localhost:3000/graph");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// LOGOUT BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#logout_btn").click(function() {
+            location.replace("http://localhost:3000/logout");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
