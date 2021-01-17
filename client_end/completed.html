@@ -546,11 +546,11 @@
 
                 if (Object.keys(max_len_obj).length > 0) {
                     for (const frontend_key in to) {
-                        if(frontend_key > from.length - 2) // not doing this for previous front end entries that are already in array.
+                        if(frontend_key > from.length - 2) // doing this for previous front end entries that are already in array.
                         {
                             for (const key in max_len_obj) {
                                 if (!(key in to[frontend_key])) {
-                                    alert("Entering: " +key+":"+ max_len_obj[key]);
+                                    //alert("Entering: " +key+":"+ max_len_obj[key]);
                                     //alert(max_len_obj[key].value);
                                     to[frontend_key][key] = max_len_obj[key];
                                 }
@@ -736,7 +736,7 @@
             console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
 
             //removing unwanted keys
-            //delete open_orders_[open_orders_.length - 1]
+            delete open_orders_[open_orders_.length - 1]
 
             Object.keys(arrayObj).forEach(function(key) {
                 delete arrayObj[key].store_logo;
