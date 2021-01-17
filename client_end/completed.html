@@ -563,19 +563,11 @@
 
                 if (Object.keys(max_len_obj).length > 0) {
                     for (const frontend_key in to) {
-<<<<<<< HEAD
                         if(frontend_key > from.length - 2) // doing this for previous front end entries that are already in array.
                         {
                             for (const key in max_len_obj) {
                                 if (!(key in to[frontend_key])) {
                                     //alert("Entering: " +key+":"+ max_len_obj[key]);
-=======
-                        if (frontend_key > from.length - 2) // not doing this for previous front end entries that are already in array.
-                        {
-                            for (const key in max_len_obj) {
-                                if (!(key in to[frontend_key])) {
-                                    alert("Entering: " + key + ":" + max_len_obj[key]);
->>>>>>> cb29bae1d98dbd094bb4c05354607404935588e2
                                     //alert(max_len_obj[key].value);
                                     to[frontend_key][key] = max_len_obj[key];
                                 }

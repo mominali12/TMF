@@ -566,17 +566,10 @@
                     for (const frontend_key in to) {
                         if (frontend_key > from.length - 2) {
                             for (const key in max_len_obj) {
-<<<<<<< HEAD
                             if (!(key in to[frontend_key])) { 
                                 //alert("Entering: " +key+":"+ max_len_obj[key]);
                                 to[frontend_key][key] = max_len_obj[key];
                             }
-=======
-                                if (!(key in to[frontend_key])) {
-                                    alert("Entering: " + key + ":" + max_len_obj[key]);
-                                    to[frontend_key][key] = max_len_obj[key];
-                                }
->>>>>>> cb29bae1d98dbd094bb4c05354607404935588e2
                             }
                         }
 
@@ -779,11 +772,6 @@
             }
             console.log("\n-------------------------------------\nRETURNED DATA \n", data);
 
-<<<<<<< HEAD
-            //console.log("\n----------------------------\nmax length obj", max_len_obj);
-
-=======
->>>>>>> cb29bae1d98dbd094bb4c05354607404935588e2
             $.post("http://localhost:3000/home/orders/save", data,
                 function(data, status) {
                     alert("Data is saved !");
