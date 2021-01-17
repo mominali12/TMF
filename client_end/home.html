@@ -574,10 +574,10 @@
                     for (const frontend_key in to) {
                         if (frontend_key > from.length - 2) {
                             for (const key in max_len_obj) {
-                                if (!(key in to[frontend_key])) {
-                                    alert("Entering: " + key + ":" + max_len_obj[key]);
-                                    to[frontend_key][key] = max_len_obj[key];
-                                }
+                            if (!(key in to[frontend_key])) { 
+                                //alert("Entering: " +key+":"+ max_len_obj[key]);
+                                to[frontend_key][key] = max_len_obj[key];
+                            }
                             }
                         }
 
@@ -764,7 +764,7 @@
 
 
             //removing unwanted keys
-            //delete completed_orders_[completed_orders_.length - 1];
+            delete completed_orders_[completed_orders_.length - 1];
 
             Object.keys(arrayObj).forEach(function(key) {
                 delete arrayObj[key].store_logo;

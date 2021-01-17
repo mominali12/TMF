@@ -43,12 +43,15 @@ class HomeDatabase {
                 await Orders.insertMany(data.open_orders,{strict : false});
             if(data.table_data != undefined || data.table_data === null)
                 await Orders.insertMany(data.table_data,{strict : false});
-
-            await Columns.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { order_type: 'C' }] }, () => {});
-            let count = 0;
-            for (let k in data.data_types) {
-                await Columns.create({ 'sr_no': count, 'column_name': k, 'column_type': data.data_types[k], 'order_type': 'C', 'user_id': process.env.ACTIVE_USER_ID });
-                count++;
+            
+            if(data.data_types != undefined)
+            {
+                await Columns.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { order_type: 'C' }] }, () => {});
+                let count = 0;
+                for (let k in data.data_types) {
+                    await Columns.create({ 'sr_no': count, 'column_name': k, 'column_type': data.data_types[k], 'order_type': 'C', 'user_id': process.env.ACTIVE_USER_ID });
+                    count++;
+                }
             }
             return true;
         } catch (error) {
@@ -75,12 +78,15 @@ class HomeDatabase {
                 await Orders.insertMany(data.table_data,{strict : false});
             if(data.completed_orders != undefined)
                 await Orders.insertMany(data.completed_orders,{strict : false});
-            await Columns.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { order_type: 'I' }] }, () => {});
-            let count = 0;
-            for (let k in data.data_types)
+            if(data.data_types != undefined)
             {
-                await Columns.create({ 'sr_no': count, 'column_name': k, 'column_type': data.data_types[k], 'order_type': 'I', 'user_id': process.env.ACTIVE_USER_ID });
-                count++;
+                await Columns.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { order_type: 'I' }] }, () => {});
+                let count = 0;
+                for (let k in data.data_types)
+                {
+                    await Columns.create({ 'sr_no': count, 'column_name': k, 'column_type': data.data_types[k], 'order_type': 'I', 'user_id': process.env.ACTIVE_USER_ID });
+                    count++;
+                }
             }
             await session.commitTransaction();
             session.endSession();
