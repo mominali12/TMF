@@ -52,7 +52,7 @@
                 </table>
             </div>
             <div class="col-md-4 p-4">
-                <button id="open_page_nav" type="button" class="btn pull-right btn-primary">Open Orders</button>
+                <button id="graph_btn" type="button" class="btn pull-right btn-danger">Logout</button>
             </div>
         </div>
 
@@ -67,6 +67,11 @@
                 <button type="button" class="btn btn-success ml-4" onclick="submit()">
                     Save
                 </button>
+            </div>
+            <div class="col-md-6 p-4">
+                <button id="graph_btn" type="button" class="btn pull-right btn-success ml-4">Graph</button>
+                <button id="open_page_nav" type="button" class="btn pull-right btn-primary">Open Orders</button>
+
             </div>
         </div>
 
@@ -167,8 +172,20 @@
         var open_orders_ = {};
         var completed__orders_ = {};
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////// OPEN-PAGE BTN CLICK /////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         $("#open_page_nav").click(function() {
             location.replace("http://localhost:3000/home");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// GRAPH BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#graph_btn").click(function() {
+            location.replace("http://localhost:3000/graph");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -534,7 +551,7 @@
         function fillObject(from, to) {
             if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length === 1) {
                 return to;
-            }else {
+            } else {
                 var max_len = 0;
                 max_len_obj = {};
                 for (const key in from) {
@@ -546,11 +563,19 @@
 
                 if (Object.keys(max_len_obj).length > 0) {
                     for (const frontend_key in to) {
+<<<<<<< HEAD
                         if(frontend_key > from.length - 2) // doing this for previous front end entries that are already in array.
                         {
                             for (const key in max_len_obj) {
                                 if (!(key in to[frontend_key])) {
                                     //alert("Entering: " +key+":"+ max_len_obj[key]);
+=======
+                        if (frontend_key > from.length - 2) // not doing this for previous front end entries that are already in array.
+                        {
+                            for (const key in max_len_obj) {
+                                if (!(key in to[frontend_key])) {
+                                    alert("Entering: " + key + ":" + max_len_obj[key]);
+>>>>>>> cb29bae1d98dbd094bb4c05354607404935588e2
                                     //alert(max_len_obj[key].value);
                                     to[frontend_key][key] = max_len_obj[key];
                                 }
@@ -588,6 +613,8 @@
         Http.onload = (e) => {
             var Data = JSON.parse(Http.responseText);
             console.log("\n=================\nLOADED DATA\n========================\n", Data);
+
+            // alert("-\\_(`*`)_/-");
 
             //setting userID
             user_identity = Data.orders[Data.orders.length - 1].user_id;
@@ -756,6 +783,8 @@
                 function(data, status) {
                     alert("Data is saved !");
                 });
+
+            location.reload();
         }
     </script>
 

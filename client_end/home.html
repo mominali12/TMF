@@ -51,7 +51,7 @@
                 </table>
             </div>
             <div class="col-md-4 p-4">
-                <button id="completed_page_nav" type="button" class="btn pull-right btn-primary">Completed Orders</button>
+                <button id="logout_btn" type="button" class="btn pull-right btn-danger">Logout</button>
             </div>
         </div>
 
@@ -66,6 +66,10 @@
                 <button type="button" class="btn btn-success ml-4" onclick="submit()">
                     Save
                 </button>
+            </div>
+            <div class="col-md-6 p-4">
+                <button id="graph_btn" type="button" class="btn pull-right btn-success ml-4">Graph</button>
+                <button id="completed_page_nav" type="button" class="btn pull-right btn-primary">Completed Orders</button>
             </div>
         </div>
 
@@ -166,8 +170,20 @@
         var completed_orders_ = {};
         var open__orders_ = {};
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// COMPLETED-PAGE BTN CLICK ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         $("#completed_page_nav").click(function() {
             location.replace("http://localhost:3000/home/completed");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// GRAPH BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#graph_btn").click(function() {
+            location.replace("http://localhost:3000/graph");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -547,18 +563,23 @@
                 }
 
                 if (Object.keys(max_len_obj).length > 0) {
-                    for (const frontend_key in to)
-                    {
-                        if(frontend_key > from.length - 2)
-                        {
+                    for (const frontend_key in to) {
+                        if (frontend_key > from.length - 2) {
                             for (const key in max_len_obj) {
+<<<<<<< HEAD
                             if (!(key in to[frontend_key])) { 
                                 //alert("Entering: " +key+":"+ max_len_obj[key]);
                                 to[frontend_key][key] = max_len_obj[key];
                             }
+=======
+                                if (!(key in to[frontend_key])) {
+                                    alert("Entering: " + key + ":" + max_len_obj[key]);
+                                    to[frontend_key][key] = max_len_obj[key];
+                                }
+>>>>>>> cb29bae1d98dbd094bb4c05354607404935588e2
                             }
                         }
-                        
+
                     }
                 }
                 return to;
@@ -758,12 +779,17 @@
             }
             console.log("\n-------------------------------------\nRETURNED DATA \n", data);
 
+<<<<<<< HEAD
             //console.log("\n----------------------------\nmax length obj", max_len_obj);
 
+=======
+>>>>>>> cb29bae1d98dbd094bb4c05354607404935588e2
             $.post("http://localhost:3000/home/orders/save", data,
                 function(data, status) {
                     alert("Data is saved !");
                 });
+
+            location.reload();
         }
     </script>
 
