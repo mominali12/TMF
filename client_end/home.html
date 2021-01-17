@@ -567,13 +567,15 @@
 
                 if (Object.keys(max_len_obj).length > 0) {
                     for (const frontend_key in to) {
-                        for (const key in max_len_obj) {
-                            if (!(key in to[frontend_key])) {
-                                alert("Entering: " + key + ":" + max_len_obj[key]);
-                                //alert(max_len_obj[key].value);
-                                to[frontend_key][key] = max_len_obj[key];
+                        if (frontend_key > from.length - 2) {
+                            for (const key in max_len_obj) {
+                                if (!(key in to[frontend_key])) {
+                                    alert("Entering: " + key + ":" + max_len_obj[key]);
+                                    to[frontend_key][key] = max_len_obj[key];
+                                }
                             }
                         }
+
                     }
                 }
                 return to;
@@ -751,13 +753,13 @@
 
             arrayObj = fillObject(open__orders_, arrayObj);
 
-            completed_orders_ = fillObject(arrayObj, completed_orders_);
+            //completed_orders_ = fillObject(arrayObj, completed_orders_);
 
             console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
 
 
             //removing unwanted keys
-            delete completed_orders_[completed_orders_.length - 1];
+            //delete completed_orders_[completed_orders_.length - 1];
 
             Object.keys(arrayObj).forEach(function(key) {
                 delete arrayObj[key].store_logo;
