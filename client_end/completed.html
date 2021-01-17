@@ -52,7 +52,7 @@
                 </table>
             </div>
             <div class="col-md-4 p-4">
-                <button id="open_page_nav" type="button" class="btn pull-right btn-primary">Open Orders</button>
+                <button id="graph_btn" type="button" class="btn pull-right btn-danger">Logout</button>
             </div>
         </div>
 
@@ -69,7 +69,9 @@
                 </button>
             </div>
             <div class="col-md-6 p-4">
-                <button id="graph_btn" type="button" class="btn pull-right btn-success">Graph</button>
+                <button id="graph_btn" type="button" class="btn pull-right btn-success ml-4">Graph</button>
+                <button id="open_page_nav" type="button" class="btn pull-right btn-primary">Open Orders</button>
+
             </div>
         </div>
 
@@ -604,6 +606,8 @@
             var Data = JSON.parse(Http.responseText);
             console.log("\n=================\nLOADED DATA\n========================\n", Data);
 
+            // alert("-\\_(`*`)_/-");
+
             //setting userID
             user_identity = Data.orders[Data.orders.length - 1].user_id;
 
@@ -771,6 +775,8 @@
                 function(data, status) {
                     alert("Data is saved !");
                 });
+
+            location.reload();
         }
     </script>
 

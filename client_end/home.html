@@ -51,11 +51,7 @@
                 </table>
             </div>
             <div class="col-md-4 p-4">
-                <table class="table table-borderless ">
-                    <button id="graph_btn" type="button" class="btn pull-right btn-danger">Logout</button>
-                    <button id="completed_page_nav" type="button" class="btn pull-right btn-primary">Completed Orders</button>
-                </table>
-
+                <button id="logout_btn" type="button" class="btn pull-right btn-danger">Logout</button>
             </div>
         </div>
 
@@ -72,7 +68,8 @@
                 </button>
             </div>
             <div class="col-md-6 p-4">
-                <button id="graph_btn" type="button" class="btn pull-right btn-success">Graph</button>
+                <button id="graph_btn" type="button" class="btn pull-right btn-success ml-4">Graph</button>
+                <button id="completed_page_nav" type="button" class="btn pull-right btn-primary">Completed Orders</button>
             </div>
         </div>
 
@@ -611,6 +608,8 @@
             var Data = JSON.parse(Http.responseText);
             console.log("\n=================\nLOADED DATA\n========================\n", Data);
 
+            // alert("-\\_(`*`)_/-");
+
             //setting userID
             user_identity = Data.orders[Data.orders.length - 1].user_id;
             //setting logo path
@@ -775,12 +774,12 @@
             }
             console.log("\n-------------------------------------\nRETURNED DATA \n", data);
 
-            console.log("\n----------------------------\nmax length obj", max_len_obj);
-
             $.post("http://localhost:3000/home/orders/save", data,
                 function(data, status) {
                     alert("Data is saved !");
                 });
+
+            location.reload();
         }
     </script>
 
