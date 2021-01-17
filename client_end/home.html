@@ -51,7 +51,11 @@
                 </table>
             </div>
             <div class="col-md-4 p-4">
-                <button id="completed_page_nav" type="button" class="btn pull-right btn-primary">Completed Orders</button>
+                <table class="table table-borderless ">
+                    <button id="graph_btn" type="button" class="btn pull-right btn-danger">Logout</button>
+                    <button id="completed_page_nav" type="button" class="btn pull-right btn-primary">Completed Orders</button>
+                </table>
+
             </div>
         </div>
 
@@ -66,6 +70,9 @@
                 <button type="button" class="btn btn-success ml-4" onclick="submit()">
                     Save
                 </button>
+            </div>
+            <div class="col-md-6 p-4">
+                <button id="graph_btn" type="button" class="btn pull-right btn-success">Graph</button>
             </div>
         </div>
 
@@ -166,8 +173,20 @@
         var completed_orders_ = {};
         var open__orders_ = {};
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// COMPLETED-PAGE BTN CLICK ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         $("#completed_page_nav").click(function() {
             location.replace("http://localhost:3000/home/completed");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// GRAPH BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#graph_btn").click(function() {
+            location.replace("http://localhost:3000/graph");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -549,8 +568,8 @@
                 if (Object.keys(max_len_obj).length > 0) {
                     for (const frontend_key in to) {
                         for (const key in max_len_obj) {
-                            if (!(key in to[frontend_key])) { 
-                                alert("Entering: " +key+":"+ max_len_obj[key]);
+                            if (!(key in to[frontend_key])) {
+                                alert("Entering: " + key + ":" + max_len_obj[key]);
                                 //alert(max_len_obj[key].value);
                                 to[frontend_key][key] = max_len_obj[key];
                             }

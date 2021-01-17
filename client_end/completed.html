@@ -68,6 +68,9 @@
                     Save
                 </button>
             </div>
+            <div class="col-md-6 p-4">
+                <button id="graph_btn" type="button" class="btn pull-right btn-success">Graph</button>
+            </div>
         </div>
 
         <div class="row">
@@ -167,8 +170,20 @@
         var open_orders_ = {};
         var completed__orders_ = {};
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////// OPEN-PAGE BTN CLICK /////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         $("#open_page_nav").click(function() {
             location.replace("http://localhost:3000/home");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// GRAPH BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#graph_btn").click(function() {
+            location.replace("http://localhost:3000/graph");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -534,7 +549,7 @@
         function fillObject(from, to) {
             if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length === 1) {
                 return to;
-            }else {
+            } else {
                 var max_len = 0;
                 max_len_obj = {};
                 for (const key in from) {
@@ -548,7 +563,7 @@
                     for (const frontend_key in to) {
                         for (const key in max_len_obj) {
                             if (!(key in to[frontend_key])) {
-                                alert("Entering: " +key+":"+ max_len_obj[key]);
+                                alert("Entering: " + key + ":" + max_len_obj[key]);
                                 //alert(max_len_obj[key].value);
                                 to[frontend_key][key] = max_len_obj[key];
                             }
