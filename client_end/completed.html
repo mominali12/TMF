@@ -563,8 +563,6 @@
 
                 if (Object.keys(max_len_obj).length > 0) {
                     for (const frontend_key in to) {
-                        if(frontend_key > from.length - 2) // doing this for previous front end entries that are already in array.
-                        {
                             for (const key in max_len_obj) {
                                 if (!(key in to[frontend_key])) {
                                     //alert("Entering: " +key+":"+ max_len_obj[key]);
