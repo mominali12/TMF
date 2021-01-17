@@ -53,6 +53,8 @@ class HomeDatabase {
                     count++;
                 }
             }
+            await session.commitTransaction();
+            session.endSession();
             return true;
         } catch (error) {
             // If an error occurred, abort the whole transaction and

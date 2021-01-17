@@ -549,7 +549,7 @@
 
         //from=completed to=frontend
         function fillObject(from, to) {
-            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length === 1) {
+            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length ===0 ) {
                 return to;
             } else {
                 var max_len = 0;
@@ -570,7 +570,7 @@
                                     to[frontend_key][key] = max_len_obj[key];
                                 }
                             }
-                        }
+                        
                     }
                 }
                 return to;
@@ -671,13 +671,34 @@
 
         }
 
+        function getPreviousValues(from,to)
+        {
+            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length ===0) {
+                return to;
+            }
+            else
+            {
+                for(let k in from)
+                {
+                    for(let l in from[k])
+                    {
+                        if(l in to[k] && !(l in datatypes))
+                        {
+                            to[k][l] = from[k][l];
+                        }       
+                    }
+                }
+                return to;
+            }
+        }
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// Submit data of table //////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        var datatypes = {};
         function submit() {
             var keys = [],
-                arrayObj = [],
-                datatypes = {};
+                arrayObj = [];
             $("#mtable thead tr th").each(function() {
                 keys.push($(this).text());
             });
@@ -747,6 +768,9 @@
             console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
 
             arrayObj = fillObject(completed__orders_, arrayObj);
+            arrayObj = fillObject(open_orders_, arrayObj);
+            arrayObj = getPreviousValues(completed__orders_,arrayObj); // Setting previous values again for previous records
+            //arrayObj = getPreviousValues(open_orders_,arrayObj); // Setting previous values again for previous records
 
             //open_orders_ = fillObject(arrayObj, open_orders_);
 
