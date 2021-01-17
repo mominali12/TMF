@@ -36,9 +36,9 @@ class HomeDatabase {
         try {
             const opts = { session };
             await Orders.deleteMany({ user_id: process.env.ACTIVE_USER_ID });
-            //console.log(data.table_data);
-            //console.log(data.open_orders);
-            //console.log(data.data_types);
+            console.log(data.table_data);
+            console.log(data.open_orders);
+            console.log(data.data_types);
             if(data.open_orders != undefined)
                 await Orders.insertMany(data.open_orders,{strict : false});
             await Orders.insertMany(data.table_data,{strict : false});

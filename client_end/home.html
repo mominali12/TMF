@@ -534,7 +534,7 @@
 
         //from=completed to=frontend
         function fillObject(from, to) {
-            if (typeof(from) === undefined || from === null) {
+            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length === 1) {
                 return to;
             } else {
                 var max_len = 0;
@@ -549,8 +549,11 @@
                 if (Object.keys(max_len_obj).length > 0) {
                     for (const frontend_key in to) {
                         for (const key in max_len_obj) {
-                            if (!to[frontend_key].hasOwnProperty(key))
+                            if (!(key in to[frontend_key])) { 
+                                alert("Entering: " +key+":"+ max_len_obj[key]);
+                                //alert(max_len_obj[key].value);
                                 to[frontend_key][key] = max_len_obj[key];
+                            }
                         }
                     }
                 }
@@ -727,7 +730,7 @@
 
             console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
 
-            arrayObj = fillObject(completed_orders_, arrayObj);
+            arrayObj = fillObject(open__orders_, arrayObj);
 
             completed_orders_ = fillObject(arrayObj, completed_orders_);
 
@@ -750,20 +753,6 @@
                 completed_orders: completed_orders_
             }
             console.log("\n-------------------------------------\nRETURNED DATA \n", data);
-
-            // find the longest json
-            // loop through its keys and check all other json whether that key is there or not
-            // if yes then continue else push longest json [key,value] into json
-
-            //get max length object
-            var max_len = 0;
-            max_len_obj = {};
-            Object.keys(arrayObj).forEach(function(key) {
-                if (arrayObj[key].length > max_len) {
-                    max_len = arrayObj[key].length;
-                    max_len_obj = arrayObj[key];
-                }
-            });
 
             console.log("\n----------------------------\nmax length obj", max_len_obj);
 

@@ -532,9 +532,9 @@
 
         //from=completed to=frontend
         function fillObject(from, to) {
-            if (typeof(from) === undefined || from === null) {
+            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length === 1) {
                 return to;
-            } else {
+            }else {
                 var max_len = 0;
                 max_len_obj = {};
                 for (const key in from) {
@@ -547,8 +547,8 @@
                 if (Object.keys(max_len_obj).length > 0) {
                     for (const frontend_key in to) {
                         for (const key in max_len_obj) {
-                            if ((to[frontend_key][key] === undefined)) { //to[frontend_key].hasOwnProperty(key)
-                                alert("Osama" + max_len_obj[key]);
+                            if (!(key in to[frontend_key])) {
+                                alert("Entering: " +key+":"+ max_len_obj[key]);
                                 //alert(max_len_obj[key].value);
                                 to[frontend_key][key] = max_len_obj[key];
                             }
@@ -726,7 +726,7 @@
 
             console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
 
-            arrayObj = fillObject(open_orders_, arrayObj);
+            arrayObj = fillObject(completed__orders_, arrayObj);
 
             open_orders_ = fillObject(arrayObj, open_orders_);
 
