@@ -388,16 +388,16 @@
 
         function ondropdownchangecolor(col) {
             if ($(col).find(":selected").text().localeCompare("Completed") === 0) {
-                $(col).closest("td").css("background-color", "rgb(0, 176, 80)");
+                $(col).closest("select").css("background-color", "rgb(0, 176, 80)");
             }
             if ($(col).find(":selected").text().localeCompare("In Progress") === 0) {
-                $(col).closest("td").css("background-color", "rgb(255, 192, 0)");
+                $(col).closest("select").css("background-color", "rgb(255, 192, 0)");
             }
             if ($(col).find(":selected").text().localeCompare("Delayed") === 0) {
-                $(col).closest("td").css("background-color", "rgb(255, 0, 0)");
+                $(col).closest("select").css("background-color", "rgb(255, 0, 0)");
             }
             if ($(col).find(":selected").text().localeCompare("Not Started") === 0) {
-                $(col).closest("td").css("background-color", "rgb(0, 112, 192)");
+                $(col).closest("select").css("background-color", "rgb(0, 112, 192)");
             }
         }
 
@@ -554,15 +554,15 @@
                     //to get drop down val AND (date value iff set)
                     if ($(this).children().first().val()) {
                         if ($(this).children().first().val().localeCompare("Not Started") === 0) {
-                            $(this).css("background-color", "rgb(0, 112, 192)");
+                            $(this).children().closest("select").css("background-color", "rgb(0, 112, 192)");
                         } else if ($(this).children().first().val().localeCompare("In Progress") === 0) {
-                            $(this).css("background-color", "rgb(255, 192, 0)");
+                            $(this).children().closest("select").css("background-color", "rgb(255, 192, 0)");
 
                         } else if ($(this).children().first().val().localeCompare("Delayed") === 0) {
-                            $(this).css("background-color", "rgb(255, 0, 0)");
+                            $(this).children().closest("select").css("background-color", "rgb(255, 0, 0)");
 
                         } else if ($(this).children().first().val().localeCompare("Completed") === 0) {
-                            $(this).css("background-color", "rgb(0, 176, 80)");
+                            $(this).children().closest("select").css("background-color", "rgb(0, 176, 80)");
 
                         }
                     }
