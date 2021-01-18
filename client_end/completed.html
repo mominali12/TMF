@@ -212,7 +212,8 @@
                             if (key.localeCompare("completed") === 0) {
                                 employee_data += '<td>' + completed_drop_down('') + '</td>';
                             } else if (key.localeCompare("file") === 0) {
-                                employee_data += '<td>' + make_fileinput_field('') + '</td>';
+                                // employee_data += '<td>' + make_fileinput_field('') + '</td>';
+                                employee_data += make_text_field('');
                             } else if (tbl_cols[key].localeCompare("text") === 0) {
                                 employee_data += make_text_field('');
                             } else if (tbl_cols[key].localeCompare("date") === 0) {
@@ -256,7 +257,11 @@
                 });
 
                 open_orders_ = orders_arr;
+<<<<<<< HEAD
                 //console.log("\n COLUMN ADDED\n OPEN ORDERS UPDATED !", open_orders_);
+=======
+                // console.log("\n COLUMN ADDED\n OPEN ORDERS UPDATED !", open_orders_);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
                 if ($('#col_modal_select').val().localeCompare('date') === 0) {
                     $('#mtable tbody tr').each(function() {
@@ -325,7 +330,11 @@
                         });
                         open_orders_ = orders_arr;
 
+<<<<<<< HEAD
                         //console.log("\n COLUMN REMOVED\n OPEN ORDERS UPDATED !", open_orders_);
+=======
+                        // console.log("\n COLUMN REMOVED\n OPEN ORDERS UPDATED !", open_orders_);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
                     }
                 }
             }
@@ -378,16 +387,16 @@
 
         function ondropdownchangecolor(col) {
             if ($(col).find(":selected").text().localeCompare("Completed") === 0) {
-                $(col).closest("td").css("background-color", "rgb(0, 176, 80)");;
+                $(col).closest("select").css("background-color", "rgb(0, 176, 80)");;
             }
             if ($(col).find(":selected").text().localeCompare("In Progress") === 0) {
-                $(col).closest("td").css("background-color", "rgb(255, 192, 0)");;
+                $(col).closest("select").css("background-color", "rgb(255, 192, 0)");;
             }
             if ($(col).find(":selected").text().localeCompare("Delayed") === 0) {
-                $(col).closest("td").css("background-color", "rgb(255, 0, 0)");;
+                $(col).closest("select").css("background-color", "rgb(255, 0, 0)");;
             }
             if ($(col).find(":selected").text().localeCompare("Not Started") === 0) {
-                $(col).closest("td").css("background-color", "rgb(0, 112, 192)");;
+                $(col).closest("select").css("background-color", "rgb(0, 112, 192)");;
             }
         }
 
@@ -491,7 +500,9 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function make_fileinput_field(txt) {
-            return '<input id="file-input" type="file" name="name" class="custom-file-upload" value="' + txt + '">';
+            // console.log("Input Field Text: ", txt);
+            // return '<input id="file-input" type="file" name="name" class="custom-file-upload" value=' + txt + '>';
+            return '<td contenteditable="true">' + txt + '</td>';
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -510,7 +521,7 @@
                     if (key.localeCompare("completed") === 0) {
                         employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
                     } else if (key.localeCompare("file") === 0) {
-                        employee_data += '<td>' + make_fileinput_field(obj[key]) + '</td>';
+                        employee_data += make_fileinput_field(obj[key]);
                     } else if (cols[key].localeCompare("text") === 0) {
                         employee_data += make_text_field(obj[key]);
                     } else if (cols[key].localeCompare("date") === 0) {
@@ -535,15 +546,15 @@
                     //to get drop down val AND (date value iff set)
                     if ($(this).children().first().val()) {
                         if ($(this).children().first().val().localeCompare("Not Started") === 0) {
-                            $(this).css("background-color", "rgb(0, 112, 192)");
+                            $(this).children().closest("select").css("background-color", "rgb(0, 112, 192)");
                         } else if ($(this).children().first().val().localeCompare("In Progress") === 0) {
-                            $(this).css("background-color", "rgb(255, 192, 0)");
+                            $(this).children().closest("select").css("background-color", "rgb(255, 192, 0)");
 
                         } else if ($(this).children().first().val().localeCompare("Delayed") === 0) {
-                            $(this).css("background-color", "rgb(255, 0, 0)");
+                            $(this).children().closest("select").css("background-color", "rgb(255, 0, 0)");
 
                         } else if ($(this).children().first().val().localeCompare("Completed") === 0) {
-                            $(this).css("background-color", "rgb(0, 176, 80)");
+                            $(this).children().closest("select").css("background-color", "rgb(0, 176, 80)");
 
                         }
                     }
@@ -557,7 +568,7 @@
 
         //from=completed to=frontend
         function fillObject(from, to) {
-            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length ===0 ) {
+            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length === 0) {
                 return to;
             } else {
                 var max_len = 0;
@@ -571,14 +582,14 @@
 
                 if (Object.keys(max_len_obj).length > 0) {
                     for (const frontend_key in to) {
-                            for (const key in max_len_obj) {
-                                if (!(key in to[frontend_key])) {
-                                    //alert("Entering: " +key+":"+ max_len_obj[key]);
-                                    //alert(max_len_obj[key].value);
-                                    to[frontend_key][key] = max_len_obj[key];
-                                }
+                        for (const key in max_len_obj) {
+                            if (!(key in to[frontend_key])) {
+                                //alert("Entering: " +key+":"+ max_len_obj[key]);
+                                //alert(max_len_obj[key].value);
+                                to[frontend_key][key] = max_len_obj[key];
                             }
-                        
+                        }
+
                     }
                 }
                 return to;
@@ -598,7 +609,11 @@
 
         Http_openorders.onload = (e) => {
             var Data_openorders = JSON.parse(Http_openorders.responseText);
+<<<<<<< HEAD
             //console.log("\OPEN ORDERS KA DATA LOAD HOGAYA HAI !\n", Data_openorders)
+=======
+            // console.log("\OPEN ORDERS KA DATA LOAD HOGAYA HAI !\n", Data_openorders)
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
             open_orders_ = Data_openorders.orders;
         }
 
@@ -610,7 +625,11 @@
 
         Http.onload = (e) => {
             var Data = JSON.parse(Http.responseText);
+<<<<<<< HEAD
             //console.log("\n=================\nLOADED DATA\n========================\n", Data);
+=======
+            // console.log("\n=================\nLOADED DATA\n========================\n", Data);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             // alert("-\\_(`*`)_/-");
 
@@ -679,21 +698,15 @@
 
         }
 
-        function getPreviousValues(from,to)
-        {
-            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length ===0) {
+        function getPreviousValues(from, to) {
+            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length === 0) {
                 return to;
-            }
-            else
-            {
-                for(let k in from)
-                {
-                    for(let l in from[k])
-                    {
-                        if(l in to[k] && !(l in datatypes))
-                        {
+            } else {
+                for (let k in from) {
+                    for (let l in from[k]) {
+                        if (l in to[k] && !(l in datatypes)) {
                             to[k][l] = from[k][l];
-                        }       
+                        }
                     }
                 }
                 return to;
@@ -704,6 +717,7 @@
         /////////////////////////////////////////// Submit data of table //////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         var datatypes = {};
+
         function submit() {
             var keys = [],
                 arrayObj = [];
@@ -726,7 +740,11 @@
 
             keys = keys.map(name => name.toLowerCase());
 
+<<<<<<< HEAD
             //console.log("keys: ", keys);
+=======
+            // console.log("keys: ", keys);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             rows_count = 0;
             $("#mtable tbody tr").each(function() {
@@ -750,7 +768,11 @@
                         obj[keys[i]] = $(this).text();
                         //to get datatype of col
                         if (rows_count === 0) {
+<<<<<<< HEAD
                             //console.log(keys[i]);
+=======
+                            // console.log(keys[i]);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
                             if ($(this).children().length > 0) {
                                 //for ▬ 
                                 if ($(this).children().first().text().localeCompare("-") === 0) {
@@ -771,18 +793,28 @@
                 arrayObj.push(obj);
             });
 
+<<<<<<< HEAD
             //console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
 
             //console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
+=======
+            // console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
+
+            // console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             arrayObj = fillObject(completed__orders_, arrayObj);
             arrayObj = fillObject(open_orders_, arrayObj);
-            arrayObj = getPreviousValues(completed__orders_,arrayObj); // Setting previous values again for previous records
+            arrayObj = getPreviousValues(completed__orders_, arrayObj); // Setting previous values again for previous records
             //arrayObj = getPreviousValues(open_orders_,arrayObj); // Setting previous values again for previous records
 
             //open_orders_ = fillObject(arrayObj, open_orders_);
 
+<<<<<<< HEAD
             //console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
+=======
+            // console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             //removing unwanted keys
             delete open_orders_[open_orders_.length - 1]
@@ -795,18 +827,29 @@
             });
 
             var data = {
+<<<<<<< HEAD
                 table_data: arrayObj,
                 data_types: datatypes,
                 open_orders: open_orders_
             }
             //console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+=======
+                    table_data: arrayObj,
+                    data_types: datatypes,
+                    open_orders: open_orders_
+                }
+                // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             $.post("http://localhost:3000/home/orders/savecompleted", data,
                 function(data, status) {
                     alert("Data is saved !");
                     location.reload();
                 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
         }
     </script>
 

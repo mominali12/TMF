@@ -30,7 +30,6 @@
     <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script> -->
 
     <div class="container-fluid p-4">
-
         <div class="row">
             <div class="col-md-4 p-4">
                 <img id="storename" alt="Home Page">
@@ -165,6 +164,11 @@
     <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
     <script type="text/javascript">
+        function fileupdated(file_form) {
+            // $(e).closest("tr")
+            $(file_form).parent().submit();
+        }
+
         var user_identity = "";
         var tbl_cols = {};
         var completed_orders_ = {};
@@ -210,7 +214,8 @@
                             if (key.localeCompare("completed") === 0) {
                                 employee_data += '<td>' + completed_drop_down('') + '</td>';
                             } else if (key.localeCompare("file") === 0) {
-                                employee_data += '<td>' + make_fileinput_field('') + '</td>';
+                                employee_data += make_text_field('');
+                                // employee_data += '<td>' + make_fileinput_field('') + '</td>';
                             } else if (tbl_cols[key].localeCompare("text") === 0) {
                                 employee_data += make_text_field('');
                             } else if (tbl_cols[key].localeCompare("date") === 0) {
@@ -256,7 +261,11 @@
                 });
 
                 completed_orders_ = orders_arr;
+<<<<<<< HEAD
                 //console.log("\n COLUMN ADDED\n COMPLETED ORDERS UPDATED !", completed_orders_);
+=======
+                // console.log("\n COLUMN ADDED\n COMPLETED ORDERS UPDATED !", completed_orders_);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
                 if ($('#col_modal_select').val().localeCompare('date') === 0) {
                     $('#mtable tbody tr').each(function() {
@@ -330,7 +339,11 @@
                         });
                         completed_orders_ = orders_arr;
 
+<<<<<<< HEAD
                         //console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
+=======
+                        // console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
                     }
                 }
             }
@@ -383,16 +396,16 @@
 
         function ondropdownchangecolor(col) {
             if ($(col).find(":selected").text().localeCompare("Completed") === 0) {
-                $(col).closest("td").css("background-color", "rgb(0, 176, 80)");
+                $(col).closest("select").css("background-color", "rgb(0, 176, 80)");
             }
             if ($(col).find(":selected").text().localeCompare("In Progress") === 0) {
-                $(col).closest("td").css("background-color", "rgb(255, 192, 0)");
+                $(col).closest("select").css("background-color", "rgb(255, 192, 0)");
             }
             if ($(col).find(":selected").text().localeCompare("Delayed") === 0) {
-                $(col).closest("td").css("background-color", "rgb(255, 0, 0)");
+                $(col).closest("select").css("background-color", "rgb(255, 0, 0)");
             }
             if ($(col).find(":selected").text().localeCompare("Not Started") === 0) {
-                $(col).closest("td").css("background-color", "rgb(0, 112, 192)");
+                $(col).closest("select").css("background-color", "rgb(0, 112, 192)");
             }
         }
 
@@ -494,7 +507,20 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function make_fileinput_field(txt) {
-            return '<input id="file-input" type="file" name="name" class="custom-file-upload" value="' + txt + '">';
+            // console.log("Input Field Text: ", txt);
+            // return '<form name="foo" method="post" enctype="multipart/form-data">' +
+            //     '<input type="file" onchange="fileupdated(this)" value="' + txt + '">' + '</form>';
+            // return '<input id="file-input" type="file" name="' + txt + '" class="custom-file-upload" value="' + txt + '">';
+            // return '<form action = "/upload" method = "POST" enctype = "multipart/form-data" >' +
+            //     '<input type = "text" name = "name" placeholder = "' + txt + '" / >' +
+            //     '< br / ><input type = "file" name = "uploadedFile" / > < br / > < br / >' +
+            //     '<input type = "submit" value = "Upload File" / >' +
+            //     '</form>' +
+            //     '<form action = "/download" method = "GET" >' +
+            //     '<input type = "submit" value = "Download File" / >' +
+            //     '</form>';
+            return '<td contenteditable="true">' + txt + '</td>';
+
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -512,7 +538,7 @@
                     if (key.localeCompare("completed") === 0) {
                         employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
                     } else if (key.localeCompare("file") === 0) {
-                        employee_data += '<td>' + make_fileinput_field(obj[key]) + '</td>';
+                        employee_data += make_fileinput_field(obj[key]);
                     } else if (cols[key].localeCompare("text") === 0) {
                         employee_data += make_text_field(obj[key]);
                     } else if (cols[key].localeCompare("date") === 0) {
@@ -536,15 +562,15 @@
                     //to get drop down val AND (date value iff set)
                     if ($(this).children().first().val()) {
                         if ($(this).children().first().val().localeCompare("Not Started") === 0) {
-                            $(this).css("background-color", "rgb(0, 112, 192)");
+                            $(this).children().closest("select").css("background-color", "rgb(0, 112, 192)");
                         } else if ($(this).children().first().val().localeCompare("In Progress") === 0) {
-                            $(this).css("background-color", "rgb(255, 192, 0)");
+                            $(this).children().closest("select").css("background-color", "rgb(255, 192, 0)");
 
                         } else if ($(this).children().first().val().localeCompare("Delayed") === 0) {
-                            $(this).css("background-color", "rgb(255, 0, 0)");
+                            $(this).children().closest("select").css("background-color", "rgb(255, 0, 0)");
 
                         } else if ($(this).children().first().val().localeCompare("Completed") === 0) {
-                            $(this).css("background-color", "rgb(0, 176, 80)");
+                            $(this).children().closest("select").css("background-color", "rgb(0, 176, 80)");
 
                         }
                     }
@@ -558,7 +584,7 @@
 
         //from=completed to=frontend
         function fillObject(from, to) {
-            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length === 0 ) {
+            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length === 0) {
                 return to;
             } else {
                 var max_len = 0;
@@ -572,12 +598,12 @@
 
                 if (Object.keys(max_len_obj).length > 0) {
                     for (const frontend_key in to) {
-                            for (const key in max_len_obj) {
-                            if (!(key in to[frontend_key])) { 
+                        for (const key in max_len_obj) {
+                            if (!(key in to[frontend_key])) {
                                 //alert("Entering: " +key+":"+ max_len_obj[key]);
                                 to[frontend_key][key] = max_len_obj[key];
                             }
-                            
+
                         }
 
                     }
@@ -613,7 +639,11 @@
         Http.onload = (e) => {
 
             var Data = JSON.parse(Http.responseText);
+<<<<<<< HEAD
             //console.log("\n=================\nLOADED DATA\n========================\n", Data);
+=======
+            // console.log("\n=================\nLOADED DATA\n========================\n", Data);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             //setting userID
             user_identity = Data.orders[Data.orders.length - 1].user_id;
@@ -679,22 +709,16 @@
 
         }
 
-        function getPreviousValues(from,to)
-        {
+        function getPreviousValues(from, to) {
             if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length <= 1 || to.length <= 1 || to.length > from.length) {
                 return to;
-            }
-            else
-            {
-                for(let k in from)
-                {
-                    for(let l in from[k])
-                    {
-                        if(l in to[k] && !(l in datatypes))
-                        {
+            } else {
+                for (let k in from) {
+                    for (let l in from[k]) {
+                        if (l in to[k] && !(l in datatypes)) {
                             to[k][l] = from[k][l];
                         }
-                            
+
                     }
                 }
                 return to;
@@ -705,6 +729,7 @@
         /////////////////////////////////////////// Submit data of table //////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         var datatypes = {};
+
         function submit() {
             var keys = [],
                 arrayObj = [];
@@ -778,7 +803,7 @@
 
             arrayObj = fillObject(open__orders_, arrayObj); // This will also replace some values of previous entries
             arrayObj = fillObject(completed_orders_, arrayObj); // This will also replace some values of previous entries
-            arrayObj = getPreviousValues(open__orders_,arrayObj); // Setting previous values again for previous records
+            arrayObj = getPreviousValues(open__orders_, arrayObj); // Setting previous values again for previous records
             //arrayObj = getPreviousValues(completed_orders_,arrayObj); // Setting previous values again for previous records
 
             //completed_orders_ = fillObject(arrayObj, completed_orders_);
@@ -797,11 +822,19 @@
             });
 
             var data = {
+<<<<<<< HEAD
                 table_data: arrayObj,
                 data_types: datatypes,
                 completed_orders: completed_orders_
             }
             // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+=======
+                    table_data: arrayObj,
+                    data_types: datatypes,
+                    completed_orders: completed_orders_
+                }
+                // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+>>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             $.post("http://localhost:3000/home/orders/save", data,
                 function(data, status) {

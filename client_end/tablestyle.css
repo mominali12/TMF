@@ -5,6 +5,11 @@
         /* white-space: pre; */
         text-overflow: ellipsis;
         -webkit-appearance: none;
+        background-color: rgb(0, 112, 192);
+    }
+    
+    .tablewrapp td select {
+        color: white;
     }
     
     .table>tbody>tr>td {
