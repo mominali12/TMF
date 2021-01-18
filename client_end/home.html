@@ -256,7 +256,7 @@
                 });
 
                 completed_orders_ = orders_arr;
-                console.log("\n COLUMN ADDED\n COMPLETED ORDERS UPDATED !", completed_orders_);
+                //console.log("\n COLUMN ADDED\n COMPLETED ORDERS UPDATED !", completed_orders_);
 
                 if ($('#col_modal_select').val().localeCompare('date') === 0) {
                     $('#mtable tbody tr').each(function() {
@@ -330,7 +330,7 @@
                         });
                         completed_orders_ = orders_arr;
 
-                        console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
+                        //console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
                     }
                 }
             }
@@ -600,7 +600,7 @@
 
         Http_completedorders.onload = (e) => {
             var Data_completedorders = JSON.parse(Http_completedorders.responseText);
-            console.log("\nCOMPLETED ORDERS KA DATA LOAD HOGAYA HAI !\n", Data_completedorders)
+            // console.log("\nCOMPLETED ORDERS KA DATA LOAD HOGAYA HAI !\n", Data_completedorders)
             completed_orders_ = Data_completedorders.orders;
         }
 
@@ -613,7 +613,7 @@
         Http.onload = (e) => {
 
             var Data = JSON.parse(Http.responseText);
-            console.log("\n=================\nLOADED DATA\n========================\n", Data);
+            //console.log("\n=================\nLOADED DATA\n========================\n", Data);
 
             //setting userID
             user_identity = Data.orders[Data.orders.length - 1].user_id;
@@ -626,7 +626,7 @@
 
             //creating copy of open orders to fulfill missing cols on save
             open__orders_ = Data.orders;
-            console.log("\n=================\original Cols \n========================\n", open__orders_);
+            // console.log("\n=================\original Cols \n========================\n", open__orders_);
 
             var cols = {};
             for (let i = 0; i < Data.types.length; i++) {
@@ -727,7 +727,7 @@
 
             keys = keys.map(name => name.toLowerCase());
 
-            console.log("keys: ", keys);
+            // console.log("keys: ", keys);
 
             rows_count = 0;
             $("#mtable tbody tr").each(function() {
@@ -751,7 +751,7 @@
                         obj[keys[i]] = $(this).text();
                         //to get datatype of col
                         if (rows_count === 0) {
-                            console.log(keys[i]);
+                            // console.log(keys[i]);
                             if ($(this).children().length > 0) {
                                 //for ▬ 
                                 if ($(this).children().first().text().localeCompare("-") === 0) {
@@ -772,9 +772,9 @@
                 arrayObj.push(obj);
             });
 
-            console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
+            // console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
 
-            console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
+            // console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
 
             arrayObj = fillObject(open__orders_, arrayObj); // This will also replace some values of previous entries
             arrayObj = fillObject(completed_orders_, arrayObj); // This will also replace some values of previous entries
@@ -783,7 +783,7 @@
 
             //completed_orders_ = fillObject(arrayObj, completed_orders_);
 
-            console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
+            // console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
 
 
             //removing unwanted keys
@@ -801,14 +801,14 @@
                 data_types: datatypes,
                 completed_orders: completed_orders_
             }
-            console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+            // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
 
             $.post("http://localhost:3000/home/orders/save", data,
                 function(data, status) {
                     alert("Data is saved !");
+                    location.reload();
                 });
 
-            location.reload();
         }
     </script>
 

@@ -15,7 +15,7 @@ class ExpressServer {
         app.use(bodyParser.json());
         app.use(Express.urlencoded({extended : true}));
         app.use(Express.static(__dirname + '/../../client_end/')); // Setting directory for css and js
-        console.log("Constructor running");
+        // console.log("Constructor running");
     }
 
     router(routes)
