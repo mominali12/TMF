@@ -261,11 +261,7 @@
                 });
 
                 completed_orders_ = orders_arr;
-<<<<<<< HEAD
-                //console.log("\n COLUMN ADDED\n COMPLETED ORDERS UPDATED !", completed_orders_);
-=======
                 // console.log("\n COLUMN ADDED\n COMPLETED ORDERS UPDATED !", completed_orders_);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
                 if ($('#col_modal_select').val().localeCompare('date') === 0) {
                     $('#mtable tbody tr').each(function() {
@@ -339,11 +335,7 @@
                         });
                         completed_orders_ = orders_arr;
 
-<<<<<<< HEAD
-                        //console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
-=======
                         // console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
                     }
                 }
             }
@@ -639,11 +631,7 @@
         Http.onload = (e) => {
 
             var Data = JSON.parse(Http.responseText);
-<<<<<<< HEAD
-            //console.log("\n=================\nLOADED DATA\n========================\n", Data);
-=======
             // console.log("\n=================\nLOADED DATA\n========================\n", Data);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             //setting userID
             user_identity = Data.orders[Data.orders.length - 1].user_id;
@@ -822,19 +810,11 @@
             });
 
             var data = {
-<<<<<<< HEAD
-                table_data: arrayObj,
-                data_types: datatypes,
-                completed_orders: completed_orders_
-            }
-            // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
-=======
                     table_data: arrayObj,
                     data_types: datatypes,
                     completed_orders: completed_orders_
                 }
                 // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             $.post("http://localhost:3000/home/orders/save", data,
                 function(data, status) {

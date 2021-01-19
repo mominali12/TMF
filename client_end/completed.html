@@ -257,11 +257,7 @@
                 });
 
                 open_orders_ = orders_arr;
-<<<<<<< HEAD
-                //console.log("\n COLUMN ADDED\n OPEN ORDERS UPDATED !", open_orders_);
-=======
                 // console.log("\n COLUMN ADDED\n OPEN ORDERS UPDATED !", open_orders_);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
                 if ($('#col_modal_select').val().localeCompare('date') === 0) {
                     $('#mtable tbody tr').each(function() {
@@ -330,11 +326,7 @@
                         });
                         open_orders_ = orders_arr;
 
-<<<<<<< HEAD
-                        //console.log("\n COLUMN REMOVED\n OPEN ORDERS UPDATED !", open_orders_);
-=======
                         // console.log("\n COLUMN REMOVED\n OPEN ORDERS UPDATED !", open_orders_);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
                     }
                 }
             }
@@ -609,11 +601,7 @@
 
         Http_openorders.onload = (e) => {
             var Data_openorders = JSON.parse(Http_openorders.responseText);
-<<<<<<< HEAD
-            //console.log("\OPEN ORDERS KA DATA LOAD HOGAYA HAI !\n", Data_openorders)
-=======
             // console.log("\OPEN ORDERS KA DATA LOAD HOGAYA HAI !\n", Data_openorders)
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
             open_orders_ = Data_openorders.orders;
         }
 
@@ -625,11 +613,7 @@
 
         Http.onload = (e) => {
             var Data = JSON.parse(Http.responseText);
-<<<<<<< HEAD
-            //console.log("\n=================\nLOADED DATA\n========================\n", Data);
-=======
             // console.log("\n=================\nLOADED DATA\n========================\n", Data);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             // alert("-\\_(`*`)_/-");
 
@@ -740,11 +724,8 @@
 
             keys = keys.map(name => name.toLowerCase());
 
-<<<<<<< HEAD
-            //console.log("keys: ", keys);
-=======
+        
             // console.log("keys: ", keys);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             rows_count = 0;
             $("#mtable tbody tr").each(function() {
@@ -768,11 +749,7 @@
                         obj[keys[i]] = $(this).text();
                         //to get datatype of col
                         if (rows_count === 0) {
-<<<<<<< HEAD
-                            //console.log(keys[i]);
-=======
                             // console.log(keys[i]);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
                             if ($(this).children().length > 0) {
                                 //for ▬ 
                                 if ($(this).children().first().text().localeCompare("-") === 0) {
@@ -793,15 +770,9 @@
                 arrayObj.push(obj);
             });
 
-<<<<<<< HEAD
-            //console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
-
-            //console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
-=======
             // console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
 
             // console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             arrayObj = fillObject(completed__orders_, arrayObj);
             arrayObj = fillObject(open_orders_, arrayObj);
@@ -810,11 +781,7 @@
 
             //open_orders_ = fillObject(arrayObj, open_orders_);
 
-<<<<<<< HEAD
-            //console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
-=======
             // console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             //removing unwanted keys
             delete open_orders_[open_orders_.length - 1]
@@ -827,29 +794,17 @@
             });
 
             var data = {
-<<<<<<< HEAD
-                table_data: arrayObj,
-                data_types: datatypes,
-                open_orders: open_orders_
-            }
-            //console.log("\n-------------------------------------\nRETURNED DATA \n", data);
-=======
                     table_data: arrayObj,
                     data_types: datatypes,
                     open_orders: open_orders_
                 }
                 // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
             $.post("http://localhost:3000/home/orders/savecompleted", data,
                 function(data, status) {
                     alert("Data is saved !");
                     location.reload();
                 });
-<<<<<<< HEAD
-
-=======
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
         }
     </script>
 

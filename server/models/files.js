@@ -1,9 +1,10 @@
 const mongoose = require ('mongoose');
 
 const FilesSchema = mongoose.Schema({
-  sr_no :Number,
   customer_id: String,
+  sr_no :Number,
   path:  String ,
+  user_id : Number,
 });
 
 FilesSchema.index({ sr_no: -1 });
