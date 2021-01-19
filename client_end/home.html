@@ -74,6 +74,7 @@
 
         <div class="row">
             <div class="col-md-12 table-responsive">
+                <input type="text" class="form-control mb-4 col-md-4" id="customer_search" onkeyup="searchcustomer()" placeholder="Search customer">
                 <table id="mtable" class="table table-bordered tablewrapp">
                     <thead id="mtableheader" class="thead-light">
                     </thead>
@@ -175,6 +176,32 @@
         var open__orders_ = {};
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// SEARCH CUSTOMER FUNCTION ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function searchcustomer() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("customer_search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mtable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// COMPLETED-PAGE BTN CLICK ///////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -261,11 +288,7 @@
                 });
 
                 completed_orders_ = orders_arr;
-<<<<<<< HEAD
-                //console.log("\n COLUMN ADDED\n COMPLETED ORDERS UPDATED !", completed_orders_);
-=======
                 // console.log("\n COLUMN ADDED\n COMPLETED ORDERS UPDATED !", completed_orders_);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
 
                 if ($('#col_modal_select').val().localeCompare('date') === 0) {
                     $('#mtable tbody tr').each(function() {
@@ -339,11 +362,8 @@
                         });
                         completed_orders_ = orders_arr;
 
-<<<<<<< HEAD
                         //console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
-=======
-                        // console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
+
                     }
                 }
             }
@@ -639,15 +659,9 @@
         Http.onload = (e) => {
 
             var Data = JSON.parse(Http.responseText);
-<<<<<<< HEAD
+
             console.log("\n=================\nLOADED DATA\n========================\n", Data);
-=======
-<<<<<<< HEAD
-            //console.log("\n=================\nLOADED DATA\n========================\n", Data);
-=======
-            // console.log("\n=================\nLOADED DATA\n========================\n", Data);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
->>>>>>> bfd779caed8cb07c68c89c989dab581b50d8ecab
+
 
             //setting userID
             user_identity = Data.orders[Data.orders.length - 1].user_id;
@@ -826,26 +840,12 @@
             });
 
             var data = {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> bfd779caed8cb07c68c89c989dab581b50d8ecab
-                table_data: arrayObj,
-                data_types: datatypes,
-                completed_orders: completed_orders_
-            }
-<<<<<<< HEAD
-            console.log("\n-------------------------------------\nRETURNED DATA \n", data);
-=======
-            // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
-=======
                     table_data: arrayObj,
                     data_types: datatypes,
                     completed_orders: completed_orders_
                 }
                 // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
->>>>>>> fa70b86236e766f6f5cc3e3a39511f160dbd69c6
->>>>>>> bfd779caed8cb07c68c89c989dab581b50d8ecab
+
 
             $.post("http://localhost:3000/home/orders/save", data,
                 function(data, status) {
