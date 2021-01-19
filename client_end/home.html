@@ -74,6 +74,7 @@
 
         <div class="row">
             <div class="col-md-12 table-responsive">
+                <input type="text" class="form-control mb-4 col-md-4" id="customer_search" onkeyup="searchcustomer()" placeholder="Search customer">
                 <table id="mtable" class="table table-bordered tablewrapp">
                     <thead id="mtableheader" class="thead-light">
                     </thead>
@@ -94,7 +95,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Add row</h4>
+                    <h4 class="modal-title modalheading">Add row</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -132,7 +133,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Add column</h4>
+                    <h4 class="modal-title modalheading">Add column</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -164,15 +165,41 @@
     <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
     <script type="text/javascript">
-        function fileupdated(file_form) {
-            // $(e).closest("tr")
-            $(file_form).parent().submit();
-        }
+        // function fileupdated(file_form) {
+        //     // $(e).closest("tr")
+        //     $(file_form).parent().submit();
+        // }
 
         var user_identity = "";
         var tbl_cols = {};
         var completed_orders_ = {};
         var open__orders_ = {};
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// SEARCH CUSTOMER FUNCTION ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function searchcustomer() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("customer_search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mtable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// COMPLETED-PAGE BTN CLICK ///////////////////////////////////////////
@@ -214,8 +241,8 @@
                             if (key.localeCompare("completed") === 0) {
                                 employee_data += '<td>' + completed_drop_down('') + '</td>';
                             } else if (key.localeCompare("file") === 0) {
-                                employee_data += make_text_field('');
-                                // employee_data += '<td>' + make_fileinput_field('') + '</td>';
+                                // employee_data += make_text_field('');
+                                employee_data += '<td>' + make_fileinput_field('') + '</td>';
                             } else if (tbl_cols[key].localeCompare("text") === 0) {
                                 employee_data += make_text_field('');
                             } else if (tbl_cols[key].localeCompare("date") === 0) {
@@ -335,7 +362,12 @@
                         });
                         completed_orders_ = orders_arr;
 
+<<<<<<< HEAD
                         // console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
+=======
+                        //console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
+
+>>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
                     }
                 }
             }
@@ -502,7 +534,7 @@
             // console.log("Input Field Text: ", txt);
             // return '<form name="foo" method="post" enctype="multipart/form-data">' +
             //     '<input type="file" onchange="fileupdated(this)" value="' + txt + '">' + '</form>';
-            // return '<input id="file-input" type="file" name="' + txt + '" class="custom-file-upload" value="' + txt + '">';
+            return '<input id="file-input" type="file" name="' + txt + '" class="custom-file-upload" value="' + txt + '">';
             // return '<form action = "/upload" method = "POST" enctype = "multipart/form-data" >' +
             //     '<input type = "text" name = "name" placeholder = "' + txt + '" / >' +
             //     '< br / ><input type = "file" name = "uploadedFile" / > < br / > < br / >' +
@@ -511,7 +543,7 @@
             //     '<form action = "/download" method = "GET" >' +
             //     '<input type = "submit" value = "Download File" / >' +
             //     '</form>';
-            return '<td contenteditable="true">' + txt + '</td>';
+            // return '<td contenteditable="true">' + txt + '</td>';
 
         }
 
@@ -530,7 +562,7 @@
                     if (key.localeCompare("completed") === 0) {
                         employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
                     } else if (key.localeCompare("file") === 0) {
-                        employee_data += make_fileinput_field(obj[key]);
+                        employee_data += '<td>' + make_fileinput_field(obj[key]) + '</td>';
                     } else if (cols[key].localeCompare("text") === 0) {
                         employee_data += make_text_field(obj[key]);
                     } else if (cols[key].localeCompare("date") === 0) {
@@ -631,7 +663,13 @@
         Http.onload = (e) => {
 
             var Data = JSON.parse(Http.responseText);
+<<<<<<< HEAD
             // console.log("\n=================\nLOADED DATA\n========================\n", Data);
+=======
+
+            console.log("\n=================\nLOADED DATA\n========================\n", Data);
+
+>>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
 
             //setting userID
             user_identity = Data.orders[Data.orders.length - 1].user_id;
@@ -815,6 +853,10 @@
                     completed_orders: completed_orders_
                 }
                 // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
 
             $.post("http://localhost:3000/home/orders/save", data,
                 function(data, status) {

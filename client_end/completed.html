@@ -77,6 +77,7 @@
 
         <div class="row">
             <div class="col-md-12 table-responsive">
+                <input type="text" class="form-control mb-4 col-md-4" id="customer_search" onkeyup="searchcustomer()" placeholder="Search customer">
                 <table id="mtable" class="table table-bordered tablewrapp">
                     <thead id="mtableheader" class="thead-light">
                     </thead>
@@ -97,7 +98,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Add row</h4>
+                    <h4 class="modal-title modalheading">Add row</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -135,7 +136,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Add column</h4>
+                    <h4 class="modal-title modalheading">Add column</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -171,6 +172,32 @@
         var tbl_cols = {};
         var open_orders_ = {};
         var completed__orders_ = {};
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// SEARCH CUSTOMER FUNCTION ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function searchcustomer() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("customer_search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mtable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////// OPEN-PAGE BTN CLICK /////////////////////////////////////////////
@@ -212,8 +239,8 @@
                             if (key.localeCompare("completed") === 0) {
                                 employee_data += '<td>' + completed_drop_down('') + '</td>';
                             } else if (key.localeCompare("file") === 0) {
-                                // employee_data += '<td>' + make_fileinput_field('') + '</td>';
-                                employee_data += make_text_field('');
+                                employee_data += '<td>' + make_fileinput_field('') + '</td>';
+                                // employee_data += make_text_field('');
                             } else if (tbl_cols[key].localeCompare("text") === 0) {
                                 employee_data += make_text_field('');
                             } else if (tbl_cols[key].localeCompare("date") === 0) {
@@ -493,8 +520,8 @@
 
         function make_fileinput_field(txt) {
             // console.log("Input Field Text: ", txt);
-            // return '<input id="file-input" type="file" name="name" class="custom-file-upload" value=' + txt + '>';
-            return '<td contenteditable="true">' + txt + '</td>';
+            return '<input id="file-input" type="file" name="' + txt + '" class="custom-file-upload" value="' + txt + '">';
+            // return '<td contenteditable="true">' + txt + '</td>';
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -513,7 +540,7 @@
                     if (key.localeCompare("completed") === 0) {
                         employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
                     } else if (key.localeCompare("file") === 0) {
-                        employee_data += make_fileinput_field(obj[key]);
+                        employee_data += '<td>' + make_fileinput_field(obj[key]) + '</td>';
                     } else if (cols[key].localeCompare("text") === 0) {
                         employee_data += make_text_field(obj[key]);
                     } else if (cols[key].localeCompare("date") === 0) {
@@ -539,6 +566,7 @@
                     if ($(this).children().first().val()) {
                         if ($(this).children().first().val().localeCompare("Not Started") === 0) {
                             $(this).children().closest("select").css("background-color", "rgb(0, 112, 192)");
+
                         } else if ($(this).children().first().val().localeCompare("In Progress") === 0) {
                             $(this).children().closest("select").css("background-color", "rgb(255, 192, 0)");
 
@@ -613,7 +641,12 @@
 
         Http.onload = (e) => {
             var Data = JSON.parse(Http.responseText);
+<<<<<<< HEAD
             // console.log("\n=================\nLOADED DATA\n========================\n", Data);
+=======
+
+            //console.log("\n=================\nLOADED DATA\n========================\n", Data);
+>>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
 
             // alert("-\\_(`*`)_/-");
 
@@ -724,8 +757,12 @@
 
             keys = keys.map(name => name.toLowerCase());
 
+<<<<<<< HEAD
         
             // console.log("keys: ", keys);
+=======
+            //console.log("keys: ", keys);
+>>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
 
             rows_count = 0;
             $("#mtable tbody tr").each(function() {
@@ -750,6 +787,10 @@
                         //to get datatype of col
                         if (rows_count === 0) {
                             // console.log(keys[i]);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
                             if ($(this).children().length > 0) {
                                 //for ▬ 
                                 if ($(this).children().first().text().localeCompare("-") === 0) {
@@ -770,9 +811,15 @@
                 arrayObj.push(obj);
             });
 
+<<<<<<< HEAD
             // console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
 
             // console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
+=======
+            //console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
+
+            //console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
+>>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
 
             arrayObj = fillObject(completed__orders_, arrayObj);
             arrayObj = fillObject(open_orders_, arrayObj);
@@ -782,6 +829,10 @@
             //open_orders_ = fillObject(arrayObj, open_orders_);
 
             // console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
 
             //removing unwanted keys
             delete open_orders_[open_orders_.length - 1]
@@ -794,11 +845,21 @@
             });
 
             var data = {
+<<<<<<< HEAD
                     table_data: arrayObj,
                     data_types: datatypes,
                     open_orders: open_orders_
                 }
                 // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+=======
+                table_data: arrayObj,
+                data_types: datatypes,
+                open_orders: open_orders_
+            }
+
+            //console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+
+>>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
 
             $.post("http://localhost:3000/home/orders/savecompleted", data,
                 function(data, status) {
