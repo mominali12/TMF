@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Order-Management</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="./tablestyle.css">
+
+</head>
+
+<body>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script> -->
+    <div class="container-fluid p-4">
+        <div class="row">
+            <div class="col-md-12 p-4">
+                <button id="open_page_nav" type="button" class="btn pull-left btn-primary mr-4">Open Orders</button>
+                <button id="completed_page_nav" type="button" class="btn pull-left btn-primary mr-4">Completed Orders</button>
+                <button id="graph_btn" type="button" class="btn pull-left btn-success mr-4">Graph</button>
+                <button id="logout_btn" type="button" class="btn pull-right btn-danger">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid p-4">
+        <div class="row justify-content-md-center">
+            <div class="col-md-6">
+                <h1 class="formheading">Add Customer</h1>
+                <form action="/uploadnewcustomer" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="customer_name" class=" mt-4">Customer</label>
+                        <input id="graphic_file" type="text" name="customername" class="form-control" placeholder="Customer name.." required>
+                        <div class="invalid-feedback">
+                            Please enter a customer name.
+                        </div>
+
+                        <label for="product_name" class=" mt-4">Product</label>
+                        <input id="graphic_file" type="text" name="productname" class="form-control" placeholder="Product name.." required>
+                        <div class="invalid-feedback">
+                            Please enter a product name.
+                        </div>
+
+                        <label for="graphic_file" class=" mt-4">Graphic file</label>
+                        <input id="graphic_file" type="text" name="filename" class="form-control" placeholder="File name.." required>
+                        <div class="invalid-feedback">
+                            Please enter a filename.
+                        </div>
+
+                        <div class="custom-file mt-4 mb-4">
+                            <input type="file" name="uploadedFile" class="custom-file-input" id="validatedCustomFile" required>
+                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                            <div class="invalid-feedback">Please select a file.</div>
+                        </div>
+
+                        <input type="submit" class="btn btn-success pull-right" value="Add Customer" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table id="mtable" class="table table-bordered tablewrapp">
+                    <thead id="mtableheader" class="thead-light">
+                        <th>Customer</th>
+                        <th>Product</th>
+                    </thead>
+                    <tbody></tbody>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// DELETE ROW FUNCTION ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function delete_row(e) {
+            $(e).closest("tr").remove();
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////// OPEN-PAGE BTN CLICK /////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#open_page_nav").click(function() {
+            location.replace("http://localhost:3000/home");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// COMPLETED-PAGE BTN CLICK ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#completed_page_nav").click(function() {
+            location.replace("http://localhost:3000/home/completed");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// GRAPH BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#graph_btn").click(function() {
+            location.replace("http://localhost:3000/graph");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// LOGOUT BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#logout_btn").click(function() {
+            location.replace("http://localhost:3000/logout");
+        });
+    </script>
+</body>

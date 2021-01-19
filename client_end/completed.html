@@ -97,7 +97,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Add row</h4>
+                    <h4 class="modal-title modalheading">Add row</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -135,7 +135,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Add column</h4>
+                    <h4 class="modal-title modalheading">Add column</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -212,8 +212,8 @@
                             if (key.localeCompare("completed") === 0) {
                                 employee_data += '<td>' + completed_drop_down('') + '</td>';
                             } else if (key.localeCompare("file") === 0) {
-                                // employee_data += '<td>' + make_fileinput_field('') + '</td>';
-                                employee_data += make_text_field('');
+                                employee_data += '<td>' + make_fileinput_field('') + '</td>';
+                                // employee_data += make_text_field('');
                             } else if (tbl_cols[key].localeCompare("text") === 0) {
                                 employee_data += make_text_field('');
                             } else if (tbl_cols[key].localeCompare("date") === 0) {
@@ -493,8 +493,8 @@
 
         function make_fileinput_field(txt) {
             // console.log("Input Field Text: ", txt);
-            // return '<input id="file-input" type="file" name="name" class="custom-file-upload" value=' + txt + '>';
-            return '<td contenteditable="true">' + txt + '</td>';
+            return '<input id="file-input" type="file" name="' + txt + '" class="custom-file-upload" value="' + txt + '">';
+            // return '<td contenteditable="true">' + txt + '</td>';
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -513,7 +513,7 @@
                     if (key.localeCompare("completed") === 0) {
                         employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
                     } else if (key.localeCompare("file") === 0) {
-                        employee_data += make_fileinput_field(obj[key]);
+                        employee_data += '<td>' + make_fileinput_field(obj[key]) + '</td>';
                     } else if (cols[key].localeCompare("text") === 0) {
                         employee_data += make_text_field(obj[key]);
                     } else if (cols[key].localeCompare("date") === 0) {
@@ -539,6 +539,7 @@
                     if ($(this).children().first().val()) {
                         if ($(this).children().first().val().localeCompare("Not Started") === 0) {
                             $(this).children().closest("select").css("background-color", "rgb(0, 112, 192)");
+
                         } else if ($(this).children().first().val().localeCompare("In Progress") === 0) {
                             $(this).children().closest("select").css("background-color", "rgb(255, 192, 0)");
 
@@ -613,7 +614,7 @@
 
         Http.onload = (e) => {
             var Data = JSON.parse(Http.responseText);
-            // console.log("\n=================\nLOADED DATA\n========================\n", Data);
+            console.log("\n=================\nLOADED DATA\n========================\n", Data);
 
             // alert("-\\_(`*`)_/-");
 
@@ -769,7 +770,7 @@
                 arrayObj.push(obj);
             });
 
-            // console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
+            console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
 
             // console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
 
@@ -793,11 +794,11 @@
             });
 
             var data = {
-                    table_data: arrayObj,
-                    data_types: datatypes,
-                    open_orders: open_orders_
-                }
-                // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+                table_data: arrayObj,
+                data_types: datatypes,
+                open_orders: open_orders_
+            }
+            console.log("\n-------------------------------------\nRETURNED DATA \n", data);
 
             $.post("http://localhost:3000/home/orders/savecompleted", data,
                 function(data, status) {
