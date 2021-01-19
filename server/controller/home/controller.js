@@ -157,8 +157,8 @@ class Controller {
 
     async SaveCustomerData(req, res) {
         if (process.env.ACTIVE_USER != "") {
-
-            let result = await HomeService.SaveCustomerData(req.body); 
+            //TODO #11 #10:@osaaama01
+            let result = await HomeService.SaveCustomerData(req.body, req.files);
             if (result)
                 res.status(200).redirect('/newcustomer');
             else
@@ -175,7 +175,14 @@ class Controller {
             res.redirect('/login');
     }
 
- 
+    async DummyUpload(req, res) {
+        if (process.env.ACTIVE_USER != "") {
+            const result = await HomeService.makeDummyUpload();
+            res.status(200).send(result);
+
+        } else
+            res.redirect('/login');
+    }
 
 }
 
