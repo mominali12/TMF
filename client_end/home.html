@@ -362,12 +362,8 @@
                         });
                         completed_orders_ = orders_arr;
 
-<<<<<<< HEAD
-                        // console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
-=======
                         //console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
 
->>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
                     }
                 }
             }
@@ -663,13 +659,9 @@
         Http.onload = (e) => {
 
             var Data = JSON.parse(Http.responseText);
-<<<<<<< HEAD
-            // console.log("\n=================\nLOADED DATA\n========================\n", Data);
-=======
 
             console.log("\n=================\nLOADED DATA\n========================\n", Data);
 
->>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
 
             //setting userID
             user_identity = Data.orders[Data.orders.length - 1].user_id;
@@ -836,7 +828,6 @@
 
             // console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
 
-
             //removing unwanted keys
             delete completed_orders_[completed_orders_.length - 1];
 
@@ -853,10 +844,6 @@
                     completed_orders: completed_orders_
                 }
                 // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
-<<<<<<< HEAD
-=======
-
->>>>>>> 2010c6814340112da6c5f0fc836b86ed03ec4272
 
             $.post("http://localhost:3000/home/orders/save", data,
                 function(data, status) {

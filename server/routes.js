@@ -4,6 +4,7 @@ let fs = require('fs');
 
 function routes(app) {
     app.get('/newcustomer', (Home.NewCustomerForm))
+    app.get('/getcustomers', (Home.GetCustomers))
     app.post('/uploadnewcustomer', (Home.SaveCustomerData))
 
 

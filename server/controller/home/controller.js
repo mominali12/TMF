@@ -2,11 +2,8 @@ const HomeService = require('../../services/homeservice');
 const fs = require('fs');
 const path = require('path');
 
-//----------------------------------Added
+//----------------------------------Added for file uploading
 const mongodb = require('mongodb')
-    // const app = express()
-    // const router = express.Router()
-    // const mongoClient = mongodb.MongoClient
 const binary = mongodb.Binary;
 //----------------------------------------
 
@@ -161,11 +158,7 @@ class Controller {
     async SaveCustomerData(req, res) {
         if (process.env.ACTIVE_USER != "") {
 
-            let file = { customername: req.body.customername, productname: req.body.productname, filename: req.body.filename, file: binary(req.files.uploadedFile.data) }
-            console.log(file)
-                // insertFile(file, res)
-
-            let result = await HomeService.SaveCustomerData(req.body);
+            let result = await HomeService.SaveCustomerData(req.body); 
             if (result)
                 res.status(200).redirect('/newcustomer');
             else
@@ -174,25 +167,15 @@ class Controller {
             res.redirect('/login');
     }
 
-    async insertFile(file, res) {
-        // mongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true }, (err, client) => {
-        //     if (err) {
-        //         return err
-        //     } else {
-        //         let db = client.db('uploadDB')
-        //         let collection = db.collection('files')
-        //         try {
-        //             collection.insertOne(file)
-        //             console.log('File Inserted')
-        //         } catch (err) {
-        //             console.log('Error while inserting:', err)
-        //         }
-        //         client.close()
-        //         res.redirect('/')
-        //     }
-
-        // })
+    async GetCustomers(req, res) {
+        if (process.env.ACTIVE_USER != "") {
+            const customers = await HomeService.getCustomersData();
+            res.status(200).json(customers);
+        } else
+            res.redirect('/login');
     }
+
+ 
 
 }
 

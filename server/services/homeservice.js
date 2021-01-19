@@ -1,10 +1,24 @@
 const Orders = require('../models/orders.js');
 const Columns = require('../models/columns.js');
+const Customers = require('../models/customer.js');
 
 class HomeDatabase {
-    async SaveCustomerData(data) {
+
+    async SaveCustomerData(data)
+    {
+        if(data.customer_name === "" || data.customer_name === undefined || data.customer_name == null)
+            return false;
+        let file = { customer_name: data.customer_name, customer_address: data.customer_address,customer_email: data.customer_email, customer_contact_no: data.customer_contact_no, filename_1: data.filename_1, file_1: binary(req.files.uploadedFile.data) }
+        console.log(file)
         console.log("Saving Customer Data ...");
-        console.log(data);
+        await Customers.deleteMany({$and: [{ user_id: process.env.ACTIVE_USER_ID },{customer_name : data.customer_name}] });
+        await Customers.insertMany(data);
+        console.log("Success!");
+        return true;
+    }
+
+    async getCustomersData() {
+        return await Customers.find({ user_id: Number(process.env.ACTIVE_USER_ID) });
     }
 
     async getHomeData() {
