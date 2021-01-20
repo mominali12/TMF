@@ -10,7 +10,7 @@ class HomeDatabase {
         if (data.customer_name === "" || data.customer_name === undefined || data.customer_name == null)
             return false;
         console.log(data);
-        let file = { customer_name: data.customer_name, customer_address: data.customer_address, customer_email: data.customer_email, customer_contact_no: data.customer_contact_no, filename_1: data.filename_1, file_1: binary(files.uploadedFile.data), user_id : process.env.ACTIVE_USER_ID }
+        let file = { customer_name: data.customer_name, customer_address: data.customer_address, customer_email: data.customer_email, customer_contact_no: data.customer_contact_no, filename_1: data.filename_1, file_1: binary(files.uploadedFile.data), user_id: process.env.ACTIVE_USER_ID }
         console.log(file)
         console.log("Saving Customer Data ...");
         await Customers.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { customer_name: data.customer_name }] });
