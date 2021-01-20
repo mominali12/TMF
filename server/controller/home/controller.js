@@ -156,14 +156,16 @@ class Controller {
     }
 
     async SaveCustomerData(req, res) {
-        if (process.env.ACTIVE_USER != "") {
+        if (process.env.ACTIVE_USER != "")
+        {
             //TODO #11 #10:@osaaama01
             let result = await HomeService.SaveCustomerData(req.body, req.files);
             if (result)
                 res.status(200).redirect('/newcustomer');
             else
                 res.status(400).send(result);
-        } else
+        }
+        else
             res.redirect('/login');
     }
 

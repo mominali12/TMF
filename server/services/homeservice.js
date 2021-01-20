@@ -9,12 +9,6 @@ class HomeDatabase {
     async SaveCustomerData(data, files) {
         if (data.customer_name === "" || data.customer_name === undefined || data.customer_name == null)
             return false;
-        // TODO #9: @osaaama01 
-        /*
-         *(node:18096) UnhandledPromiseRejectionWarning: ValidationError: Customer validation failed: filename_1:
-         *Cast to string failed for value "{}" at path "filename_1", filename_2: Cast to string failed for value "{}" 
-         *at path "filename_2", filename_3: Cast to string failed for value "{}" at path "filename_3", 
-         *filename_4: Cast to string failed for value "{}" at path "filename_4",*/
         console.log(data);
         let file = { customer_name: data.customer_name, customer_address: data.customer_address, customer_email: data.customer_email, customer_contact_no: data.customer_contact_no, filename_1: data.filename_1, file_1: binary(files.uploadedFile.data) }
         console.log(file)
