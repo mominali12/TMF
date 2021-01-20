@@ -18,7 +18,7 @@ const CustomerSchema = mongoose.Schema({
   filename_1 : 
   {
     type: String,
-    default : {}
+    default : ""
   },
   file_1 : 
   {
@@ -28,7 +28,7 @@ const CustomerSchema = mongoose.Schema({
   filename_2 : 
   {
     type: String,
-    default : {}
+    default : ""
   },
   file_2 : 
   {
@@ -38,7 +38,7 @@ const CustomerSchema = mongoose.Schema({
   filename_3 : 
   {
     type: String,
-    default : {}
+    default : ""
   },
   file_3 : 
   {
@@ -48,7 +48,7 @@ const CustomerSchema = mongoose.Schema({
   filename_4 : 
   {
     type: String,
-    default : {}
+    default : ""
   },
   file_4 : 
   {
@@ -58,7 +58,7 @@ const CustomerSchema = mongoose.Schema({
   filename_5 : 
   {
     type: String,
-    default : {}
+    default : ""
   },
   file_5 : 
   {
@@ -68,7 +68,7 @@ const CustomerSchema = mongoose.Schema({
   filename_6 : 
   {
     type: String,
-    default : {}
+    default : ""
   },
   file_6 : 
   {
@@ -78,7 +78,7 @@ const CustomerSchema = mongoose.Schema({
   filename_7 : 
   {
     type: String,
-    default : {}
+    default : ""
   },
   file_7 : 
   {
@@ -88,7 +88,7 @@ const CustomerSchema = mongoose.Schema({
   filename_8 : 
   {
     type: String,
-    default : {}
+    default : ""
   },
   file_8 : 
   {
@@ -98,7 +98,7 @@ const CustomerSchema = mongoose.Schema({
   filename_9 : 
   {
     type: String,
-    default : {}
+    default : ""
   },
   file_9 : 
   {
@@ -108,7 +108,7 @@ const CustomerSchema = mongoose.Schema({
   filename_10 : 
   {
     type: String,
-    default : {}
+    default : ""
   },
   file_10 : 
   {
