@@ -14,7 +14,7 @@ class HomeDatabase {
         console.log(file)
         console.log("Saving Customer Data ...");
         await Customers.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { customer_name: data.customer_name }] });
-        await Customers.insertMany(data);
+        await Customers.insertMany(file);
         console.log("Success!");
         return true;
     }
