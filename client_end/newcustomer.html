@@ -52,94 +52,155 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="/uploadnewcustomer" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-                        <div class="form-group">
+                    <form id="newcustomerform" action="/uploadnewcustomer" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        <div id="newcustomerformbody" class="form-group">
                             <label for="customer_name" class=" mt-4">Customer</label>
-                            <input id="graphic_file" type="text" name="customer_name" class="form-control" placeholder="Customer name.." required>
+                            <input id="customer_name" type="text" name="customer_name" class="form-control" placeholder="Customer name.." required>
                             <div class="invalid-feedback">
                                 Please enter a customer name.
                             </div>
 
                             <label for="customer_address" class=" mt-4">Postal Address</label>
-                            <input id="graphic_file" type="text" name="customer_address" class="form-control" placeholder="Postal address.." required>
+                            <input id="customer_address" type="text" name="customer_address" class="form-control" placeholder="Postal address.." required>
                             <div class="invalid-feedback">
                                 Please enter a customer address.
                             </div>
 
                             <label for="customer_email" class=" mt-4">Email Address</label>
-                            <input id="graphic_file" type="email" name="customer_email" class="form-control" placeholder="name@example.com" required>
+                            <input id="customer_email" type="email" name="customer_email" class="form-control" placeholder="name@example.com" required>
                             <div class="invalid-feedback">
                                 Please enter a valid email address.
                             </div>
 
                             <label for="customer_contact_no" class=" mt-4">Contact Number</label>
-                            <input id="graphic_file" type="tel" name="customer_contact_no" class="form-control" placeholder="(format: xxxx-xxx-xxxx)" pattern="^\d{4}-\d{3}-\d{4}$" required>
+                            <input id="customer_contact_no" type="tel" name="customer_contact_no" class="form-control" placeholder="(format: xxxx-xxx-xxxx)" pattern="^\d{4}-\d{3}-\d{4}$" required>
                             <div class="invalid-feedback">
                                 Please enter a valid contact number.
                             </div>
 
-                            <label for="graphic_file" class=" mt-4">Graphic file</label>
-                            <input id="graphic_file" type="text" name="filename_1" class="form-control" placeholder="File name.." required>
+                            <label for="filename_1" class=" mt-4">Graphic file</label>
+                            <input id="filename_1" type="text" name="filename_1" class="form-control" placeholder="File name.." required>
                             <div class="invalid-feedback">
                                 Please enter a filename.
                             </div>
-
                             <div class="custom-file mt-4">
-                                <input type="file" name="uploadedFile" name="file_1" onchange="uploadFile()" class="custom-file-input" id="file_1" required>
+                                <input type="file" name="uploadedFile" name="file_1" onchange="uploadFile(this)" class="custom-file-input" id="file_1" required>
                                 <label id="file_1_label" class="custom-file-label" for="file_1">Choose file...</label>
                                 <div class="invalid-feedback">Please select a file.</div>
                             </div>
-                            <small class="text-muted" id="status"></small>
+                            <small class="text-muted" id="status_file_1"></small><br/>
 
-                            <!-- <label for="graphic_file" class=" mt-4">Graphic file</label>
-                        <input id="graphic_file" type="text" name="filename" class="form-control" placeholder="File name.." required>
-                        <div class="invalid-feedback">
-                            Please enter a filename.
+                            <label for="filename_2" class=" mt-4">Graphic file</label>
+                            <input id="filename_2" type="text" name="filename_2" class="form-control" placeholder="File name.." required>
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_2" onchange="uploadFile(this)" class="custom-file-input" id="file_2" required>
+                                <label id="file_2_label" class="custom-file-label" for="file_2">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_2"></small><br/>
+
+                            <label for="filename_3" class=" mt-4">Graphic file</label>
+                            <input id="filename_3" type="text" name="filename_3" class="form-control" placeholder="File name.." required>
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_3" onchange="uploadFile(this)" class="custom-file-input" id="file_3" required>
+                                <label id="file_3_label" class="custom-file-label" for="file_3">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_3"></small><br/>
+
+                            <label for="filename_4" class=" mt-4">Graphic file</label>
+                            <input id="filename_4" type="text" name="filename_4" class="form-control" placeholder="File name.." required>
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_4" onchange="uploadFile(this)" class="custom-file-input" id="file_4" required>
+                                <label id="file_4_label" class="custom-file-label" for="file_4">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_4"></small><br/>
+
+                            <label for="filename_5" class=" mt-4">Graphic file</label>
+                            <input id="filename_5" type="text" name="filename_5" class="form-control" placeholder="File name.." required>
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_5" onchange="uploadFile(this)" class="custom-file-input" id="file_5" required>
+                                <label id="file_5_label" class="custom-file-label" for="file_5">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_5"></small><br/>
+
+                            <label for="filename_6" class=" mt-4">Graphic file</label>
+                            <input id="filename_6" type="text" name="filename_6" class="form-control" placeholder="File name.." required>
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_6" onchange="uploadFile(this)" class="custom-file-input" id="file_6" required>
+                                <label id="file_6_label" class="custom-file-label" for="file_6">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_6"></small><br/>
+
+                            <label for="filename_7" class=" mt-4">Graphic file</label>
+                            <input id="filename_7" type="text" name="filename_7" class="form-control" placeholder="File name.." required>
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_7" onchange="uploadFile(this)" class="custom-file-input" id="file_7" required>
+                                <label id="file_7_label" class="custom-file-label" for="file_7">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_7"></small><br/>
+
+                            <label for="filename_8" class=" mt-4">Graphic file</label>
+                            <input id="filename_8" type="text" name="filename_8" class="form-control" placeholder="File name.." required>
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_8" onchange="uploadFile(this)" class="custom-file-input" id="file_8" required>
+                                <label id="file_8_label" class="custom-file-label" for="file_8">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_8"></small><br/>
+
+                            <label for="filename_9" class=" mt-4">Graphic file</label>
+                            <input id="filename_9" type="text" name="filename_9" class="form-control" placeholder="File name.." required>
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_9" onchange="uploadFile(this)" class="custom-file-input" id="file_9" required>
+                                <label id="file_9_label" class="custom-file-label" for="file_9">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_9"></small><br/>
+
+                            <label for="filename_10" class=" mt-4">Graphic file</label>
+                            <input id="filename_10" type="text" name="filename_10" class="form-control" placeholder="File name.." required>
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_10" onchange="uploadFile(this)" class="custom-file-input" id="file_10" required>
+                                <label id="file_10_label" class="custom-file-label" for="file_10">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_10"></small><br/>
+
                         </div>
-
-                        <div class="custom-file mt-4">
-                            <input type="file" name="uploadedFile" class="custom-file-input" id="validatedCustomFile" required>
-                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                            <div class="invalid-feedback">Please select a file.</div>
-                        </div> -->
-
-                            <!-- <label for="graphic_file" class=" mt-4">Graphic file</label>
-                        <input id="graphic_file" type="text" name="filename" class="form-control" placeholder="File name.." required>
-                        <div class="invalid-feedback">
-                            Please enter a filename.
-                        </div>
-
-                        <div class="custom-file mt-4">
-                            <input type="file" name="uploadedFile" class="custom-file-input" id="validatedCustomFile" required>
-                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                            <div class="invalid-feedback">Please select a file.</div>
-                        </div> -->
-
-                            <!-- <label for="graphic_file" class=" mt-4">Graphic file</label>
-                        <input id="graphic_file" type="text" name="filename" class="form-control" placeholder="File name.." required>
-                        <div class="invalid-feedback">
-                            Please enter a filename.
-                        </div>
-
-                        <div class="custom-file mt-4">
-                            <input type="file" name="uploadedFile" class="custom-file-input" id="validatedCustomFile" required>
-                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                            <div class="invalid-feedback">Please select a file.</div>
-                        </div> -->
-
-                            <!-- <label for="graphic_file" class=" mt-4">Graphic file</label>
-                        <input id="graphic_file" type="text" name="filename" class="form-control" placeholder="File name.." required>
-                        <div class="invalid-feedback">
-                            Please enter a filename.
-                        </div>
-
-                        <div class="custom-file mt-4">
-                            <input type="file" name="uploadedFile" class="custom-file-input" id="validatedCustomFile" required>
-                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                            <div class="invalid-feedback">Please select a file.</div>
-                        </div> -->
-                            <input type="submit" class="btn btn-success pull-right mt-4" value="Add Customer" />
-                        </div>
+                        <input type="submit" class="btn btn-success pull-right mt-4" value="Add Customer" />
+                        <input type="button" class="btn btn-primary pull-right m-4" onclick="resetForm()" value="Reset Form">
                     </form>
                 </div>
 
@@ -156,7 +217,7 @@
     <div class="container-fluid p-4">
         <div class="row mb-4">
             <div class="col-md-6">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addcustomerModal">
+                <button type="button" class="btn btn-primary" onclick="resetForm()" data-toggle="modal" data-target="#addcustomerModal">
                     Add Customer
                 </button>
             </div>
@@ -176,6 +237,8 @@
     </div>
 
     <script>
+        selected_file = "";
+
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
             'use strict';
@@ -195,23 +258,38 @@
             }, false);
         })();
 
+
         function _(el) {
             return document.getElementById(el);
         }
 
-        function uploadFile() {
+        function resetForm() {
+            _("newcustomerform").reset();
+            selected_file = "";
+            //resetting upload progress field
+            $("#newcustomerform").find("small").text("");
+            //resetting label for file name
+            for (var i = 1; i < 11; i++) {
+                $("label[for='file_" + i + "']").text("");
+            }
+        }
+
+        function uploadFile(thisfile) {
 
             //adding file to form data
-            var file = _("file_1").files[0];
+            var file = thisfile.files[0];
 
+            alert(thisfile.id);
             //setting label text to uploaded file name
-            _("file_1_label").innerHTML = file.name;
+            // _("file_1_label").innerHTML = file.name;
+            $("label[for='" + thisfile.id + "']").text(file.name);
 
             // alert(file.name+" | "+file.size+" | "+file.type);
 
             //making dummy form 
             var formdata = new FormData();
-            formdata.append("file1", file);
+            formdata.append(thisfile.id, file);
+            selected_file = thisfile.id;
             var ajax = new XMLHttpRequest();
             ajax.upload.addEventListener("progress", progressHandler, false);
             // ajax.addEventListener("load", completeHandler, false);
@@ -224,7 +302,7 @@
         }
 
         function progressHandler(event) {
-            _("status").innerHTML = "Uploaded " + (event.loaded / event.total) * 100 + "%";
+            _("status_" + selected_file).innerHTML = "Uploaded " + (event.loaded / event.total) * 100 + "%";
         }
 
         // function completeHandler(event) {
@@ -233,11 +311,11 @@
         // }
 
         function errorHandler(event) {
-            _("status").innerHTML = "Upload Failed";
+            _("status_" + selected_file).innerHTML = "Upload Failed";
         }
 
         function abortHandler(event) {
-            _("status").innerHTML = "Upload Aborted";
+            _("status_" + selected_file).innerHTML = "Upload Aborted";
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// DELETE ROW FUNCTION ////////////////////////////////////////////////
