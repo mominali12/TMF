@@ -234,8 +234,6 @@
             <div class="col-md-12 table-responsive">
                 <table id="mtable" class="table table-bordered tablewrapp">
                     <thead id="mtableheader" class="thead-light">
-                        <th>Customer</th>
-                        <th>Product</th>
                     </thead>
                     <tbody></tbody>
             </div>
@@ -275,39 +273,49 @@
         function resetForm() {
             //resetting input fields
             $("#customerform_heading").text("Add Customer");
-            _("newcustomerform").reset();
+            _("newcustomer_form").reset();
             //resetting selected file 
             selected_file = "";
             //resetting upload progress field
-            $("#newcustomerform").find("small").text("");
+            $("#newcustomer_form").find("small").text("");
             //resetting label for file name
             for (var i = 1; i < 11; i++) {
                 $("label[for='file_" + i + "']").text("");
             }
         }
 
-        function load_data(obj) {
+        function load_data(obj, cols) {
+
+            var tblheaders = '<th>' + '-' + '</th>';
+            tblheaders += '<th>' + '+' + '</th>';
+
+            cols.forEach(element => {
+                tblheaders += '<th>' + element.replaceAll("_", " ").toUpperCase() + '</th>';
+            });
+            $('#mtableheader').append(tblheaders);
 
             var employee_data = '';
             employee_data += '<tr>';
             employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
-            employee_data += '<td><button class="btn btn-primary" onclick="edit_row(this)"/>+</button></td>';
+            employee_data += '<td><button class="btn btn-primary" onclick="edit_row(this)" data-toggle="modal" data-target="#addcustomerModal"/>+</button></td>';
 
-            employee_data += '<td>' + obj["business_name "] + '</td>';
-            employee_data += '<td>' + obj["contact_name"] + '</td>';
-            employee_data += '<td>' + obj["customer_address"] + '</td>';
-            employee_data += '<td>' + obj["customer_email"] + '</td>';
-            employee_data += '<td>' + obj["customer_contact_no"] + '</td>';
-            employee_data += '<td>' + obj["filename_1"] + '</td>';
-            employee_data += '<td>' + obj["filename_2"] + '</td>';
-            employee_data += '<td>' + obj["filename_3"] + '</td>';
-            employee_data += '<td>' + obj["filename_4"] + '</td>';
-            employee_data += '<td>' + obj["filename_5"] + '</td>';
-            employee_data += '<td>' + obj["filename_6"] + '</td>';
-            employee_data += '<td>' + obj["filename_7"] + '</td>';
-            employee_data += '<td>' + obj["filename_8"] + '</td>';
-            employee_data += '<td>' + obj["filename_9"] + '</td>';
-            employee_data += '<td>' + obj["filename_10"] + '</td>';
+            cols.forEach(element => {
+                employee_data += '<td>' + obj[element] + '</td>';
+            });
+            // employee_data += '<td>' + obj["contact_name"] + '</td>';
+            // employee_data += '<td>' + obj["customer_address"] + '</td>';
+            // employee_data += '<td>' + obj["customer_email"] + '</td>';
+            // employee_data += '<td>' + obj["customer_contact_no"] + '</td>';
+            // employee_data += '<td>' + obj["filename_1"] + '</td>';
+            // employee_data += '<td>' + obj["filename_2"] + '</td>';
+            // employee_data += '<td>' + obj["filename_3"] + '</td>';
+            // employee_data += '<td>' + obj["filename_4"] + '</td>';
+            // employee_data += '<td>' + obj["filename_5"] + '</td>';
+            // employee_data += '<td>' + obj["filename_6"] + '</td>';
+            // employee_data += '<td>' + obj["filename_7"] + '</td>';
+            // employee_data += '<td>' + obj["filename_8"] + '</td>';
+            // employee_data += '<td>' + obj["filename_9"] + '</td>';
+            // employee_data += '<td>' + obj["filename_10"] + '</td>';
 
             $('#mtable').append(employee_data);
         }
@@ -326,16 +334,7 @@
 
             console.log("\n=================\nLOADED DATA\n========================\n", Data);
 
-            var cols = Object.keys(Data[0]);
-
-            //removing all unwanted keys
-            keys_to_remove = ["_id", "__v", "user_id"];
-            keys_to_remove.forEach(function(k) {
-                const index = cols.indexOf(k);
-                if (index > -1) {
-                    cols.splice(index, 1);
-                }
-            });
+            var cols = ['business_name', 'contact_name', 'customer_address', 'customer_email', 'customer_contact_no', 'filename_1', 'filename_2', 'filename_3', 'filename_4', 'filename_5', 'filename_6', 'filename_7', 'filename_8', 'filename_9', 'filename_10']
 
             console.log("\n=================\nCOLUMNS\n========================\n", cols);
 
@@ -400,7 +399,15 @@
 
         function edit_row(e) {
             $("#customerform_heading").text("Update Customer");
-
+            //getting cols
+            var cols = $(e).closest('tr').find('td');
+            console.log("cols", cols);
+            var i = 2;
+            $("form#newcustomer_form :input:not([type='file'])").each(function() {
+                if (i < 16)
+                    var input = $(this).val(cols[i].textContent); // This is the jquery object of the input, do what you will
+                i++;
+            });
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
