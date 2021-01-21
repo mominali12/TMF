@@ -21,13 +21,14 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <!-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script> -->
+
     <div class="container-fluid p-4">
         <div class="row">
             <div class="col-md-12 p-4">
@@ -46,16 +47,22 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h1 class="formheading">Add Customer</h1>
+                    <h1 id="customerform_heading" class="formheading">Add Customer</h1>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form id="newcustomerform" action="/uploadnewcustomer" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-                        <div id="newcustomerformbody" class="form-group">
-                            <label for="customer_name" class=" mt-4">Customer</label>
-                            <input id="customer_name" type="text" name="customer_name" class="form-control" placeholder="Customer name.." required>
+                    <form id="newcustomer_form" aria-autocomplete="none" autoComplete="off" action="/uploadnewcustomer" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        <div id="newcustomer_formbody" class="form-group">
+                            <label for="business_name" class=" mt-4">Business Name</label>
+                            <input id="business_name" type="text" name="business_name" class="form-control" placeholder="Business name.." required>
+                            <div class="invalid-feedback">
+                                Please enter a customer name.
+                            </div>
+
+                            <label for="contact_name" class=" mt-4">Contact Name</label>
+                            <input id="contact_name" type="text" name="contact_name" class="form-control" placeholder="Contact name..">
                             <div class="invalid-feedback">
                                 Please enter a customer name.
                             </div>
@@ -73,7 +80,7 @@
                             </div>
 
                             <label for="customer_contact_no" class=" mt-4">Contact Number</label>
-                            <input id="customer_contact_no" type="tel" name="customer_contact_no" class="form-control" placeholder="(format: xxxx-xxx-xxxx)" pattern="^\d{4}-\d{3}-\d{4}$">
+                            <input id="customer_contact_no" type="tel" name="customer_contact_no" class="form-control" placeholder="(format: xxxx-xxx-xxxx)">
                             <div class="invalid-feedback">
                                 Please enter a valid contact number.
                             </div>
@@ -259,12 +266,17 @@
         })();
 
 
+        //simplifying get element by ID
         function _(el) {
             return document.getElementById(el);
         }
 
+        //Reset customer form
         function resetForm() {
+            //resetting input fields
+            $("#customerform_heading").text("Add Customer");
             _("newcustomerform").reset();
+            //resetting selected file 
             selected_file = "";
             //resetting upload progress field
             $("#newcustomerform").find("small").text("");
@@ -274,6 +286,70 @@
             }
         }
 
+        function load_data(obj) {
+
+            var employee_data = '';
+            employee_data += '<tr>';
+            employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
+            employee_data += '<td><button class="btn btn-primary" onclick="edit_row(this)"/>+</button></td>';
+
+            employee_data += '<td>' + obj["business_name "] + '</td>';
+            employee_data += '<td>' + obj["contact_name"] + '</td>';
+            employee_data += '<td>' + obj["customer_address"] + '</td>';
+            employee_data += '<td>' + obj["customer_email"] + '</td>';
+            employee_data += '<td>' + obj["customer_contact_no"] + '</td>';
+            employee_data += '<td>' + obj["filename_1"] + '</td>';
+            employee_data += '<td>' + obj["filename_2"] + '</td>';
+            employee_data += '<td>' + obj["filename_3"] + '</td>';
+            employee_data += '<td>' + obj["filename_4"] + '</td>';
+            employee_data += '<td>' + obj["filename_5"] + '</td>';
+            employee_data += '<td>' + obj["filename_6"] + '</td>';
+            employee_data += '<td>' + obj["filename_7"] + '</td>';
+            employee_data += '<td>' + obj["filename_8"] + '</td>';
+            employee_data += '<td>' + obj["filename_9"] + '</td>';
+            employee_data += '<td>' + obj["filename_10"] + '</td>';
+
+            $('#mtable').append(employee_data);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////// Getting data from Database //////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        const Http = new XMLHttpRequest();
+        const url = 'http://localhost:3000/getcustomers';
+        Http.open("GET", url);
+        Http.send();
+        Http.onload = function() {
+
+            var Data = JSON.parse(Http.responseText);
+
+            console.log("\n=================\nLOADED DATA\n========================\n", Data);
+
+            var cols = Object.keys(Data[0]);
+
+            //removing all unwanted keys
+            keys_to_remove = ["_id", "__v", "user_id"];
+            keys_to_remove.forEach(function(k) {
+                const index = cols.indexOf(k);
+                if (index > -1) {
+                    cols.splice(index, 1);
+                }
+            });
+
+            console.log("\n=================\nCOLUMNS\n========================\n", cols);
+
+            //looping over table's data
+            for (var i = 0; i < Data.length; i++) {
+                var obj = Data[i];
+                load_data(obj, cols);
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// Uploading file Function //////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         function uploadFile(thisfile) {
 
             //adding file to form data
@@ -282,8 +358,6 @@
             //setting label text to uploaded file name
             // _("file_1_label").innerHTML = file.name;
             $("label[for='" + thisfile.id + "']").text(file.name);
-
-            // alert(file.name+" | "+file.size+" | "+file.type);
 
             //making dummy form 
             var formdata = new FormData();
@@ -300,6 +374,7 @@
             ajax.send(formdata);
         }
 
+        // file upload progress
         function progressHandler(event) {
             _("status_" + selected_file).innerHTML = "Uploaded " + (event.loaded / event.total) * 100 + "%";
         }
@@ -309,13 +384,25 @@
         //     // _("progressBar").value = 0; //wil clear progress bar after successful upload
         // }
 
+        // error occured while file uploading 
         function errorHandler(event) {
             _("status_" + selected_file).innerHTML = "Upload Failed";
         }
 
+        // file upload cancelled/aborted
         function abortHandler(event) {
             _("status_" + selected_file).innerHTML = "Upload Aborted";
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// DELETE ROW FUNCTION ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function edit_row(e) {
+            $("#customerform_heading").text("Update Customer");
+
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// DELETE ROW FUNCTION ////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

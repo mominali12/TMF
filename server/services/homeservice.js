@@ -12,13 +12,12 @@ class HomeDatabase {
         console.log(files);
         console.log(data);
         let final_data = { customer_name: data.customer_name, customer_address: data.customer_address, customer_email: data.customer_email, customer_contact_no: data.customer_contact_no, user_id: process.env.ACTIVE_USER_ID };
-        let file_index=0;
-        for( let index =1;index < 11 ;index++) // 10 attachements in customer table
+        let file_index = 0;
+        for (let index = 1; index < 11; index++) // 10 attachements in customer table
         {
-            final_data['filename_'+index] = data['filename_'+index];
-            if(final_data['filename_'+index] !== "")
-            {
-                final_data['file_'+index] = binary(files.uploadedFile[file_index].data);
+            final_data['filename_' + index] = data['filename_' + index];
+            if (final_data['filename_' + index] !== "") {
+                final_data['file_' + index] = binary(files.uploadedFile[file_index].data);
                 file_index++;
             }
         }
