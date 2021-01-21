@@ -7,11 +7,11 @@ const binary = mongodb.Binary;
 class HomeDatabase {
 
     async SaveCustomerData(data, files) {
-        if (data.customer_name === "" || data.customer_name === undefined || data.customer_name == null)
+        if (data.business_name === "" || data.business_name === undefined || data.business_name == null)
             return false;
         console.log(files);
         console.log(data);
-        let final_data = { customer_name: data.customer_name, customer_address: data.customer_address, customer_email: data.customer_email, customer_contact_no: data.customer_contact_no, user_id: process.env.ACTIVE_USER_ID };
+        let final_data = { business_name:data.business_name, contact_name: data.contact_name , customer_address: data.customer_address, customer_email: data.customer_email, customer_contact_no: data.customer_contact_no, user_id: process.env.ACTIVE_USER_ID };
         let file_index=0;
         for( let index =1;index < 11 ;index++) // 10 attachements in customer table
         {
@@ -24,7 +24,7 @@ class HomeDatabase {
         }
         console.log(final_data);
         console.log("Saving Customer Data ...");
-        await Customers.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { customer_name: data.customer_name }] });
+        await Customers.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { business_name: data.business_name }] });
         await Customers.insertMany(final_data);
         console.log("Success!");
         return true;

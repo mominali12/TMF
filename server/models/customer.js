@@ -1,7 +1,11 @@
 const mongoose = require ('mongoose');
 
 const CustomerSchema = mongoose.Schema({
-  customer_name: { type: String, required: true, unique: true },
+  business_name: { type: String, required: true, unique: true },
+  contact_name:  {
+    type: String,
+    default : ""
+  },
   customer_address:  {
     type: String,
     default : ""
@@ -118,7 +122,7 @@ const CustomerSchema = mongoose.Schema({
   user_id: Number,
 });
 
-CustomerSchema.index({ customer_name: -1 });
+CustomerSchema.index({ business_name: -1 });
 
 const Customer = mongoose.model(
   'Customer',
