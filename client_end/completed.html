@@ -125,18 +125,18 @@
     <!--////////////////////////////////////// ADD ROW MODAL ///////////////////////////////////////-->
     <!--////////////////////////////////////////////////////////////////////////////////////////////-->
 
-    <!-- The Modal -->
+    <!-- The Modal
     <div class="modal" id="rowModal">
         <div class="modal-dialog">
             <div class="modal-content">
 
-                <!-- Modal Header -->
+                Modal Header
                 <div class="modal-header">
                     <h4 class="modal-title modalheading">Add row</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <!-- Modal body -->
+                Modal body
                 <div class="modal-body">
                     <label for="customer_name">Customer Name</label>
                     <input id="row_modal_customer_name" class="form-control" id="customer_name" placeholder="Customer Name">
@@ -144,14 +144,14 @@
                     <input id="row_modal_product_name" class="form-control" id="product_name" placeholder="Product">
                 </div>
 
-                <!-- Modal footer -->
+                Modal footer
                 <div class="modal-footer">
                     <button id="add_row_modal" type="button" class="btn btn-success" data-dismiss="modal">Add Row</button>
                 </div>
 
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
     <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
@@ -461,6 +461,24 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// files_drop_down FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function files_drop_down(selectedval) {
+            var dropdown = '<select class="form-control" name="general_dropdown" id="files_dd">';
+            var attachment = "";
+            for (let i = 1; i < 11; i++) {
+                attachment = 'Attachment-' + i;
+                if (attachment.localeCompare(selectedval) === 0) {
+                    dropdown += '<option selected="selected" value="' + attachment + '">' + attachment + '</option>';
+
+                } else {
+                    dropdown += '<option value="' + attachment + '">' + attachment + '</option>';
+                }
+            }
+            return dropdown;
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////// Completed col dropdown FUNC ///////////////////////////////////////////////
@@ -582,7 +600,7 @@
                     if (key.localeCompare("completed") === 0) {
                         employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
                     } else if (key.localeCompare("file") === 0) {
-                        employee_data += '<td>' + make_fileinput_field(obj[key]) + '</td>';
+                        employee_data += '<td>' + files_drop_down(obj[key]) + '</td>';
                     } else if (cols[key].localeCompare("text") === 0) {
                         employee_data += make_text_field(obj[key]);
                     } else if (cols[key].localeCompare("date") === 0) {

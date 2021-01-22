@@ -285,8 +285,7 @@
                             if (key.localeCompare("completed") === 0) {
                                 employee_data += '<td>' + completed_drop_down('') + '</td>';
                             } else if (key.localeCompare("file") === 0) {
-                                // employee_data += make_text_field('');
-                                employee_data += '<td>' + make_fileinput_field('') + '</td>';
+                                employee_data += '<td>' + files_drop_down('Attachment_1') + '</td>';
                             } else if (tbl_cols[key].localeCompare("text") === 0) {
                                 employee_data += make_text_field('');
                             } else if (tbl_cols[key].localeCompare("date") === 0) {
@@ -468,6 +467,26 @@
             }
         }
 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// files_drop_down FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function files_drop_down(selectedval) {
+            var dropdown = '<select class="form-control" name="general_dropdown" id="files_dd">';
+            var attachment = "";
+            for (let i = 1; i < 11; i++) {
+                attachment = 'Attachment-' + i;
+                if (attachment.localeCompare(selectedval) === 0) {
+                    dropdown += '<option selected="selected" value="' + attachment + '">' + attachment + '</option>';
+
+                } else {
+                    dropdown += '<option value="' + attachment + '">' + attachment + '</option>';
+                }
+            }
+            return dropdown;
+        }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////// Completed col dropdown FUNC ///////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -597,7 +616,7 @@
                     if (key.localeCompare("completed") === 0) {
                         employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
                     } else if (key.localeCompare("file") === 0) {
-                        employee_data += '<td>' + make_fileinput_field(obj[key]) + '</td>';
+                        employee_data += '<td>' + files_drop_down(obj[key]) + '</td>';
                     } else if (cols[key].localeCompare("text") === 0) {
                         employee_data += make_text_field(obj[key]);
                     } else if (cols[key].localeCompare("date") === 0) {
@@ -702,18 +721,18 @@
 
         Http.onload = (e) => {
 
-            $(function() {
-                var current = location.pathname;
-                console.log("location: ", current);
-                $('#nav li a').each(function() {
-                    var $this = $(this);
-                    // if the current path is like this link, make it active
-                    if ($this.attr('href').indexOf(current) !== -1) {
-                        console.log("href_val: ", $this.attr('href'));
-                        $this.addClass('active');
-                    }
-                });
-            });
+            // $(function() {
+            //     var current = location.pathname;
+            //     console.log("location: ", current);
+            //     $('#nav li a').each(function() {
+            //         var $this = $(this);
+            //         // if the current path is like this link, make it active
+            //         if ($this.attr('href').indexOf(current) !== -1) {
+            //             console.log("href_val: ", $this.attr('href'));
+            //             $this.addClass('active');
+            //         }
+            //     });
+            // });
 
             var Data = JSON.parse(Http.responseText);
 
