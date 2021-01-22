@@ -136,7 +136,8 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <label for="customer_name">Customer Name</label>
-                    <input id="row_modal_customer_name" class="form-control" id="customer_name" placeholder="Customer Name">
+                    <select class="form-control" name="general_dropdown" id="customers_dd"></select>
+                    <!-- <input id="row_modal_customer_name" class="form-control" id="customer_name" placeholder="Customer Name"> -->
                     <label for="product_name">Product</label>
                     <input id="row_modal_product_name" class="form-control" id="product_name" placeholder="Product">
                 </div>
@@ -210,14 +211,6 @@
         var open__orders_ = {};
         var customers_list = [];
 
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////// MAKE CUSTOMER LIST FUNCTION ///////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        function makecustomerlist() {
-
-        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// SEARCH CUSTOMER FUNCTION ///////////////////////////////////////////
@@ -720,6 +713,12 @@
         Http.send();
 
         Http.onload = (e) => {
+
+            $.get("http://localhost:3000/getcustomersname/", function(data, status) {
+                console.log("Data: ", data, "\nStatus: ", status);
+                for (let i = 0; i < data.length; i++)
+                    $("#customers_dd").append('<option value="' + data[i].business_name + '">' + data[i].business_name + '</option>');
+            });
 
             // $(function() {
             //     var current = location.pathname;
