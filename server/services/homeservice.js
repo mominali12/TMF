@@ -6,6 +6,17 @@ const binary = mongodb.Binary;
 
 class HomeDatabase {
 
+
+    async DeleteCustomerData(data)
+    {
+        if (data.business_name === "" || data.business_name === undefined || data.business_name == null)
+            return false;
+        console.log("Deleting Customer Data ...");
+        await Customers.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { business_name: data.business_name }] });
+        console.log("Successfully Deleted!");
+        return true;
+    }
+
     async SaveCustomerData(data, files) {
         if (data.business_name === "" || data.business_name === undefined || data.business_name == null)
             return false;
@@ -16,7 +27,8 @@ class HomeDatabase {
         for (let index = 1; index < 11; index++) // 10 attachements in customer table
         {
             final_data['filename_' + index] = data['filename_' + index];
-            if (final_data['filename_' + index] !== "") {
+            if (final_data['filename_' + index] !== "" && files.uploadedFile[file_index] !== undefined)
+            {
                 final_data['file_' + index] = binary(files.uploadedFile[file_index].data);
                 file_index++;
             }
@@ -25,7 +37,7 @@ class HomeDatabase {
         console.log("Saving Customer Data ...");
         await Customers.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { business_name: data.business_name }] });
         await Customers.insertMany(final_data);
-        console.log("Success!");
+        console.log("Successfully Saved!");
         return true;
     }
 
@@ -33,6 +45,9 @@ class HomeDatabase {
         return true;
     }
 
+    async getCustomerBusinessName() {
+        return await Customers.find({user_id : Number(process.env.ACTIVE_USER_ID) },{ business_name:1,_id:0 });
+    }
 
     async getCustomersData() {
         return await Customers.find({ user_id: Number(process.env.ACTIVE_USER_ID) });
@@ -99,7 +114,8 @@ class HomeDatabase {
 
     }
 
-    async SaveData(data) {
+    async SaveData(data) // Function to save data for open orders
+    {
         const session = await Orders.startSession();
         session.startTransaction();
         try {
@@ -132,7 +148,8 @@ class HomeDatabase {
 
     }
 
-    async FirstTimeColumnsLoad() {
+    async FirstTimeColumnsLoad() // This function only runs once. Creates the by default columns for a new user.
+    {
         const column = await Columns.findOne({ user_id: process.env.ACTIVE_USER_ID }).exec();
         if (column === null || column === undefined) {
             await Columns.insertMany([
