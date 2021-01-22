@@ -313,6 +313,21 @@
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////// Find obj keys with prefix "X" //////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function findValueByPrefix(object, prefix) {
+            var lst = {};
+            for (var property in object) {
+                if (object.hasOwnProperty(property) &&
+                    property.toString().startsWith(prefix)) {
+                    lst[property] = object[property];
+                }
+            }
+            return lst;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////// Getting data from Database //////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -330,6 +345,8 @@
 
             console.log("\n=================\nCOLUMNS\n========================\n", cols);
 
+            var files_list = findValueByPrefix(Data[0], "file_");
+            console.log(files_list, "=============================\n\n");
 
             // making table headers
             var tblheaders = '<th>' + '-' + '</th>';
@@ -422,7 +439,18 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function delete_row(e) {
-            $(e).closest("tr").remove();
+            //get business name
+            var businessname = $(e).closest("tr").children()[2].textContent;
+            data = {
+                business_name: businessname
+            }
+            $.post("http://localhost:3000/dummyfileupload", data,
+                function(data, status) {
+                    console.log("request status is :", status);
+                    alert(businessname + "'s record is deleted !");
+                    // $(e).closest("tr").remove();
+                    location.reload();
+                });
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
