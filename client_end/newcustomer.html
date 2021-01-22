@@ -286,14 +286,6 @@
 
         function load_data(obj, cols) {
 
-            var tblheaders = '<th>' + '-' + '</th>';
-            tblheaders += '<th>' + '+' + '</th>';
-
-            cols.forEach(element => {
-                tblheaders += '<th>' + element.replaceAll("_", " ").toUpperCase() + '</th>';
-            });
-            $('#mtableheader').append(tblheaders);
-
             var employee_data = '';
             employee_data += '<tr>';
             employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
@@ -337,6 +329,19 @@
             var cols = ['business_name', 'contact_name', 'customer_address', 'customer_email', 'customer_contact_no', 'filename_1', 'filename_2', 'filename_3', 'filename_4', 'filename_5', 'filename_6', 'filename_7', 'filename_8', 'filename_9', 'filename_10']
 
             console.log("\n=================\nCOLUMNS\n========================\n", cols);
+
+
+            // making table headers
+            var tblheaders = '<th>' + '-' + '</th>';
+            tblheaders += '<th>' + '+' + '</th>';
+
+            cols.forEach(element => {
+                tblheaders += '<th>' + element.replaceAll("_", " ").toUpperCase() + '</th>';
+            });
+
+            // adding table headers under thead tag of our table
+            $('#mtableheader').append(tblheaders);
+
 
             //looping over table's data
             for (var i = 0; i < Data.length; i++) {
@@ -402,10 +407,12 @@
             //getting cols
             var cols = $(e).closest('tr').find('td');
             console.log("cols", cols);
+            //first two cols are just for basic delete/update operation's assistance
             var i = 2;
+            //accessing all input fields 
             $("form#newcustomer_form :input:not([type='file'])").each(function() {
                 if (i < 16)
-                    var input = $(this).val(cols[i].textContent); // This is the jquery object of the input, do what you will
+                    var input = $(this).val(cols[i].textContent); //updating field value
                 i++;
             });
         }

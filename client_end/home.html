@@ -28,7 +28,29 @@
 
     <!-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script> -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- <p class="navbar-brand">Welcome </p> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav" id="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:3000/home">Open Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:3000/home/completed">Completed Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:3000/graph">Graph</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:3000/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <div class="container-fluid p-4">
         <div class="row">
             <div class="col-md-4 p-4">
@@ -49,32 +71,39 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-4 p-4">
+            <!-- <div class="col-md-4 p-4">
                 <button id="logout_btn" type="button" class="btn pull-right btn-danger">Logout</button>
-            </div>
+            </div> -->
         </div>
 
         <div class="row">
-            <div class="col-md-6 p-4">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#colModal">
-                    Add/Remove Column
-                </button>
-                <button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#rowModal">
-                    Add Row
-                </button>
-                <button type="button" class="btn btn-success ml-4" onclick="submit()">
-                    Save
-                </button>
-            </div>
-            <div class="col-md-6 p-4">
+
+            <!-- <div class="col-md-6 p-4">
                 <button id="graph_btn" type="button" class="btn pull-right btn-success ml-4">Graph</button>
                 <button id="completed_page_nav" type="button" class="btn pull-right btn-primary">Completed Orders</button>
+            </div> -->
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="modalheading">Open Orders</h4>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6 p-4">
                 <input type="text" class="form-control mr-2" id="customer_search" onkeyup="searchcustomer()" placeholder="Search customer">
+            </div>
+            <div class="col-md-6 p-4">
+                <button type="button" class="btn btn-success ml-4 pull-right" onclick="submit()">
+                    Save
+                </button>
+                <button type="button" class="btn btn-primary ml-4 pull-right" data-toggle="modal" data-target="#colModal">
+                    Add/Remove Column
+                </button>
+                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#rowModal">
+                    Add Row
+                </button>
             </div>
         </div>
 
@@ -179,6 +208,8 @@
         var tbl_cols = {};
         var completed_orders_ = {};
         var open__orders_ = {};
+        var customers_list = [];
+
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// MAKE CUSTOMER LIST FUNCTION ///////////////////////////////////////////
@@ -652,11 +683,16 @@
         Http_completedorders.open("GET", url_completedorders);
         Http_completedorders.send();
 
+
         Http_completedorders.onload = (e) => {
             var Data_completedorders = JSON.parse(Http_completedorders.responseText);
             // console.log("\nCOMPLETED ORDERS KA DATA LOAD HOGAYA HAI !\n", Data_completedorders)
             completed_orders_ = Data_completedorders.orders;
         }
+
+
+        //loading customers' data
+
 
         //loading open orders
         const Http = new XMLHttpRequest();
@@ -665,6 +701,19 @@
         Http.send();
 
         Http.onload = (e) => {
+
+            $(function() {
+                var current = location.pathname;
+                console.log("location: ", current);
+                $('#nav li a').each(function() {
+                    var $this = $(this);
+                    // if the current path is like this link, make it active
+                    if ($this.attr('href').indexOf(current) !== -1) {
+                        console.log("href_val: ", $this.attr('href'));
+                        $this.addClass('active');
+                    }
+                });
+            });
 
             var Data = JSON.parse(Http.responseText);
 

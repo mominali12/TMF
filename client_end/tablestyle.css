@@ -1,82 +1,85 @@
-    .formheading {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-weight: bold;
-        font-size: 70px;
-    }
-    
-    .modalheading {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-weight: bold;
-        font-size: 50px;
-    }
-    
-    .tablewrapp select {
-        width: 120px;
-        white-space: nowrap;
-        /* overflow: hidden; */
-        /* white-space: pre; */
-        text-overflow: ellipsis;
-        -webkit-appearance: none;
-        background-color: rgb(0, 112, 192);
-    }
-    
-    .tablewrapp td select {
-        color: white;
-    }
-    
-    .table>tbody>tr>td {
-        vertical-align: middle;
-    }
-    
-    .tablewrapp th {
-        white-space: nowrap;
-        font-weight: lighter;
-        text-align: center;
-    }
-    
-    .tablewrapp td {
-        text-align: center;
-        background-color: rgb(0, 112, 192);
-        color: white;
-    }
-    
-    input {
-        color: #2c2c2c
-    }
-    
-    input[type="file"] {
-        color: #2c2c2c;
-    }
-    
-    .custom-file-upload {
-        border: 1px solid #ccc;
-        display: inline-block;
-        padding: 6px 12px;
-        cursor: pointer;
-    }
-    
-    select option,
-    select {
-        background-color: white;
-        color: #2c2c2c
-    }
-    
-    select option[value="Not Started"],
-    select.o1 {
-        background-color: rgb(0, 112, 192);
-    }
-    
-    select option[value="In Progress"],
-    select.o2 {
-        background-color: rgb(255, 192, 0);
-    }
-    
-    select option[value="Delayed"],
-    select.o3 {
-        background-color: rgb(255, 0, 0);
-    }
-    
-    select option[value="Completed"],
-    select.o3 {
-        background-color: rgb(0, 176, 80);
-    }
+/* tbody{height: 400px; overflow-y: scroll;display:block;}
+th { position: sticky; top: 0; } */
+
+.formheading {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 70px;
+}
+
+.modalheading {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 50px;
+}
+
+.tablewrapp select {
+    width: 120px;
+    white-space: nowrap;
+    /* overflow: hidden; */
+    /* white-space: pre; */
+    text-overflow: ellipsis;
+    -webkit-appearance: none;
+    background-color: rgb(0, 112, 192);
+}
+
+.tablewrapp td select {
+    color: white;
+}
+
+.table>tbody>tr>td {
+    vertical-align: middle;
+}
+
+.tablewrapp th {
+    white-space: nowrap;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.tablewrapp td {
+    text-align: center;
+    background-color: rgb(0, 112, 192);
+    color: white;
+}
+
+input {
+    color: #2c2c2c
+}
+
+input[type="file"] {
+    color: #2c2c2c;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+select option,
+select {
+    background-color: white;
+    color: #2c2c2c
+}
+
+select option[value="Not Started"],
+select.o1 {
+    background-color: rgb(0, 112, 192);
+}
+
+select option[value="In Progress"],
+select.o2 {
+    background-color: rgb(255, 192, 0);
+}
+
+select option[value="Delayed"],
+select.o3 {
+    background-color: rgb(255, 0, 0);
+}
+
+select option[value="Completed"],
+select.o3 {
+    background-color: rgb(0, 176, 80);
+}
