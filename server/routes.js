@@ -6,6 +6,7 @@ function routes(app) {
     app.get('/newcustomer', (Home.NewCustomerForm))
     app.get('/getcustomers', (Home.GetCustomers))
     app.post('/uploadnewcustomer', (Home.SaveCustomerData))
+    app.post('/uploadnewcustomer', (Home.DeleteCustomerData))
     app.post('/dummyfileupload', (Home.DummyUpload))
 
 

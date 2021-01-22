@@ -158,8 +158,20 @@ class Controller {
     async SaveCustomerData(req, res) {
         if (process.env.ACTIVE_USER != "")
         {
-            //TODO #11 #10:@osaaama01
             let result = await HomeService.SaveCustomerData(req.body, req.files);
+            if (result)
+                res.status(200).redirect('/newcustomer');
+            else
+                res.status(400).send(result);
+        }
+        else
+            res.redirect('/login');
+    }
+
+    async DeleteCustomerData(req, res) {
+        if (process.env.ACTIVE_USER != "")
+        {
+            let result = await HomeService.DeleteCustomerData(req.body, req.files);
             if (result)
                 res.status(200).redirect('/newcustomer');
             else
@@ -172,6 +184,14 @@ class Controller {
     async GetCustomers(req, res) {
         if (process.env.ACTIVE_USER != "") {
             const customers = await HomeService.getCustomersData();
+            res.status(200).json(customers);
+        } else
+            res.redirect('/login');
+    }
+
+    async GetCustomersBusinessName(req, res) {
+        if (process.env.ACTIVE_USER != "") {
+            const customers = await HomeService.getCustomerBusinessName();
             res.status(200).json(customers);
         } else
             res.redirect('/login');

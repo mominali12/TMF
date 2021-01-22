@@ -91,6 +91,9 @@ db.orders.find({user_id : Number('1')});
 // Run a find command to view items sold on April 4th, 2014.
 db.orders.find({ user_id: 1 });
 
+
+db.customers.find({user_id : 1},{ user_id: 1, _id : 0 }); // Showing specific columns, first json for where condition, second for columns. 1 means show, 0 means hide.
+
 // Run an aggregation to view total sales for each product in 2014.
 const aggregation = [
   { $match: { date: { $gte: new Date('2014-01-01'), $lt: new Date('2015-01-01') } } },
