@@ -5,8 +5,9 @@ let fs = require('fs');
 function routes(app) {
     app.get('/newcustomer', (Home.NewCustomerForm))
     app.get('/getcustomers', (Home.GetCustomers))
+    app.get('/getcustomersname', (Home.GetCustomersBusinessName))
     app.post('/uploadnewcustomer', (Home.SaveCustomerData))
-    app.post('/uploadnewcustomer', (Home.DeleteCustomerData))
+    app.post('/deletecustomer', (Home.DeleteCustomerData))
     app.post('/dummyfileupload', (Home.DummyUpload))
 
 

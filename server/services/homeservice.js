@@ -27,7 +27,8 @@ class HomeDatabase {
         for (let index = 1; index < 11; index++) // 10 attachements in customer table
         {
             final_data['filename_' + index] = data['filename_' + index];
-            if (final_data['filename_' + index] !== "") {
+            if (final_data['filename_' + index] !== "" && files.uploadedFile[file_index] !== undefined)
+            {
                 final_data['file_' + index] = binary(files.uploadedFile[file_index].data);
                 file_index++;
             }
