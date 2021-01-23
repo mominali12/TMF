@@ -21,16 +21,30 @@ class HomeDatabase {
     async SaveCustomerData(data, files) {
         if (data.business_name === "" || data.business_name === undefined || data.business_name == null)
             return false;
+         
         console.log(files);
         console.log(data);
         let final_data = { business_name: data.business_name, contact_name: data.contact_name, customer_address: data.customer_address, customer_email: data.customer_email, customer_contact_no: data.customer_contact_no, user_id: process.env.ACTIVE_USER_ID };
-        let file_index = 0;
-        for (let index = 1; index < 11; index++) // 10 attachements in customer table
+        if(files.uploadedFile[0] === undefined || files.uploadedFile[0] === null ) // Doesn't send array for a single record in files that why we cannot use []
         {
-            final_data['filename_' + index] = data['filename_' + index];
-            if (final_data['filename_' + index] !== "" && files.uploadedFile[file_index] !== undefined) {
-                final_data['file_' + index] = files.uploadedFile[file_index];
-                file_index++;
+            for (let index = 1; index < 11; index++) // 10 attachements in customer table
+            {
+                final_data['filename_' + index] = data['filename_' + index];
+                if (final_data['filename_' + index] !== "" && files.uploadedFile !== undefined && files.uploadedFile !== null) {
+                    final_data['file_' + index] = files.uploadedFile;
+                    }
+            }
+        }
+        else
+        {
+            let file_index = 0;
+            for (let index = 1; index < 11; index++) // 10 attachements in customer table
+            {
+                final_data['filename_' + index] = data['filename_' + index];
+                if (final_data['filename_' + index] !== "" && files.uploadedFile[file_index] !== undefined && files.uploadedFile[file_index] !== null) {
+                    final_data['file_' + index] = files.uploadedFile[file_index];
+                    file_index++;
+                }
             }
         }
         console.log(final_data);
@@ -47,9 +61,29 @@ class HomeDatabase {
         let file_extension = (customer[data.file].name.split('.')); // Getting extension from the object's name retrieved from the db
         file_extension = file_extension[file_extension.length - 1];
         const file = customer[data.file].data.buffer;
-        //fs.writeFileSync('.\\'+data.path + '.' + file_extension, file);
-        fs.writeFileSync('Newfile' + '.' + file_extension, file);
+        const download_path = __dirname+'/../../client_end/Downloads/'+data.path + '.' + file_extension;
+        console.log(download_path);
+        fs.writeFileSync(download_path, file);
         return data.path + '.' + file_extension;
+    }
+
+    async DeleteFile(data)
+    {
+        const directory = __dirname+'/../../client_end/Downloads/';
+
+        fs.readdir( directory, (err, files) =>
+        {
+            if (err)
+                throw err;
+
+            for (const file of files)
+            {
+                fs.unlink(directory+file, err =>
+                {
+                    if (err) throw err;
+                });
+            }   
+        }); 
     }
 
     async getCustomerBusinessName() {

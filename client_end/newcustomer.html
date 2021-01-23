@@ -355,7 +355,7 @@
             var file_name = "file_" + file_num;
             var data = {
                 business_name: businessname,
-                path: "Downloads\\" + $(e).text(),
+                path: $(e).text(),
                 file: file_name
             }
             console.log("File download req data: ", data);
@@ -366,8 +366,8 @@
                     //fs.writeFileSync("Downloads\\customer1sample1.csv", file);
                     console.log("request status is :", status);
                     var a = document.createElement('a'); // create html element anchor
-                    a.href = 'Newfile.jpg'; // xhr.response is a blob
-                    a.download = "TEMP-1.jpg"; // Set the file name.
+                    a.href = '/Downloads/'+data;
+                    a.download = data; // Set the file name.
                     a.style.display = 'none'; // set anchor as hidden
                     document.body.appendChild(a);
                     a.click();

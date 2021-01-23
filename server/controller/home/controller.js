@@ -177,8 +177,11 @@ class Controller {
             res.redirect('/login');
     }
 
-    async GetCustomers(req, res) {
-        if (process.env.ACTIVE_USER != "") {
+    async GetCustomers(req, res)
+    {
+        if (process.env.ACTIVE_USER != "")
+        {
+            await HomeService.DeleteFile();
             const customers = await HomeService.getCustomersData();
             res.status(200).json(customers);
         } else
@@ -186,10 +189,12 @@ class Controller {
     }
 
     async GetCustomer(req, res) {
-        if (process.env.ACTIVE_USER != "") {
-            const customers = await HomeService.getCustomersData();
-            res.status(200).json(customers);
-        } else
+        if (process.env.ACTIVE_USER != "")
+        {
+            const customer = await HomeService.getCustomerData(req.body);
+            res.status(200).json(customer);
+        }
+        else
             res.redirect('/login');
     }
 
@@ -209,6 +214,15 @@ class Controller {
         } else
             res.redirect('/login');
     }
+
+    // async DeleteFile(req, res) {
+    //     if (process.env.ACTIVE_USER != "") {
+    //         const result = await HomeService.DeleteFile(req.body);
+    //         res.status(200).send(result);
+
+    //     } else
+    //         res.redirect('/login');
+    // }
 
 }
 
