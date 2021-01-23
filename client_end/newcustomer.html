@@ -284,7 +284,7 @@
             }
         }
 
-        function load_data(obj, cols, files_list) {
+        function load_data(obj, cols) {
 
             var employee_data = '';
             employee_data += '<tr>';
@@ -310,8 +310,8 @@
                     // } else {
                     //     employee_data += '<td>' + obj[element] + '</td>';
                     // }
-                    var filenum = element.slice(9)
-                    employee_data += '<td onclick="download_request(' + element + "," + file_num + ')">' + obj[element] + '</td>';
+                    var filenum = element.slice(9);
+                    employee_data += '<td onclick="download_request(this,' + filenum + ')">' + obj[element]; + '</td>';
                 } else {
                     employee_data += '<td>' + obj[element] + '</td>';
                 }
@@ -324,25 +324,20 @@
         /////////////////////////////////////// Find obj keys with prefix "X" //////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        function download_request(filename_key, file_num) {
+        function download_request(e, file_num) {
             //get business name
             var businessname = $(e).closest("tr").children()[2].textContent;
             var file_name = "file_" + file_num;
-            data = {
-                    business_name: businessname,
-                    filename_key: "",
-                    file: file_name
-                }
-                // $.post("http://localhost:3000/deletecustomer", data,
-                //     function(data, status) {
-                //         console.log("request status is :", status);
-                //         alert(businessname + "'s record is deleted !");
-                //         // $(e).closest("tr").remove();
-                //         location.reload();
-                //     });
-
-            // window.open("http://www.google.com", "", "width=200,height=100");
-
+            var data = {
+                business_name: businessname,
+                path: "Downloads\\" + $(e).text(),
+                file: file_name
+            }
+            console.log("File download req data: ", data);
+            $.post("http://localhost:3000/filedownload", data,
+                function(data, status) {
+                    console.log("request status is :", status);
+                });
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -394,16 +389,16 @@
             //looping over table's data
             for (var i = 0; i < Data.length; i++) {
                 var obj = Data[i];
-                var files_list = findValueByPrefix(Data[i], "file_");
-                console.log(files_list, "=============================\n\n");
-                var all_cols = [];
-                all_cols.push(...cols);
+                // var files_list = findValueByPrefix(Data[i], "file_");
+                // console.log(files_list, "=============================\n\n");
+                // var all_cols = [];
+                // all_cols.push(...cols);
 
                 // //adding files data cols
-                if (Object.keys(files_list).length > 0)
-                    all_cols.push(...Object.keys(files_list));
-                console.log("All columns: ", all_cols);
-                load_data(obj, all_cols, files_list);
+                // if (Object.keys(files_list).length > 0)
+                //     all_cols.push(...Object.keys(files_list));
+                // console.log("All columns: ", all_cols);
+                load_data(obj, cols);
             }
         }
 

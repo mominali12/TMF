@@ -156,28 +156,24 @@ class Controller {
     }
 
     async SaveCustomerData(req, res) {
-        if (process.env.ACTIVE_USER != "")
-        {
+        if (process.env.ACTIVE_USER != "") {
             let result = await HomeService.SaveCustomerData(req.body, req.files);
             if (result)
                 res.status(200).redirect('/newcustomer');
             else
                 res.status(400).send(result);
-        }
-        else
+        } else
             res.redirect('/login');
     }
 
     async DeleteCustomerData(req, res) {
-        if (process.env.ACTIVE_USER != "")
-        {
+        if (process.env.ACTIVE_USER != "") {
             let result = await HomeService.DeleteCustomerData(req.body, req.files);
             if (result)
                 res.status(200).redirect('/newcustomer');
             else
                 res.status(400).send(result);
-        }
-        else
+        } else
             res.redirect('/login');
     }
 
@@ -199,7 +195,7 @@ class Controller {
 
     async DownloadFile(req, res) {
         if (process.env.ACTIVE_USER != "") {
-            const result = await HomeService.DownloadFile();
+            const result = await HomeService.DownloadFile(req.body);
             res.status(200).send(result);
 
         } else
