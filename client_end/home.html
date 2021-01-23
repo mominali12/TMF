@@ -617,7 +617,9 @@
 
             Object.keys(cols).forEach(function(key) {
                 if (key.localeCompare("▬") !== 0) {
-                    if (key.localeCompare("completed") === 0) {
+                    if (key.localeCompare("customer_name") === 0) {
+                        employee_data += '<td>' + obj[key] + '</td>';
+                    } else if (key.localeCompare("completed") === 0) {
                         employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
                     } else if (key.localeCompare("file") === 0) {
                         employee_data += '<td>' + files_drop_down(obj[key]) + '</td>';

@@ -486,7 +486,7 @@
         function edit_row(e) {
             $("#customerform_heading").text("Update Customer");
             // getting cols
-            // var cols = $(e).closest('tr').find('td');
+            var cols = $(e).closest('tr').find('td');
             // console.log("cols", cols);
             //first two cols are just for basic delete/update operation's assistance
             var i = 2;
