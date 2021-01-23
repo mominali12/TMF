@@ -197,9 +197,9 @@ class Controller {
             res.redirect('/login');
     }
 
-    async DummyUpload(req, res) {
+    async DownloadFile(req, res) {
         if (process.env.ACTIVE_USER != "") {
-            const result = await HomeService.makeDummyUpload();
+            const result = await HomeService.DownloadFile();
             res.status(200).send(result);
 
         } else
