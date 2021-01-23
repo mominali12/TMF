@@ -284,7 +284,7 @@
             }
         }
 
-        function load_data(obj, cols) {
+        function load_data(obj, cols, files_list) {
 
             var employee_data = '';
             employee_data += '<tr>';
@@ -292,24 +292,57 @@
             employee_data += '<td><button class="btn btn-primary" onclick="edit_row(this)" data-toggle="modal" data-target="#addcustomerModal"/>+</button></td>';
 
             cols.forEach(element => {
-                employee_data += '<td>' + obj[element] + '</td>';
+                if (element.includes("filename_") && obj[element].localeCompare("") !== 0) {
+                    // /*
+                    //  *Steps for search file 
+                    //  *corresponding to the filename 
+                    //  */
+                    // //make temp name
+                    // var tempname = "file_";
+                    // //getting filenumber and appending to temp name
+                    // tempname += element.slice(-1);
+                    // //check if any file exist against this filename field
+                    // var file_found = cols.includes(tempname);
+                    // //if file exists
+                    // if (file_found) {
+                    //     console.log("\n---------------------\n File data: ", obj[tempname].data)
+                    //     employee_data += '<a href="#" download>Download</a>';
+                    // } else {
+                    //     employee_data += '<td>' + obj[element] + '</td>';
+                    // }
+                    var filenum = element.slice(9)
+                    employee_data += '<td onclick="download_request(' + element + "," + file_num + ')">' + obj[element] + '</td>';
+                } else {
+                    employee_data += '<td>' + obj[element] + '</td>';
+                }
             });
-            // employee_data += '<td>' + obj["contact_name"] + '</td>';
-            // employee_data += '<td>' + obj["customer_address"] + '</td>';
-            // employee_data += '<td>' + obj["customer_email"] + '</td>';
-            // employee_data += '<td>' + obj["customer_contact_no"] + '</td>';
-            // employee_data += '<td>' + obj["filename_1"] + '</td>';
-            // employee_data += '<td>' + obj["filename_2"] + '</td>';
-            // employee_data += '<td>' + obj["filename_3"] + '</td>';
-            // employee_data += '<td>' + obj["filename_4"] + '</td>';
-            // employee_data += '<td>' + obj["filename_5"] + '</td>';
-            // employee_data += '<td>' + obj["filename_6"] + '</td>';
-            // employee_data += '<td>' + obj["filename_7"] + '</td>';
-            // employee_data += '<td>' + obj["filename_8"] + '</td>';
-            // employee_data += '<td>' + obj["filename_9"] + '</td>';
-            // employee_data += '<td>' + obj["filename_10"] + '</td>';
 
             $('#mtable').append(employee_data);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////// Find obj keys with prefix "X" //////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function download_request(filename_key, file_num) {
+            //get business name
+            var businessname = $(e).closest("tr").children()[2].textContent;
+            var file_name = "file_" + file_num;
+            data = {
+                    business_name: businessname,
+                    filename_key: "",
+                    file: file_name
+                }
+                // $.post("http://localhost:3000/deletecustomer", data,
+                //     function(data, status) {
+                //         console.log("request status is :", status);
+                //         alert(businessname + "'s record is deleted !");
+                //         // $(e).closest("tr").remove();
+                //         location.reload();
+                //     });
+
+            // window.open("http://www.google.com", "", "width=200,height=100");
+
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -345,8 +378,6 @@
 
             console.log("\n=================\nCOLUMNS\n========================\n", cols);
 
-            var files_list = findValueByPrefix(Data[0], "file_");
-            console.log(files_list, "=============================\n\n");
 
             // making table headers
             var tblheaders = '<th>' + '-' + '</th>';
@@ -363,12 +394,21 @@
             //looping over table's data
             for (var i = 0; i < Data.length; i++) {
                 var obj = Data[i];
-                load_data(obj, cols);
+                var files_list = findValueByPrefix(Data[i], "file_");
+                console.log(files_list, "=============================\n\n");
+                var all_cols = [];
+                all_cols.push(...cols);
+
+                // //adding files data cols
+                if (Object.keys(files_list).length > 0)
+                    all_cols.push(...Object.keys(files_list));
+                console.log("All columns: ", all_cols);
+                load_data(obj, all_cols, files_list);
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////// Uploading file Function //////////////////////////////////////////
+        /////////////////////////////////////////// Uploading file Function ////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function uploadFile(thisfile) {
@@ -421,9 +461,9 @@
 
         function edit_row(e) {
             $("#customerform_heading").text("Update Customer");
-            //getting cols
-            var cols = $(e).closest('tr').find('td');
-            console.log("cols", cols);
+            // getting cols
+            // var cols = $(e).closest('tr').find('td');
+            // console.log("cols", cols);
             //first two cols are just for basic delete/update operation's assistance
             var i = 2;
             //accessing all input fields 
@@ -444,7 +484,7 @@
             data = {
                 business_name: businessname
             }
-            $.post("http://localhost:3000/dummyfileupload", data,
+            $.post("http://localhost:3000/deletecustomer", data,
                 function(data, status) {
                     console.log("request status is :", status);
                     alert(businessname + "'s record is deleted !");
