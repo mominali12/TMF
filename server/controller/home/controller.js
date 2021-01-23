@@ -185,6 +185,14 @@ class Controller {
             res.redirect('/login');
     }
 
+    async GetCustomer(req, res) {
+        if (process.env.ACTIVE_USER != "") {
+            const customers = await HomeService.getCustomersData();
+            res.status(200).json(customers);
+        } else
+            res.redirect('/login');
+    }
+
     async GetCustomersBusinessName(req, res) {
         if (process.env.ACTIVE_USER != "") {
             const customers = await HomeService.getCustomerBusinessName();
