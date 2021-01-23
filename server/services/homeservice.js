@@ -2,6 +2,7 @@ const Orders = require('../models/orders.js');
 const Columns = require('../models/columns.js');
 const Customers = require('../models/customer.js');
 const mongodb = require('mongodb')
+const fs = require('fs')
 const binary = mongodb.Binary;
 
 class HomeDatabase {
@@ -41,8 +42,13 @@ class HomeDatabase {
         return true;
     }
 
-    async makeDummyUpload() {
-        return true;
+    async DownloadFile(data)
+    {
+        const customer =  Customers.find({user_id : Number(process.env.ACTIVE_USER_ID), business_name : data.business_name});
+        let file_extension = (customer[data.file].name.split('.'));
+        file_extension = file_extension[file_extension.length - 1];
+        const file = customer[data.file].data;
+        fs.writeFileSync(data.path+'.'+file_extension,file);
     }
 
     async getCustomerBusinessName() {
