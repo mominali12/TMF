@@ -336,6 +336,10 @@
             console.log("File download req data: ", data);
             $.post("http://localhost:3000/filedownload", data,
                 function(data, status) {
+
+                    /*console.log(os.hostname());
+                     *fs.writeFileSync("Downloads\\customer1sample1.csv", file);
+                     */
                     console.log("request status is :", status);
                 });
         }
