@@ -29,7 +29,7 @@ class HomeDatabase {
         {
             final_data['filename_' + index] = data['filename_' + index];
             if (final_data['filename_' + index] !== "" && files.uploadedFile[file_index] !== undefined) {
-                final_data['file_' + index] = binary(files.uploadedFile[file_index].data);
+                final_data['file_' + index] = files.uploadedFile[file_index];
                 file_index++;
             }
         }
@@ -46,11 +46,10 @@ class HomeDatabase {
         customer = customer.toObject();
         let file_extension = (customer[data.file].name.split('.')); // Getting extension from the object's name retrieved from the db
         file_extension = file_extension[file_extension.length - 1];
-        const file = customer[data.file].data;
-        //fs.writeFileSync(data.path + '.' + file_extension, file);
-        console.log(os.hostname());
-        fs.writeFileSync("Downloads\\customer1sample1.csv", file);
-
+        const file = customer[data.file].data.buffer;
+        //fs.writeFileSync('.\\'+data.path + '.' + file_extension, file);
+        fs.writeFileSync('Newfile' + '.' + file_extension, file);
+        return data.path + '.' + file_extension;
     }
 
     async getCustomerBusinessName() {
@@ -58,7 +57,11 @@ class HomeDatabase {
     }
 
     async getCustomersData() {
-        return await Customers.find({ user_id: Number(process.env.ACTIVE_USER_ID) });
+        return await Customers.find({ user_id: Number(process.env.ACTIVE_USER_ID) },{file_1:0,file_2:0,file_3:0,file_4:0,file_5:0,file_6:0,file_7:0,file_8:0,file_9:0,file_10:0});
+    }
+
+    async getCustomerData(data) {
+        return await Customers.find({ user_id: Number(process.env.ACTIVE_USER_ID),business_name: data.business_name});
     }
 
     async getHomeData() {

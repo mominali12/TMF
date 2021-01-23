@@ -335,12 +335,18 @@
             }
             console.log("File download req data: ", data);
             $.post("http://localhost:3000/filedownload", data,
-                function(data, status) {
-
-                    /*console.log(os.hostname());
-                     *fs.writeFileSync("Downloads\\customer1sample1.csv", file);
-                     */
+                function(data, status)
+                {
+                    console.log(data);
+                    //fs.writeFileSync("Downloads\\customer1sample1.csv", file);
                     console.log("request status is :", status);
+                    var a = document.createElement('a'); // create html element anchor
+                    a.href = 'Newfile.jpg'; // xhr.response is a blob
+                    a.download = "TEMP-1.jpg"; // Set the file name.
+                    a.style.display = 'none'; // set anchor as hidden
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove()
                 });
         }
 
