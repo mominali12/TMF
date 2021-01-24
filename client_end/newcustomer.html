@@ -35,35 +35,25 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav w-100">
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/home">Open Orders</a>
+                    <a class="nav-link" href="http://localhost:3000/home">Open</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/home/completed">Completed Orders</a>
+                    <a class="nav-link" href="http://localhost:3000/home/completed">Completed</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:3000/graph">Graph</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/newcustomer">New Customer</a>
+                    <a class="nav-link" href="http://localhost:3000/newcustomer">Customers</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item ml-auto">
                     <a class="nav-link" href="http://localhost:3000/logout">Logout</a>
                 </li>
             </ul>
         </div>
     </nav>
-    <!-- <div class="container-fluid p-4">
-        <div class="row">
-            <div class="col-md-12 p-4">
-                <button id="open_page_nav" type="button" class="btn pull-left btn-primary mr-4">Open Orders</button>
-                <button id="completed_page_nav" type="button" class="btn pull-left btn-primary mr-4">Completed Orders</button>
-                <button id="graph_btn" type="button" class="btn pull-left btn-success mr-4">Graph</button>
-                <button id="logout_btn" type="button" class="btn pull-right btn-danger">Logout</button>
-            </div>
-        </div>
-    </div> -->
 
 
     <div class="modal" id="addcustomerModal">
@@ -247,14 +237,21 @@
 
 
     <div class="container-fluid p-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="modalheading">Customers Data</h4>
+            </div>
+        </div>
         <div class="row mb-4">
             <div class="col-md-6">
-                <button type="button" class="btn btn-primary" onclick="resetForm()" data-toggle="modal" data-target="#addcustomerModal">
+                <input type="text" class="form-control mr-2" id="customer_search" onkeyup="searchcustomer()" placeholder="Search business">
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary pull-right" onclick="resetForm()" data-toggle="modal" data-target="#addcustomerModal">
                     Add Customer
                 </button>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12 table-responsive">
                 <table id="mtable" class="table table-bordered tablewrapp">
@@ -288,6 +285,32 @@
             }, false);
         })();
 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// SEARCH CUSTOMER FUNCTION ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function searchcustomer() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("customer_search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mtable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
 
         //simplifying get element by ID
         function _(el) {
@@ -346,7 +369,7 @@
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////// Find obj keys with prefix "X" //////////////////////////////////////////
+        ////////////////////////////////////// Download_request for attachment /////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function download_request(e, file_num) {
@@ -360,8 +383,7 @@
             }
             console.log("File download req data: ", data);
             $.post("http://localhost:3000/filedownload", data,
-                function(data, status)
-                {
+                function(data, status) {
                     console.log(data);
                     //fs.writeFileSync("Downloads\\customer1sample1.csv", file);
                     console.log("request status is :", status);
@@ -501,6 +523,26 @@
                 if (i < 16)
                     var input = $(this).val(cols[i].textContent); //updating field value
                 i++;
+            });
+            var businessname = $(e).closest("tr").children()[2].textContent;
+            data = {
+                business_name: businessname
+            }
+            $.post("http://localhost:3000/getcustomer", data, function(data, status) {
+                console.log("Data: ", data, "\nStatus: ", status);
+                var files_list = findValueByPrefix(data[0], "file_");
+                // console.log("files list :", files_list);
+                Object.keys(files_list).forEach(element => {
+                    var file_input = "#" + element;
+                    console.log("File: ", files_list[element]);
+                    $(file_input)[0].files["0"] = files_list[element];
+                    console.log($(file_input)[0].files);
+                    // console.log($("form#newcustomer_form :input([type='" + "file_input" + "'])")); //.files.append(files_list[element]);
+                    // $(file_input)[0].files.uploadedFile.append(files_list[element]);
+
+                    // console.log(element, "\n\nfile value: ", files_list[element].data);
+                    // console.log("\nfilelist elements:\n", files_list[element]);
+                });
             });
         }
 
