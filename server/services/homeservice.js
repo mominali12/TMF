@@ -131,9 +131,9 @@ class HomeDatabase {
     {
         let file_extension = (file.uploadedFile.name.split('.')); // Getting extension from the object's name retrieved from the db
         file_extension = file_extension[file_extension.length - 1];
-        if(file_extension !== "jpg" || file_extension !== "png")
+        if(file_extension !== 'jpg' && file_extension !== 'png')
             return false;
-        const download_file = file.uploadedFile.data.buffer;
+        const download_file = binary(file.uploadedFile.data).buffer;
         const download_path = __dirname+'/../../client_end/assets/'+process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER+ '.' + "png";
         console.log(download_path);
         fs.writeFileSync(download_path, download_file);
