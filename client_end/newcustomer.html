@@ -222,7 +222,7 @@
                             <small class="text-muted" id="status_file_10"></small><br/>
 
                         </div>
-                        <input type="submit" class="btn btn-success pull-right mt-4" value="Add Customer" />
+                        <input id="addcustomerbtn" type="submit" class="btn btn-success pull-right mt-4" value="Add Customer" />
                         <input type="button" class="btn btn-primary pull-right m-4" onclick="resetForm()" value="Reset Form">
                     </form>
                 </div>
@@ -320,6 +320,9 @@
 
         //Reset customer form
         function resetForm() {
+            //setting post url of form to add customer 
+            $("#newcustomer_form").attr("action", "/uploadnewcustomer");
+            $("#addcustomerbtn").val("Add Customer");
             //making sure business name is editable
             $("#business_name").prop("disabled", false);
             //resetting input fields
@@ -514,6 +517,11 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function edit_row(e) {
+            //updating post request made on click
+            $("#newcustomer_form").attr("action", "/updatecustomer");
+            //updating button text
+            $("#addcustomerbtn").val("Update Customer");
+            //updating form heading text
             $("#customerform_heading").text("Update Customer");
             // getting cols
             var cols = $(e).closest('tr').find('td');
