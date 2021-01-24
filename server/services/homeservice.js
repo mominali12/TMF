@@ -28,6 +28,8 @@ class HomeDatabase {
 
         let customer = Customers.find({ user_id: Number(process.env.ACTIVE_USER_ID), business_name: data.business_name}).exec();
         customer = customer.toObject();
+        if(files.uploadedFile === null || files.uploadedFile === undefined || customer === undefined || customer === null)
+            return true;
         if(files.uploadedFile[0] === undefined || files.uploadedFile[0] === null ) // Front end doesn't send array for a single record in files that why we cannot use []
         {
             for (let index = 1; index < 11; index++) // 10 attachements in customer table
@@ -106,6 +108,19 @@ class HomeDatabase {
         console.log(download_path);
         fs.writeFileSync(download_path, file);
         return data.path + '.' + file_extension;
+    }
+
+    async UploadLogo(file)
+    {
+        let file_extension = (file.uploadedFile.name.split('.')); // Getting extension from the object's name retrieved from the db
+        file_extension = file_extension[file_extension.length - 1];
+        if(file_extension !== "jpg" || file_extension !== "png")
+            return false;
+        const file = file.uploadedFile.data.buffer;
+        const download_path = __dirname+'/../../client_end/assets/'+process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER+ '.' + "png";
+        console.log(download_path);
+        fs.writeFileSync(download_path, file);
+        return true;
     }
 
     async DeleteFile(data)
