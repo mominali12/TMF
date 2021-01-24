@@ -174,7 +174,7 @@ class Controller {
             if (result)
                 res.status(200).redirect('/newcustomer');
             else
-                res.status(400).send(result);
+                res.status(400).send('Business name not found!');
         }
         else
             res.redirect('/login');

@@ -28,9 +28,18 @@ class HomeDatabase {
 
         let customer = Customers.find({ user_id: Number(process.env.ACTIVE_USER_ID), business_name: data.business_name}).exec();
         customer = customer.toObject();
-        if(files.uploadedFile === null || files.uploadedFile === undefined || customer === undefined || customer === null)
-            return true;
-        if(files.uploadedFile[0] === undefined || files.uploadedFile[0] === null ) // Front end doesn't send array for a single record in files that why we cannot use []
+        if(customer === undefined || customer === null)
+            return false;
+
+        if(files === null || files===undefined) // No attachements sent
+        {
+            for (let index = 1; index < 11; index++) 
+            {
+                final_data['filename_' + index] = data['filename_' + index];
+            }
+
+        }
+        else if(files.uploadedFile[0] === undefined || files.uploadedFile[0] === null ) //Single attachement sent. Front end doesn't send array for a single record in files that why we cannot use []
         {
             for (let index = 1; index < 11; index++) // 10 attachements in customer table
             {
@@ -68,9 +77,17 @@ class HomeDatabase {
         console.log(files);
         console.log(data);
         let final_data = { business_name: data.business_name, contact_name: data.contact_name, customer_address: data.customer_address, customer_email: data.customer_email, customer_contact_no: data.customer_contact_no, user_id: process.env.ACTIVE_USER_ID };
-        if(files.uploadedFile[0] === undefined || files.uploadedFile[0] === null ) // Doesn't send array for a single record in files that why we cannot use []
+        if(files === null || files===undefined) // No attachements
         {
-            for (let index = 1; index < 11; index++) // 10 attachements in customer table
+            for (let index = 1; index < 11; index++) 
+            {
+                final_data['filename_' + index] = data['filename_' + index];
+            }
+
+        }
+        else if(files.uploadedFile[0] === undefined || files.uploadedFile[0] === null )// Single attachement. Front end doesn't send array for a single record in files that why we cannot use []
+        {
+            for (let index = 1; index < 11; index++) 
             {
                 final_data['filename_' + index] = data['filename_' + index];
                 if (final_data['filename_' + index] !== "" && files.uploadedFile !== undefined && files.uploadedFile !== null) {
@@ -78,10 +95,10 @@ class HomeDatabase {
                     }
             }
         }
-        else
+        else // More than 1 attachement
         {
             let file_index = 0;
-            for (let index = 1; index < 11; index++) // 10 attachements in customer table
+            for (let index = 1; index < 11; index++) 
             {
                 final_data['filename_' + index] = data['filename_' + index];
                 if (final_data['filename_' + index] !== "" && files.uploadedFile[file_index] !== undefined && files.uploadedFile[file_index] !== null) {
@@ -116,10 +133,10 @@ class HomeDatabase {
         file_extension = file_extension[file_extension.length - 1];
         if(file_extension !== "jpg" || file_extension !== "png")
             return false;
-        const file = file.uploadedFile.data.buffer;
+        const download_file = file.uploadedFile.data.buffer;
         const download_path = __dirname+'/../../client_end/assets/'+process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER+ '.' + "png";
         console.log(download_path);
-        fs.writeFileSync(download_path, file);
+        fs.writeFileSync(download_path, download_file);
         return true;
     }
 
