@@ -52,7 +52,7 @@
                 </li>
                 <li class="nav-item ml-auto">
                     <a class="nav-link" style="display: inline;"><span onclick="uploadlogo()" class="iconify" data-icon="mdi:cloud-upload" data-inline="false"></span></a>
-                    <a class="nav-link" href="http://localhost:3000/logout" style="display: inline;">Logout</a>
+                    <a class="nav-link" href="http://localhost:3000/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
                 </li>
             </ul>
         </div>
@@ -308,37 +308,33 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $('#add_row_modal').click(function() {
-            if ($('#row_modal_customer_name').val()) {
-                if ($('#row_modal_product_name').val()) {
-                    var employee_data = '';
-                    employee_data += '<tr>';
-                    employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
-                    var counter = 0;
-                    Object.keys(tbl_cols).forEach(function(key) {
-                        if (key.localeCompare("▬") !== 0) {
-                            if (key.localeCompare("completed") === 0) {
-                                employee_data += '<td>' + completed_drop_down('') + '</td>';
-                            } else if (key.localeCompare("file") === 0) {
-                                employee_data += '<td>' + files_drop_down('Attachment_1') + '</td>';
-                            } else if (tbl_cols[key].localeCompare("text") === 0) {
-                                employee_data += make_text_field('');
-                            } else if (tbl_cols[key].localeCompare("date") === 0) {
-                                employee_data += '<td>' + make_date_selector('') + '</td>';
-                            } else {
-                                employee_data += '<td>' + make_drop_down('') + '</td>';
-                            }
+            if ($('#row_modal_product_name').val()) {
+                var employee_data = '';
+                employee_data += '<tr>';
+                employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
+                var counter = 0;
+                Object.keys(tbl_cols).forEach(function(key) {
+                    if (key.localeCompare("▬") !== 0) {
+                        if (key.localeCompare("completed") === 0) {
+                            employee_data += '<td>' + completed_drop_down('') + '</td>';
+                        } else if (key.localeCompare("file") === 0) {
+                            employee_data += '<td>' + files_drop_down('Attachment_1') + '</td>';
+                        } else if (tbl_cols[key].localeCompare("text") === 0) {
+                            employee_data += make_text_field('');
+                        } else if (tbl_cols[key].localeCompare("date") === 0) {
+                            employee_data += '<td>' + make_date_selector('') + '</td>';
+                        } else {
+                            employee_data += '<td>' + make_drop_down('') + '</td>';
                         }
-                    });
-                    $('#mtable').append(employee_data);
+                    }
+                });
+                $('#mtable').append(employee_data);
 
-                    // $('#mtable tbody').append($("#mtable tbody tr:last").clone());
-                    $('#mtable tbody tr:last td:nth-child(2)').html($('#row_modal_customer_name').val());
-                    $('#mtable tbody tr:last td:nth-child(3)').html($('#row_modal_product_name').val());
-                } else {
-                    alert("Please enter product name");
-                }
+                // $('#mtable tbody').append($("#mtable tbody tr:last").clone());
+                $('#mtable tbody tr:last td:nth-child(2)').html($('#customers_dd :selected').val());
+                $('#mtable tbody tr:last td:nth-child(3)').html($('#row_modal_product_name').val());
             } else {
-                alert("Please enter customer name");
+                alert("Please enter product name");
             }
         });
 

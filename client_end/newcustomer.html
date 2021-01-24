@@ -53,7 +53,7 @@
                 </li>
                 <li class="nav-item ml-auto">
                     <a class="nav-link" style="display: inline;"><span onclick="uploadlogo()" class="iconify" data-icon="mdi:cloud-upload" data-inline="false"></span></a>
-                    <a class="nav-link" href="http://localhost:3000/logout" style="display: inline;">Logout</a>
+                    <a class="nav-link" href="http://localhost:3000/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
                 </li>
             </ul>
         </div>
@@ -253,7 +253,7 @@
             </div>
             <div class="col-md-6">
                 <button type="button" class="btn btn-primary pull-right" onclick="resetForm()" data-toggle="modal" data-target="#addcustomerModal">
-                    Add Customer
+                    Add Customer <span class="iconify" data-icon="mdi:account-plus" data-inline="false"></span> 
                 </button>
             </div>
         </div>
@@ -371,8 +371,8 @@
 
             var employee_data = '';
             employee_data += '<tr>';
-            employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
-            employee_data += '<td><button class="btn btn-primary" onclick="edit_row(this)" data-toggle="modal" data-target="#addcustomerModal"/>+</button></td>';
+            employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/><span class="iconify" data-icon="mdi:delete" data-inline="false"></span></button></td>';
+            employee_data += '<td><button class="btn btn-primary" onclick="edit_row(this)" data-toggle="modal" data-target="#addcustomerModal"/><span class="iconify" data-icon="fa-solid:user-edit" data-inline="false"></span></button></td>';
 
             cols.forEach(element => {
                 if (element.includes("filename_") && obj[element].localeCompare("") !== 0) {
@@ -466,8 +466,8 @@
 
 
             // making table headers
-            var tblheaders = '<th>' + '-' + '</th>';
-            tblheaders += '<th>' + '+' + '</th>';
+            var tblheaders = '<th>' + '<span class="iconify" data-icon="mdi:delete" data-inline="false"></span>' + '</th>';
+            tblheaders += '<th>' + '<span class="iconify" data-icon="fa-solid:user-edit" data-inline="false"></span>' + '</th>';
 
             cols.forEach(element => {
                 tblheaders += '<th>' + element.replaceAll("_", " ").toUpperCase() + '</th>';
