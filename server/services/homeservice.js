@@ -18,6 +18,47 @@ class HomeDatabase {
         return true;
     }
 
+    async UpdateCustomerData(data)
+    {
+        if (data.business_name === "" || data.business_name === undefined || data.business_name == null)
+            return false;
+         
+        console.log(files);
+        console.log(data);
+
+        let customer = Customers.find({ user_id: Number(process.env.ACTIVE_USER_ID), business_name: data.business_name}).exec();
+        customer = customer.toObject();
+        if(files.uploadedFile[0] === undefined || files.uploadedFile[0] === null ) // Front end doesn't send array for a single record in files that why we cannot use []
+        {
+            for (let index = 1; index < 11; index++) // 10 attachements in customer table
+            {
+                customer['filename_' + index] = data['filename_' + index];
+                if (customer['filename_' + index] !== "" && files.uploadedFile !== undefined && files.uploadedFile !== null && customer['file_'+index] != undefined && customer['file_'+index] != null) {
+                    customer['file_' + index] = files.uploadedFile;
+                    }
+            }
+        }
+        else
+        {
+            let file_index = 0;
+            for (let index = 1; index < 11; index++) // 10 attachements in customer table (file1 to file10)
+            {
+                customer['filename_' + index] = data['filename_' + index];
+                if (customer['filename_' + index] !== "" && files.uploadedFile[file_index] !== undefined && files.uploadedFile[file_index] !== null && customer['file_'+index] != undefined && customer['file_'+index] != null) {
+                    customer['file_' + index] = files.uploadedFile[file_index];
+                    file_index++;
+                }
+            }
+        }
+        console.log(customer);
+        console.log("Updating Customer Data ...");
+        await Customers.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { business_name: data.business_name }] });
+        await Customers.insertMany(customer);
+        console.log("Successfully Updated!");
+        return true;
+
+    }
+
     async SaveCustomerData(data, files) {
         if (data.business_name === "" || data.business_name === undefined || data.business_name == null)
             return false;

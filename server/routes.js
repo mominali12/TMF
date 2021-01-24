@@ -4,10 +4,12 @@ let fs = require('fs');
 
 function routes(app) {
     app.get('/newcustomer', (Home.NewCustomerForm));
+    app.get('/updatecustomer', (Home.UpdateCustomerData));
     app.get('/getcustomers', (Home.GetCustomers));
     app.post('/getcustomer', (Home.GetCustomer));
     app.get('/getcustomersname', (Home.GetCustomersBusinessName));
     app.post('/uploadnewcustomer', (Home.SaveCustomerData));
+    app.post('/deletecustomer', (Home.DeleteCustomerData));
 
 
     app.post('/filedownload', (Home.DownloadFile));
