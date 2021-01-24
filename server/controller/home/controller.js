@@ -191,7 +191,8 @@ class Controller {
             res.redirect('/login');
     }
 
-    async UploadLogo(req, res) {
+    async UploadLogo(req, res)
+    {
         if (process.env.ACTIVE_USER != "") {
             let result = await HomeService.UploadLogo(req.files);
             if (result)
