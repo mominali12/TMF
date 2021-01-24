@@ -166,6 +166,20 @@ class Controller {
             res.redirect('/login');
     }
 
+    async UpdateCustomerData(req, res)
+    {
+        if (process.env.ACTIVE_USER != "")
+        {
+            let result = await HomeService.UpdateCustomerData(req.body, req.files);
+            if (result)
+                res.status(200).redirect('/newcustomer');
+            else
+                res.status(400).send(result);
+        }
+        else
+            res.redirect('/login');
+    }
+
     async DeleteCustomerData(req, res) {
         if (process.env.ACTIVE_USER != "") {
             let result = await HomeService.DeleteCustomerData(req.body, req.files);
