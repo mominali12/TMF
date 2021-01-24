@@ -8,7 +8,7 @@ function routes(app) {
     app.post('/getcustomer', (Home.GetCustomer));
     app.get('/getcustomersname', (Home.GetCustomersBusinessName));
     app.post('/uploadnewcustomer', (Home.SaveCustomerData));
-
+    app.post('/deletecustomer', (Home.DeleteCustomerData));
 
     app.post('/filedownload', (Home.DownloadFile));
     app.post('/filedelete', (Home.DownloadFile));
