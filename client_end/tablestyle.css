@@ -1,6 +1,11 @@
 /* tbody{height: 400px; overflow-y: scroll;display:block;}
 th { position: sticky; top: 0; } */
 
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
 .filecell {
     cursor: pointer;
 }

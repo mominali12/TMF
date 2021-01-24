@@ -43,6 +43,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+    <!-- For icons -->
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
     <nav class="navbar  sticky-top navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -63,7 +66,8 @@
                     <a class="nav-link" href="http://localhost:3000/graph">Graph</a>
                 </li>
                 <li class="nav-item ml-auto">
-                    <a class="nav-link" href="http://localhost:3000/logout">Logout</a>
+                    <a class="nav-link" style="display: inline;"><span onclick="uploadlogo()" class="iconify" data-icon="mdi:cloud-upload" data-inline="false"></span></a>
+                    <a class="nav-link" href="http://localhost:3000/logout" style="display: inline;">Logout</a>
                 </li>
             </ul>
         </div>
@@ -92,6 +96,33 @@
     </div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script type="text/javascript">
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// UPLOAD CUSTOMER'S LOGO /////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function uploadlogo() {
+            var x = document.createElement("INPUT");
+            x.setAttribute("type", "file");
+            x.setAttribute("id", "tempfileupload");
+            // x.style.display = 'none'; // set anchor as hidden
+            document.body.appendChild(x);
+            x.click();
+            $("#tempfileupload").change(function() {
+                console.log("hurray");
+                var ajax = new XMLHttpRequest();
+                var formdata = new FormData();
+                formdata.append('uploadedFile', $("#tempfileupload")[0].files[0]);
+                ajax.open("POST", "/uploadlogo");
+                ajax.send(formdata);
+                // $.post("http://localhost:3000/uploadlogo", tempdata,
+                //     function(tempdata, status) {
+                //         console.log("data: ", tempdata, "status: ", status);
+                //     });
+                // return true;
+                $('#tempfileupload').remove();
+            });
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////// CUSTOMER PAGE BTN CLICK ///////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
