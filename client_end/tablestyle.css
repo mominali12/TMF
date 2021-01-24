@@ -1,6 +1,10 @@
 /* tbody{height: 400px; overflow-y: scroll;display:block;}
 th { position: sticky; top: 0; } */
 
+.filecell {
+    cursor: pointer;
+}
+
 .nav-link {
     font-weight: bold;
 }
@@ -9,12 +13,14 @@ th { position: sticky; top: 0; } */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: bold;
     font-size: 70px;
+    color: #2c2c2c;
 }
 
 .modalheading {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: bold;
     font-size: 50px;
+    color: #2c2c2c;
 }
 
 .tablewrapp select {
@@ -39,6 +45,7 @@ th { position: sticky; top: 0; } */
     white-space: nowrap;
     font-weight: lighter;
     text-align: center;
+    font-weight: bold;
 }
 
 .tablewrapp td {

@@ -43,16 +43,17 @@
                     <a class="nav-link" href="http://localhost:3000/home/completed">Completed</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/graph">Graph</a>
+                    <a class="nav-link" href="http://localhost:3000/newcustomer">Customers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/newcustomer">Customers</a>
+                    <a class="nav-link" href="http://localhost:3000/graph">Graph</a>
                 </li>
                 <li class="nav-item ml-auto">
                     <a class="nav-link" href="http://localhost:3000/logout">Logout</a>
                 </li>
             </ul>
         </div>
+
     </nav>
 
 
@@ -319,6 +320,8 @@
 
         //Reset customer form
         function resetForm() {
+            //making sure business name is editable
+            $("#business_name").prop("disabled", false);
             //resetting input fields
             $("#customerform_heading").text("Add Customer");
             _("newcustomer_form").reset();
@@ -359,7 +362,7 @@
                     //     employee_data += '<td>' + obj[element] + '</td>';
                     // }
                     var filenum = element.slice(9);
-                    employee_data += '<td onclick="download_request(this,' + filenum + ')">' + obj[element]; + '</td>';
+                    employee_data += '<td class="filecell" onclick="download_request(this,' + filenum + ')">' + obj[element]; + '</td>';
                 } else {
                     employee_data += '<td>' + obj[element] + '</td>';
                 }
@@ -520,10 +523,14 @@
             var i = 2;
             //accessing all input fields 
             $("form#newcustomer_form :input:not([type='file'])").each(function() {
-                if (i < 16)
+                if (i < 16) {
                     var input = $(this).val(cols[i].textContent); //updating field value
+                }
                 i++;
             });
+
+            //making sure business name is not editable
+            $("#business_name").prop("disabled", true);
             var businessname = $(e).closest("tr").children()[2].textContent;
             data = {
                 business_name: businessname

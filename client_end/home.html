@@ -33,7 +33,6 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav w-100">
                 <li class="nav-item">
@@ -43,10 +42,10 @@
                     <a class="nav-link" href="http://localhost:3000/home/completed">Completed</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/graph">Graph</a>
+                    <a class="nav-link" href="http://localhost:3000/newcustomer">Customers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/newcustomer">Customers</a>
+                    <a class="nav-link" href="http://localhost:3000/graph">Graph</a>
                 </li>
                 <li class="nav-item ml-auto">
                     <a class="nav-link" href="http://localhost:3000/logout">Logout</a>
@@ -54,6 +53,7 @@
             </ul>
         </div>
     </nav>
+
     <div class="container-fluid p-4">
         <div class="row">
             <div class="col-md-4 p-4">
@@ -727,7 +727,7 @@
 
         Http.onload = (e) => {
 
-            $.post("http://localhost:3000/getcustomersname/", function(data, status) {
+            $.get("http://localhost:3000/getcustomersname/", function(data, status) {
                 console.log("Data: ", data, "\nStatus: ", status);
                 for (let i = 0; i < data.length; i++)
                     $("#customers_dd").append('<option value="' + data[i].business_name + '">' + data[i].business_name + '</option>');
