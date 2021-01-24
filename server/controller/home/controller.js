@@ -174,7 +174,7 @@ class Controller {
             if (result)
                 res.status(200).redirect('/newcustomer');
             else
-                res.status(400).send(result);
+                res.status(400).send('Business name not found!');
         }
         else
             res.redirect('/login');
@@ -190,6 +190,19 @@ class Controller {
         } else
             res.redirect('/login');
     }
+
+    async UploadLogo(req, res) {
+        if (process.env.ACTIVE_USER != "") {
+            let result = await HomeService.UploadLogo(req.files);
+            if (result)
+                res.status(200).redirect('/home');
+            else
+                res.status(400).send(result);
+        } else
+            res.redirect('/login');
+    }
+
+    
 
     async GetCustomers(req, res)
     {

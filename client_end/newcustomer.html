@@ -388,7 +388,6 @@
             $.post("http://localhost:3000/filedownload", data,
                 function(data, status) {
                     console.log(data);
-                    //fs.writeFileSync("Downloads\\customer1sample1.csv", file);
                     console.log("request status is :", status);
                     var a = document.createElement('a'); // create html element anchor
                     a.href = '/Downloads/' + data;

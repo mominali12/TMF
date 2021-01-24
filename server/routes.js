@@ -11,6 +11,9 @@ function routes(app) {
     app.post('/uploadnewcustomer', (Home.SaveCustomerData));
     app.post('/deletecustomer', (Home.DeleteCustomerData));
 
+    app.post('/uploadlogo', (Home.UploadLogo));
+
+
     app.post('/filedownload', (Home.DownloadFile));
     app.post('/filedelete', (Home.DownloadFile));
 
