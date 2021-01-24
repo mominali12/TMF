@@ -3,14 +3,15 @@ const Home = require('./controller/home/controller');
 let fs = require('fs');
 
 function routes(app) {
-    app.get('/newcustomer', (Home.NewCustomerForm))
-    app.get('/getcustomers', (Home.GetCustomers))
-    app.get('/getcustomer', (Home.GetCustomers))
-    app.get('/getcustomersname', (Home.GetCustomersBusinessName))
-    app.post('/uploadnewcustomer', (Home.SaveCustomerData))
-    app.post('/deletecustomer', (Home.DeleteCustomerData))
-    app.post('/filedownload', (Home.DownloadFile))
+    app.get('/newcustomer', (Home.NewCustomerForm));
+    app.get('/getcustomers', (Home.GetCustomers));
+    app.post('/getcustomer', (Home.GetCustomer));
+    app.get('/getcustomersname', (Home.GetCustomersBusinessName));
+    app.post('/uploadnewcustomer', (Home.SaveCustomerData));
 
+
+    app.post('/filedownload', (Home.DownloadFile));
+    app.post('/filedelete', (Home.DownloadFile));
 
     app.get(['/graph'], (Home.GetGraph));
     app.get(['/graphdata'], (Home.GetGraphData1));
