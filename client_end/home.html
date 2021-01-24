@@ -31,10 +31,10 @@
 
     <!-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script> -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <!-- <p class="navbar-brand">Welcome </p> -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon navbaricon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav w-100">
@@ -61,7 +61,7 @@
     <div class="container-fluid p-4">
         <div class="row">
             <div class="col-md-4 p-4">
-                <img id="storename" alt="Home Page">
+                <img style="max-height: 20vh; max-width: 30vh;" id="storename" alt="Home Page">
             </div>
             <div class="col-md-4 p-4">
                 <table class="table table-bordered table-striped table-inverse ">
@@ -99,17 +99,17 @@
 
         <div class="row">
             <div class="col-md-6 p-4">
-                <input type="text" class="form-control mr-2" id="customer_search" onkeyup="searchcustomer()" placeholder="Search customer">
+                <input style="display: inline !important;" type="text" class="form-control mr-2" id="customer_search" onkeyup="searchcustomer()" placeholder="Search customer">
             </div>
             <div class="col-md-6 p-4">
-                <button type="button" class="btn btn-success ml-4 pull-right" onclick="submit()">
-                    Save
+                <button type="button" class="btn btn-success ml-4 mb-2 pull-right" onclick="submit()">
+                    <span class="iconify" data-icon="mdi:floppy" data-inline="false"></span> Save
                 </button>
-                <button type="button" class="btn btn-primary ml-4 pull-right" data-toggle="modal" data-target="#colModal">
-                    Add/Remove Column
+                <button type="button" class="btn btn-primary ml-4 mb-2 pull-right" data-toggle="modal" data-target="#colModal">
+                    <span class="iconify" data-icon="mdi:plus-minus" data-inline="false"></span> Add/Remove Column
                 </button>
-                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#rowModal">
-                    Add Row
+                <button type="button" class="btn btn-primary mb-2 pull-right" data-toggle="modal" data-target="#rowModal">
+                   <span class="iconify" data-icon="mdi:plus" data-inline="false"></span> Add Row 
                 </button>
             </div>
         </div>
@@ -142,16 +142,16 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <label for="customer_name">Customer Name</label>
+                    <label for="customer_name"><span class="iconify" data-icon="mdi:account" data-inline="false"></span> Customer Name</label>
                     <select class="form-control" name="general_dropdown" id="customers_dd"></select>
                     <!-- <input id="row_modal_customer_name" class="form-control" id="customer_name" placeholder="Customer Name"> -->
-                    <label for="product_name">Product</label>
+                    <label class="mt-4" for="product_name"><span class="iconify" data-icon="mdi:dropbox" data-inline="false"></span> Product</label>
                     <input id="row_modal_product_name" class="form-control" id="product_name" placeholder="Product">
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button id="add_row_modal" type="button" class="btn btn-success" data-dismiss="modal">Add Row</button>
+                    <button id="add_row_modal" type="button" class="btn btn-success" data-dismiss="modal"><span class="iconify" data-icon="mdi:plus" data-inline="false"></span> Add Row</button>
                 </div>
 
             </div>
@@ -175,16 +175,16 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title modalheading">Add column</h4>
+                    <h4 class="modal-title modalheading">Add / Remove column</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <label for="column_name">Column title</label>
+                    <label for="column_name"><span class="iconify" data-icon="mdi:page-layout-header" data-inline="false"></span> Column title</label>
                     <input id="col_modal_column_name" class="form-control" id="customer_name" placeholder="Column Name">
 
-                    <label for="general_dropdown">Column type</label>
+                    <label class="mt-4" for="general_dropdown"><span class="iconify" data-icon="mdi:arrow-down-drop-circle" data-inline="false"></span> Column type</label>
                     <select class="form-control" name="general_dropdown" id="col_modal_select">
                         <option value="date">Date</option>
                         <option value="dropdown">Dropdown</option>
@@ -194,8 +194,8 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button id="add_col_modal" type="button" class="btn btn-success" data-dismiss="modal">Add Column</button>
-                    <button id="del_col_modal" type="button" class="btn btn-danger" data-dismiss="modal">Delete Column</button>
+                    <button id="add_col_modal" type="button" class="btn btn-success" data-dismiss="modal"><span class="iconify" data-icon="mdi:plus" data-inline="false"></span> Add Column</button>
+                    <button id="del_col_modal" type="button" class="btn btn-danger" data-dismiss="modal"><span class="iconify" data-icon="mdi:delete" data-inline="false"></span> Delete Column</button>
                 </div>
 
             </div>

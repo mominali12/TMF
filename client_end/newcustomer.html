@@ -32,8 +32,8 @@
     <!-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script> -->
 
-    <nav class="navbar  sticky-top navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar  sticky-top navbar-expand-lg">
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -105,7 +105,7 @@
                                 Please enter a valid contact number.
                             </div>
 
-                            <label for="filename_1" class=" mt-4">Graphic file</label>
+                            <label for="filename_1" class=" mt-4">Attachment 1</label>
                             <input id="filename_1" type="text" name="filename_1" class="form-control" placeholder="File name..">
                             <div class="invalid-feedback">
                                 Please enter a filename.
@@ -117,7 +117,7 @@
                             </div>
                             <small class="text-muted" id="status_file_1"></small><br/>
 
-                            <label for="filename_2" class=" mt-4">Graphic file</label>
+                            <label for="filename_2" class=" mt-4">Attachment 2</label>
                             <input id="filename_2" type="text" name="filename_2" class="form-control" placeholder="File name..">
                             <div class="invalid-feedback">
                                 Please enter a filename.
@@ -129,7 +129,7 @@
                             </div>
                             <small class="text-muted" id="status_file_2"></small><br/>
 
-                            <label for="filename_3" class=" mt-4">Graphic file</label>
+                            <label for="filename_3" class=" mt-4">Attachment 3</label>
                             <input id="filename_3" type="text" name="filename_3" class="form-control" placeholder="File name..">
                             <div class="invalid-feedback">
                                 Please enter a filename.
@@ -141,7 +141,7 @@
                             </div>
                             <small class="text-muted" id="status_file_3"></small><br/>
 
-                            <label for="filename_4" class=" mt-4">Graphic file</label>
+                            <label for="filename_4" class=" mt-4">Attachment 4</label>
                             <input id="filename_4" type="text" name="filename_4" class="form-control" placeholder="File name..">
                             <div class="invalid-feedback">
                                 Please enter a filename.
@@ -153,7 +153,7 @@
                             </div>
                             <small class="text-muted" id="status_file_4"></small><br/>
 
-                            <label for="filename_5" class=" mt-4">Graphic file</label>
+                            <label for="filename_5" class=" mt-4">Attachment 5</label>
                             <input id="filename_5" type="text" name="filename_5" class="form-control" placeholder="File name..">
                             <div class="invalid-feedback">
                                 Please enter a filename.
@@ -165,7 +165,7 @@
                             </div>
                             <small class="text-muted" id="status_file_5"></small><br/>
 
-                            <label for="filename_6" class=" mt-4">Graphic file</label>
+                            <label for="filename_6" class=" mt-4">Attachment 6</label>
                             <input id="filename_6" type="text" name="filename_6" class="form-control" placeholder="File name..">
                             <div class="invalid-feedback">
                                 Please enter a filename.
@@ -177,7 +177,7 @@
                             </div>
                             <small class="text-muted" id="status_file_6"></small><br/>
 
-                            <label for="filename_7" class=" mt-4">Graphic file</label>
+                            <label for="filename_7" class=" mt-4">Attachment 7</label>
                             <input id="filename_7" type="text" name="filename_7" class="form-control" placeholder="File name..">
                             <div class="invalid-feedback">
                                 Please enter a filename.
@@ -189,7 +189,7 @@
                             </div>
                             <small class="text-muted" id="status_file_7"></small><br/>
 
-                            <label for="filename_8" class=" mt-4">Graphic file</label>
+                            <label for="filename_8" class=" mt-4">Attachment 8</label>
                             <input id="filename_8" type="text" name="filename_8" class="form-control" placeholder="File name..">
                             <div class="invalid-feedback">
                                 Please enter a filename.
@@ -201,7 +201,7 @@
                             </div>
                             <small class="text-muted" id="status_file_8"></small><br/>
 
-                            <label for="filename_9" class=" mt-4">Graphic file</label>
+                            <label for="filename_9" class=" mt-4">Attachment 9</label>
                             <input id="filename_9" type="text" name="filename_9" class="form-control" placeholder="File name..">
                             <div class="invalid-feedback">
                                 Please enter a filename.
@@ -213,7 +213,7 @@
                             </div>
                             <small class="text-muted" id="status_file_9"></small><br/>
 
-                            <label for="filename_10" class=" mt-4">Graphic file</label>
+                            <label for="filename_10" class=" mt-4">Attachment 10</label>
                             <input id="filename_10" type="text" name="filename_10" class="form-control" placeholder="File name..">
                             <div class="invalid-feedback">
                                 Please enter a filename.
@@ -248,10 +248,10 @@
             </div>
         </div>
         <div class="row mb-4">
-            <div class="col-md-6">
-                <input type="text" class="form-control mr-2" id="customer_search" onkeyup="searchcustomer()" placeholder="Search business">
+            <div class="col-md-6 mb-2">
+                <input type="text" class="form-control" id="customer_search" onkeyup="searchcustomer()" placeholder="Search business">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 mb-2">
                 <button type="button" class="btn btn-primary pull-right" onclick="resetForm()" data-toggle="modal" data-target="#addcustomerModal">
                     Add Customer <span class="iconify" data-icon="mdi:account-plus" data-inline="false"></span> 
                 </button>
