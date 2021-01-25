@@ -51,7 +51,7 @@
                     <a class="nav-link" href="http://localhost:3000/graph">Graph</a>
                 </li>
                 <li class="nav-item ml-auto">
-                    <a class="nav-link" style="display: inline;"><span onclick="uploadlogo()" class="iconify" data-icon="mdi:cloud-upload" data-inline="false"></span></a>
+                    <a class="nav-link" href="#" style="display: inline;">Upload logo <span onclick="uploadlogo()" class="iconify" data-icon="mdi:cloud-upload" data-inline="false"></span></a>
                     <a class="nav-link" href="http://localhost:3000/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
                 </li>
             </ul>
@@ -212,15 +212,7 @@
         //     $(file_form).parent().submit();
         // }
 
-        // Add remove loading class on body element based on Ajax request status
-        $(document).on({
-            ajaxStart: function() {
-                $("body").addClass("loading");
-            },
-            ajaxStop: function() {
-                $("body").removeClass("loading");
-            }
-        });
+
 
         var user_identity = "";
         var tbl_cols = {};
@@ -238,20 +230,25 @@
             x.setAttribute("id", "tempfileupload");
             // x.style.display = 'none'; // set anchor as hidden
             document.body.appendChild(x);
+            $("#tempfileupload").css("display", 'none');
             x.click();
             $("#tempfileupload").change(function() {
-                console.log("hurray");
                 var ajax = new XMLHttpRequest();
+
                 var formdata = new FormData();
                 formdata.append('uploadedFile', $("#tempfileupload")[0].files[0]);
-                ajax.open("POST", "/uploadlogo");
+                ajax.open("POST", "/uploadlogo", false);
                 ajax.send(formdata);
-                // $.post("http://localhost:3000/uploadlogo", tempdata,
-                //     function(tempdata, status) {
-                //         console.log("data: ", tempdata, "status: ", status);
-                //     });
-                // return true;
+                while (ajax.status !== 200) {
+                    if (ajax.status === 400) {
+                        alert("Invalid Extension");
+                        break;
+                    }
+                    $("body").addClass("loading");
+                }
+                $("body").removeClass("loading");
                 $('#tempfileupload').remove();
+                location.reload();
             });
         }
 
