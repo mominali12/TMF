@@ -224,20 +224,26 @@
             x.setAttribute("id", "tempfileupload");
             // x.style.display = 'none'; // set anchor as hidden
             document.body.appendChild(x);
+            $("#tempfileupload").css("display",'none');
             x.click();
             $("#tempfileupload").change(function() {
                 console.log("hurray");
                 var ajax = new XMLHttpRequest();
+                
                 var formdata = new FormData();
                 formdata.append('uploadedFile', $("#tempfileupload")[0].files[0]);
-                ajax.open("POST", "/uploadlogo");
+                ajax.open("POST", "/uploadlogo",false);
                 ajax.send(formdata);
+                if(ajax.status === 400)
+                    alert("Invalid Extension");
+                alert(ajax.status); // place a loader on response using while status is not 200 and also a message for 400 that invalid extension
                 // $.post("http://localhost:3000/uploadlogo", tempdata,
                 //     function(tempdata, status) {
                 //         console.log("data: ", tempdata, "status: ", status);
                 //     });
                 // return true;
                 $('#tempfileupload').remove();
+                location.reload();
             });
         }
 
