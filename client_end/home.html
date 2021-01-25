@@ -239,14 +239,10 @@
                 formdata.append('uploadedFile', $("#tempfileupload")[0].files[0]);
                 ajax.open("POST", "/uploadlogo", false);
                 ajax.send(formdata);
-                while (ajax.status !== 200) {
-                    if (ajax.status === 400) {
-                        alert("Invalid Extension");
-                        break;
-                    }
-                    $("body").addClass("loading");
+                if (ajax.status === 400) {
+                    alert("Invalid Extension");
                 }
-                $("body").removeClass("loading");
+
                 $('#tempfileupload').remove();
                 location.reload();
             });
