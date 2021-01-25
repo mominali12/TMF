@@ -387,6 +387,7 @@
 
         function delete_row(e) {
             $(e).closest("tr").remove();
+            submit();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -847,6 +848,9 @@
             } else {
                 for (let k in from) {
                     for (let l in from[k]) {
+
+                        if (to[k] === undefined)
+                            break;
                         if (l in to[k] && !(l in datatypes)) {
                             to[k][l] = from[k][l];
                         }

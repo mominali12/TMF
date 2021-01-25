@@ -23,11 +23,13 @@ th { position: sticky; top: 0; } */
 .nav-link {
     font-weight: bold;
     color: #49708a;
+    cursor: pointer;
 }
 
 .nav-item :hover {
     font-weight: bold;
     color: #286090;
+    cursor: pointer;
 }
 
 .custom-toggler .navbar-toggler-icon {
