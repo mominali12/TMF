@@ -18,7 +18,7 @@ class HomeDatabase {
         return true;
     }
 
-    async UpdateCustomerData(data)
+    async UpdateCustomerData(data,files)
     {
         if (data.business_name === "" || data.business_name === undefined || data.business_name == null)
             return false;
@@ -26,16 +26,21 @@ class HomeDatabase {
         console.log(files);
         console.log(data);
 
-        let customer = Customers.find({ user_id: Number(process.env.ACTIVE_USER_ID), business_name: data.business_name}).exec();
+        let customer = await Customers.findOne({ user_id: Number(process.env.ACTIVE_USER_ID), business_name: data.business_name}).exec();
         customer = customer.toObject();
         if(customer === undefined || customer === null)
             return false;
+        
+        customer['contact_name'] = data["contact_name"];
+        customer['customer_address'] = data["customer_address"];
+        customer['customer_contact_no'] = data["customer_contact_no"];
+        customer['customer_email'] = data["customer_email"];
 
         if(files === null || files===undefined) // No attachements sent
         {
             for (let index = 1; index < 11; index++) 
             {
-                final_data['filename_' + index] = data['filename_' + index];
+                customer['filename_' + index] = data['filename_' + index];
             }
 
         }
@@ -44,7 +49,7 @@ class HomeDatabase {
             for (let index = 1; index < 11; index++) // 10 attachements in customer table
             {
                 customer['filename_' + index] = data['filename_' + index];
-                if (customer['filename_' + index] !== "" && files.uploadedFile !== undefined && files.uploadedFile !== null && customer['file_'+index] != undefined && customer['file_'+index] != null) {
+                if (customer['filename_' + index] !== "" && files.uploadedFile !== undefined && files.uploadedFile !== null) {
                     customer['file_' + index] = files.uploadedFile;
                     }
             }
@@ -55,7 +60,7 @@ class HomeDatabase {
             for (let index = 1; index < 11; index++) // 10 attachements in customer table (file1 to file10)
             {
                 customer['filename_' + index] = data['filename_' + index];
-                if (customer['filename_' + index] !== "" && files.uploadedFile[file_index] !== undefined && files.uploadedFile[file_index] !== null && customer['file_'+index] != undefined && customer['file_'+index] != null) {
+                if (customer['filename_' + index] !== "" && files.uploadedFile[file_index] !== undefined && files.uploadedFile[file_index] !== null) {
                     customer['file_' + index] = files.uploadedFile[file_index];
                     file_index++;
                 }

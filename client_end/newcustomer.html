@@ -348,11 +348,12 @@
 
         //Reset customer form
         function resetForm() {
+            
             //setting post url of form to add customer 
             $("#newcustomer_form").attr("action", "/uploadnewcustomer");
             $("#addcustomerbtn").val("Add Customer");
             //making sure business name is editable
-            $("#business_name").prop("disabled", false);
+            $("#business_name").css("pointer-events", "auto");
             //resetting input fields
             $("#customerform_heading").text("Add Customer");
             _("newcustomer_form").reset();
@@ -565,11 +566,12 @@
             });
 
             //making sure business name is not editable
-            $("#business_name").prop("disabled", true);
+            //$("#business_name").prop("disabled", true);
             var businessname = $(e).closest("tr").children()[2].textContent;
             data = {
                 business_name: businessname
             }
+            $("#business_name").css("pointer-events", "none");
             $.post("http://localhost:3000/getcustomer", data, function(data, status) {
                 console.log("Data: ", data, "\nStatus: ", status);
                 var files_list = findValueByPrefix(data[0], "file_");
