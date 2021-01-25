@@ -235,13 +235,8 @@
                 ajax.open("POST", "/uploadlogo",false);
                 ajax.send(formdata);
                 if(ajax.status === 400)
-                    alert("Invalid Extension");
-                alert(ajax.status); // place a loader on response using while status is not 200 and also a message for 400 that invalid extension
-                // $.post("http://localhost:3000/uploadlogo", tempdata,
-                //     function(tempdata, status) {
-                //         console.log("data: ", tempdata, "status: ", status);
-                //     });
-                // return true;
+                    alert("Invalid File Extension");
+                //alert(ajax.status); 
                 $('#tempfileupload').remove();
                 location.reload();
             });
