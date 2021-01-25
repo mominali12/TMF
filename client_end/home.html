@@ -212,6 +212,16 @@
         //     $(file_form).parent().submit();
         // }
 
+        // Add remove loading class on body element based on Ajax request status
+        $(document).on({
+            ajaxStart: function() {
+                $("body").addClass("loading");
+            },
+            ajaxStop: function() {
+                $("body").removeClass("loading");
+            }
+        });
+
         var user_identity = "";
         var tbl_cols = {};
         var completed_orders_ = {};
