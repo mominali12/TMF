@@ -26,6 +26,9 @@ class HomeDatabase {
         console.log(files);
         console.log(data);
 
+        let newfileindex = data.isfileupdated.split(',');
+        console.log(newfileindex);
+
         let customer = await Customers.findOne({ user_id: Number(process.env.ACTIVE_USER_ID), business_name: data.business_name}).exec();
         customer = customer.toObject();
         if(customer === undefined || customer === null)
@@ -49,7 +52,7 @@ class HomeDatabase {
             for (let index = 1; index < 11; index++) // 10 attachements in customer table
             {
                 customer['filename_' + index] = data['filename_' + index];
-                if (customer['filename_' + index] !== "" && files.uploadedFile !== undefined && files.uploadedFile !== null) {
+                if (customer['filename_' + index] !== "" && files.uploadedFile !== undefined && files.uploadedFile !== null && newfileindex[index - 1] === '1') {
                     customer['file_' + index] = files.uploadedFile;
                     }
             }
@@ -60,7 +63,7 @@ class HomeDatabase {
             for (let index = 1; index < 11; index++) // 10 attachements in customer table (file1 to file10)
             {
                 customer['filename_' + index] = data['filename_' + index];
-                if (customer['filename_' + index] !== "" && files.uploadedFile[file_index] !== undefined && files.uploadedFile[file_index] !== null) {
+                if (customer['filename_' + index] !== "" && files.uploadedFile[file_index] !== undefined && files.uploadedFile[file_index] !== null && newfileindex[index - 1] === '1') {
                     customer['file_' + index] = files.uploadedFile[file_index];
                     file_index++;
                 }
