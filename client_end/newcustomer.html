@@ -396,7 +396,7 @@
 
         //Reset customer form
         function resetForm() {
-
+            update_customer = 0;
             //setting post url of form to add customer 
             $("#newcustomer_form").attr("action", "/uploadnewcustomer");
             $("#addcustomerbtn").val("Add Customer");
@@ -563,6 +563,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         function edit_row(e) {
+            update_customer = 1;
             //updating post request made on click
             $("#newcustomer_form").attr("action", "/updatecustomer");
             //updating button text
@@ -584,27 +585,27 @@
 
             //making sure business name is not editable
             //$("#business_name").prop("disabled", true);
-            var businessname = $(e).closest("tr").children()[2].textContent;
-            data = {
-                business_name: businessname
-            }
+            // var businessname = $(e).closest("tr").children()[2].textContent;
+            // data = {
+            //     business_name: businessname
+            // }
             $("#business_name").css("pointer-events", "none");
-            $.post("http://localhost:3000/getcustomer", data, function(data, status) {
-                console.log("Data: ", data, "\nStatus: ", status);
-                var files_list = findValueByPrefix(data[0], "file_");
-                // console.log("files list :", files_list);
-                Object.keys(files_list).forEach(element => {
-                    var file_input = "#" + element;
-                    console.log("File: ", files_list[element]);
-                    $(file_input)[0].files["0"] = files_list[element];
-                    console.log($(file_input)[0].files);
-                    // console.log($("form#newcustomer_form :input([type='" + "file_input" + "'])")); //.files.append(files_list[element]);
-                    // $(file_input)[0].files.uploadedFile.append(files_list[element]);
+            // $.post("http://localhost:3000/getcustomer", data, function(data, status) {
+            //     console.log("Data: ", data, "\nStatus: ", status);
+            //     var files_list = findValueByPrefix(data[0], "file_");
+            //     // console.log("files list :", files_list);
+            //     Object.keys(files_list).forEach(element => {
+            //         var file_input = "#" + element;
+            //         console.log("File: ", files_list[element]);
+            //         $(file_input)[0].files["0"] = files_list[element];
+            //         console.log($(file_input)[0].files);
+            // console.log($("form#newcustomer_form :input([type='" + "file_input" + "'])")); //.files.append(files_list[element]);
+            // $(file_input)[0].files.uploadedFile.append(files_list[element]);
 
-                    // console.log(element, "\n\nfile value: ", files_list[element].data);
-                    // console.log("\nfilelist elements:\n", files_list[element]);
-                });
-            });
+            // console.log(element, "\n\nfile value: ", files_list[element].data);
+            // console.log("\nfilelist elements:\n", files_list[element]);
+            // });
+            // });
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
