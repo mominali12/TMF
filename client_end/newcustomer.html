@@ -269,6 +269,7 @@
 
     <script>
         selected_file = "";
+        var update_customer = 0;
 
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
@@ -288,6 +289,53 @@
                 });
             }, false);
         })();
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////// ADD BOOL FILES_UPDATED LIST //////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //get form by name
+        const formElem = document.querySelector('form');
+        formElem.addEventListener('submit', (e) => {
+            // on form submission, prevent default
+            e.preventDefault();
+
+            // construct a FormData object, which fires the formdata event
+            new FormData(formElem);
+        });
+
+        formElem.addEventListener('formdata', (e) => {
+            console.log('formdata fired');
+
+            // Get the form data from the event object
+            let data = e.formData;
+            var isfileupdated = [];
+            for (var counter = 1; counter < 11; counter++) {
+                if ($("label[for='file_" + counter + "']").text().localeCompare("Choose file...") === 0) {
+                    isfileupdated.push(0);
+                } else {
+                    isfileupdated.push(1);
+                }
+
+            }
+
+            //appending files data
+            data.append("isfileupdated", isfileupdated);
+            console.log("Details of form data submitted");
+            // for (var value of data.values()) {
+            //     console.log(value);
+            // }
+
+            // submit the data via XHR
+            let request = new XMLHttpRequest();
+            if (update_customer === 1) {
+                request.open("POST", "/updatecustomer");
+            } else {
+                request.open("POST", "/uploadnewcustomer");
+            }
+            request.send(data);
+        });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////// UPLOAD CUSTOMER'S LOGO /////////////////////////////////////////////
@@ -348,7 +396,7 @@
 
         //Reset customer form
         function resetForm() {
-            
+
             //setting post url of form to add customer 
             $("#newcustomer_form").attr("action", "/uploadnewcustomer");
             $("#addcustomerbtn").val("Add Customer");
@@ -376,23 +424,6 @@
 
             cols.forEach(element => {
                 if (element.includes("filename_") && obj[element].localeCompare("") !== 0) {
-                    // /*
-                    //  *Steps for search file 
-                    //  *corresponding to the filename 
-                    //  */
-                    // //make temp name
-                    // var tempname = "file_";
-                    // //getting filenumber and appending to temp name
-                    // tempname += element.slice(-1);
-                    // //check if any file exist against this filename field
-                    // var file_found = cols.includes(tempname);
-                    // //if file exists
-                    // if (file_found) {
-                    //     console.log("\n---------------------\n File data: ", obj[tempname].data)
-                    //     employee_data += '<a href="#" download>Download</a>';
-                    // } else {
-                    //     employee_data += '<td>' + obj[element] + '</td>';
-                    // }
                     var filenum = element.slice(9);
                     employee_data += '<td class="filecell" onclick="download_request(this,' + filenum + ')">' + obj[element]; + '</td>';
                 } else {
@@ -480,15 +511,6 @@
             //looping over table's data
             for (var i = 0; i < Data.length; i++) {
                 var obj = Data[i];
-                // var files_list = findValueByPrefix(Data[i], "file_");
-                // console.log(files_list, "=============================\n\n");
-                // var all_cols = [];
-                // all_cols.push(...cols);
-
-                // //adding files data cols
-                // if (Object.keys(files_list).length > 0)
-                //     all_cols.push(...Object.keys(files_list));
-                // console.log("All columns: ", all_cols);
                 load_data(obj, cols);
             }
         }
@@ -525,11 +547,6 @@
         function progressHandler(event) {
             _("status_" + selected_file).innerHTML = "Uploaded " + (event.loaded / event.total) * 100 + "%";
         }
-
-        // function completeHandler(event) {
-        //     // _("status").innerHTML = "upload completed !";
-        //     // _("progressBar").value = 0; //wil clear progress bar after successful upload
-        // }
 
         // error occured while file uploading 
         function errorHandler(event) {
