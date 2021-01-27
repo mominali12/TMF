@@ -237,7 +237,10 @@ class Controller {
     async DownloadFile(req, res) {
         if (process.env.ACTIVE_USER != "") {
             const result = await HomeService.DownloadFile(req.body);
-            res.status(200).send(result);
+            if(result)
+                res.status(200).send(result);
+            else
+                res.status(400).send("No Attachment with the associated column...");
 
         } else
             res.redirect('/login');

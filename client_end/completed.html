@@ -641,7 +641,7 @@
             employee_data += '<tr>';
             employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
 
-            console.log("cols ki keys: ", Object.keys(cols));
+            //console.log("cols ki keys: ", Object.keys(cols));
             Object.keys(cols).forEach(function(key) {
                 if (key.localeCompare("▬") !== 0) {
                     if (key.localeCompare("customer_name") === 0) {

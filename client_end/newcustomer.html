@@ -306,7 +306,7 @@
         });
 
         formElem.addEventListener('formdata', (e) => {
-            console.log('formdata fired');
+            //console.log('formdata fired');
 
             // Get the form data from the event object
             let data = e.formData;
@@ -322,9 +322,9 @@
 
             //appending files data
             data.append("isfileupdated", isfileupdated);
-            console.log("Details of form data submitted");
+            //console.log("Details of form data submitted");
             for (var value of data.values()) {
-                console.log(value);
+                //console.log(value);
             }
 
             // submit the data via XHR
@@ -355,7 +355,7 @@
             document.body.appendChild(x);
             x.click();
             $("#tempfileupload").change(function() {
-                console.log("hurray");
+                //console.log("hurray");
                 var ajax = new XMLHttpRequest();
                 var formdata = new FormData();
                 formdata.append('uploadedFile', $("#tempfileupload")[0].files[0]);
@@ -453,11 +453,11 @@
                 path: $(e).text(),
                 file: file_name
             }
-            console.log("File download req data: ", data);
+            //console.log("File download req data: ", data);
             $.post("http://localhost:3000/filedownload", data,
                 function(data, status) {
-                    console.log(data);
-                    console.log("request status is :", status);
+                    //console.log(data);
+                    //console.log("request status is :", status);
                     var a = document.createElement('a'); // create html element anchor
                     a.href = '/Downloads/' + data;
                     a.download = data; // Set the file name.
@@ -495,11 +495,11 @@
 
             var Data = JSON.parse(Http.responseText);
 
-            console.log("\n=================\nLOADED DATA\n========================\n", Data);
+            //console.log("\n=================\nLOADED DATA\n========================\n", Data);
 
             var cols = ['business_name', 'contact_name', 'customer_address', 'customer_email', 'customer_contact_no', 'filename_1', 'filename_2', 'filename_3', 'filename_4', 'filename_5', 'filename_6', 'filename_7', 'filename_8', 'filename_9', 'filename_10']
 
-            console.log("\n=================\nCOLUMNS\n========================\n", cols);
+            //console.log("\n=================\nCOLUMNS\n========================\n", cols);
 
 
             // making table headers

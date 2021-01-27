@@ -23,11 +23,11 @@ class HomeDatabase {
         if (data.business_name === "" || data.business_name === undefined || data.business_name == null)
             return false;
          
-        console.log(files);
-        console.log(data);
+        //console.log(files);
+        //console.log(data);
 
         let newfileindex = data.isfileupdated.split(',');
-        console.log(newfileindex);
+        //console.log(newfileindex);
 
         let customer = await Customers.findOne({ user_id: Number(process.env.ACTIVE_USER_ID), business_name: data.business_name}).exec();
         customer = customer.toObject();
@@ -69,7 +69,7 @@ class HomeDatabase {
                 }
             }
         }
-        console.log(customer);
+        //console.log(customer);
         console.log("Updating Customer Data ...");
         await Customers.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { business_name: data.business_name }] });
         await Customers.insertMany(customer);
@@ -82,8 +82,8 @@ class HomeDatabase {
         if (data.business_name === "" || data.business_name === undefined || data.business_name == null)
             return false;
          
-        console.log(files);
-        console.log(data);
+        //console.log(files);
+        //console.log(data);
         let final_data = { business_name: data.business_name, contact_name: data.contact_name, customer_address: data.customer_address, customer_email: data.customer_email, customer_contact_no: data.customer_contact_no, user_id: process.env.ACTIVE_USER_ID };
         if(files === null || files===undefined) // No attachements
         {
@@ -115,7 +115,7 @@ class HomeDatabase {
                 }
             }
         }
-        console.log(final_data);
+        //console.log(final_data);
         console.log("Saving Customer Data ...");
         await Customers.deleteMany({ $and: [{ user_id: process.env.ACTIVE_USER_ID }, { business_name: data.business_name }] });
         await Customers.insertMany(final_data);
@@ -126,11 +126,13 @@ class HomeDatabase {
     async DownloadFile(data) {
         let customer = await Customers.findOne({ user_id: Number(process.env.ACTIVE_USER_ID), business_name: data.business_name }).exec();
         customer = customer.toObject();
+        if(customer[data.file] === undefined || customer[data.file] === null)
+            return false;
         let file_extension = (customer[data.file].name.split('.')); // Getting extension from the object's name retrieved from the db
         file_extension = file_extension[file_extension.length - 1];
         const file = customer[data.file].data.buffer;
         const download_path = __dirname+'/../../client_end/Downloads/'+data.path + '.' + file_extension;
-        console.log(download_path);
+        //console.log(download_path);
         fs.writeFileSync(download_path, file);
         return data.path + '.' + file_extension;
     }
@@ -143,7 +145,7 @@ class HomeDatabase {
             return false;
         const download_file = binary(file.uploadedFile.data).buffer;
         const download_path = __dirname+'/../../client_end/assets/'+process.env.ACTIVE_USER_ID + process.env.ACTIVE_USER+ '.' + "png";
-        console.log(download_path);
+        //console.log(download_path);
         fs.writeFileSync(download_path, download_file);
         return true;
     }
@@ -211,9 +213,9 @@ class HomeDatabase {
         try {
             const opts = { session };
             await Orders.deleteMany({ user_id: process.env.ACTIVE_USER_ID });
-            console.log(data.table_data);
-            console.log(data.open_orders);
-            console.log(data.data_types);
+            //console.log(data.table_data);
+            //console.log(data.open_orders);
+            //console.log(data.data_types);
             if (data.open_orders != undefined)
                 await Orders.insertMany(data.open_orders, { strict: false });
             if (data.table_data != undefined || data.table_data === null)
@@ -246,9 +248,9 @@ class HomeDatabase {
             session.startTransaction();
             try {
                 await Orders.deleteMany({ user_id: process.env.ACTIVE_USER_ID });
-                console.log(data.table_data);
-                console.log(data.completed_orders);
-                console.log(data.data_types);
+                //console.log(data.table_data);
+                //console.log(data.completed_orders);
+                //console.log(data.data_types);
                 if (data.table_data != undefined)
                     await Orders.insertMany(data.table_data, { strict: false });
                 if (data.completed_orders != undefined)
