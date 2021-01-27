@@ -329,11 +329,17 @@
 
             // submit the data via XHR
             let request = new XMLHttpRequest();
+            //adding callback function to loadend event
+            request.addEventListener('loadend', function() {
+                location.reload();
+            });
+            //calling different post API's depending on form type (new/update)
             if (update_customer === 1) {
-                request.open("POST", "/updatecustomer");
+                request.open("POST", "/updatecustomer", false);
             } else {
-                request.open("POST", "/uploadnewcustomer");
+                request.open("POST", "/uploadnewcustomer", false);
             }
+            //sending request
             request.send(data);
         });
 
@@ -577,7 +583,7 @@
             var i = 2;
             //accessing all input fields 
             $("form#newcustomer_form :input:not([type='file'])").each(function() {
-                if (i < 16) {
+                if (i < 17) {
                     var input = $(this).val(cols[i].textContent); //updating field value
                 }
                 i++;
