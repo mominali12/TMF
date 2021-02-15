@@ -40,7 +40,10 @@ function routes(app) {
 
     app.get('/login', (Login.GetLoginPage));
 
-    app.get('/logout', (req, res) => {
+    app.get('/logout', (req, res) =>
+    {
+        console.log(req.session.ACTIVE_USER);
+        req.session.ACTIVE_USER = "";
         process.env.ACTIVE_USER = "";
         res.redirect('/login');
     });

@@ -5,7 +5,7 @@ class UserDatabase
 {
     async byId(data)
     {
-      return this.validPassword(data.username, String(data.password));
+      return this.validPassword(data.body.username, String(data.body.password),data);
     }
 
     async UserInsert(data)
@@ -31,13 +31,13 @@ class UserDatabase
     }
 
     // hash the password
-    generateHash = function(password)
+    generateHash = function (password)
     {
       return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
     }
 
     // checking if password is valid
-    validPassword = async function(username_param,password_param)
+    validPassword = async function(username_param,password_param,req)
     {
       const user = await User.findOne({username: username_param}).exec();
       if(user === null || user === undefined)
@@ -46,6 +46,9 @@ class UserDatabase
       let password_db = user.toObject().password;   
       if(password_db)
       {
+        req.session.ACTIVE_USER = user.toObject().username;
+        req.session.ACTIVE_USER_ID = user.toObject().userid;
+        req.session.ACTIVE_USER_LOGO = user.toObject().userlogo;
         process.env.ACTIVE_USER = user.toObject().username;
         process.env.ACTIVE_USER_ID = user.toObject().userid;
         process.env.ACTIVE_USER_LOGO = user.toObject().userlogo;

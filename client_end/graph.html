@@ -11,7 +11,7 @@
 
     <script>
         const Http = new XMLHttpRequest();
-        const url = 'http://localhost:3000/graphdata';
+        const url = '/graphdata';
         Http.open("GET", url);
         Http.send();
         window.onload = function() {
@@ -54,19 +54,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav w-100">
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/home">Open</a>
+                    <a class="nav-link" href="/home">Open</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/home/completed">Completed</a>
+                    <a class="nav-link" href="/home/completed">Completed</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/newcustomer">Customers</a>
+                    <a class="nav-link" href="/newcustomer">Customers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/graph">Graph</a>
+                    <a class="nav-link" href="/graph">Graph</a>
                 </li>
                 <li class="nav-item ml-auto">
-                    <a class="nav-link" href="http://localhost:3000/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
+                    <a class="nav-link" href="/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
                 </li>
             </ul>
         </div>
@@ -113,7 +113,7 @@
                 formdata.append('uploadedFile', $("#tempfileupload")[0].files[0]);
                 ajax.open("POST", "/uploadlogo");
                 ajax.send(formdata);
-                // $.post("http://localhost:3000/uploadlogo", tempdata,
+                // $.post("/uploadlogo", tempdata,
                 //     function(tempdata, status) {
                 //         console.log("data: ", tempdata, "status: ", status);
                 //     });
@@ -127,7 +127,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#new_customer_nav").click(function() {
-            location.replace("http://localhost:3000/newcustomer");
+            location.replace("/newcustomer");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +135,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#open_page_nav").click(function() {
-            location.replace("http://localhost:3000/home");
+            location.replace("/home");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,7 +143,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#completed_page_nav").click(function() {
-            location.replace("http://localhost:3000/home/completed");
+            location.replace("/home/completed");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,7 +151,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#logout_btn").click(function() {
-            location.replace("http://localhost:3000/logout");
+            location.replace("/logout");
         });
     </script>
 </body>

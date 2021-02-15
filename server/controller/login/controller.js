@@ -43,7 +43,7 @@ class Controller
     async GetbyIdandPass(req, res)
     {
           
-      let r = await LoginService.byId(req.body);
+      let r = await LoginService.byId(req);
       if (!r)
       {
         res.status(404).json('Invalid Username or Password!');

@@ -39,20 +39,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav w-100">
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/home">Open</a>
+                    <a class="nav-link" href="/home">Open</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/home/completed">Completed</a>
+                    <a class="nav-link" href="/home/completed">Completed</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/newcustomer">Customers</a>
+                    <a class="nav-link" href="/newcustomer">Customers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/graph">Graph</a>
+                    <a class="nav-link" href="/graph">Graph</a>
                 </li>
                 <li class="nav-item ml-auto">
                     <a class="nav-link" href="#" onclick="uploadlogo()" style="display: inline;">Upload logo <span class="iconify" data-icon="mdi:cloud-upload" data-inline="false"></span></a>
-                    <a class="nav-link" href="http://localhost:3000/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
+                    <a class="nav-link" href="/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
                 </li>
             </ul>
         </div>
@@ -279,7 +279,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#new_customer_nav").click(function() {
-            location.replace("http://localhost:3000/newcustomer");
+            location.replace("/newcustomer");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -287,7 +287,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#completed_page_nav").click(function() {
-            location.replace("http://localhost:3000/home/completed");
+            location.replace("/home/completed");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -295,7 +295,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#graph_btn").click(function() {
-            location.replace("http://localhost:3000/graph");
+            location.replace("/graph");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -303,7 +303,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#logout_btn").click(function() {
-            location.replace("http://localhost:3000/logout");
+            location.replace("/logout");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -734,7 +734,7 @@
 
         //loading completed orders
         const Http_completedorders = new XMLHttpRequest();
-        const url_completedorders = 'http://localhost:3000/home/completedorders';
+        const url_completedorders = '/home/completedorders';
         Http_completedorders.open("GET", url_completedorders);
         Http_completedorders.send();
 
@@ -751,13 +751,13 @@
 
         //loading open orders
         const Http = new XMLHttpRequest();
-        const url = 'http://localhost:3000/home/orders';
+        const url = '/home/orders';
         Http.open("GET", url);
         Http.send();
 
         Http.onload = (e) => {
 
-            $.get("http://localhost:3000/getcustomersname/", function(data, status) {
+            $.get("/getcustomersname/", function(data, status) {
                 //console.log("Data: ", data, "\nStatus: ", status);
                 for (let i = 0; i < data.length; i++)
                     $("#customers_dd").append('<option value="' + data[i].business_name + '">' + data[i].business_name + '</option>');
@@ -966,7 +966,7 @@
                 }
                 // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
 
-            $.post("http://localhost:3000/home/orders/save", data,
+            $.post("/home/orders/save", data,
                 function(data, status) {
                     alert("Data is saved !");
                     location.reload();

@@ -40,19 +40,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav w-100">
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/home">Open</a>
+                    <a class="nav-link" href="/home">Open</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/home/completed">Completed</a>
+                    <a class="nav-link" href="/home/completed">Completed</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/newcustomer">Customers</a>
+                    <a class="nav-link" href="/newcustomer">Customers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:3000/graph">Graph</a>
+                    <a class="nav-link" href="/graph">Graph</a>
                 </li>
                 <li class="nav-item ml-auto">
-                    <a class="nav-link" href="http://localhost:3000/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
+                    <a class="nav-link" href="/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
                 </li>
             </ul>
         </div>
@@ -361,7 +361,7 @@
                 formdata.append('uploadedFile', $("#tempfileupload")[0].files[0]);
                 ajax.open("POST", "/uploadlogo");
                 ajax.send(formdata);
-                // $.post("http://localhost:3000/uploadlogo", tempdata,
+                // $.post("/uploadlogo", tempdata,
                 //     function(tempdata, status) {
                 //         console.log("data: ", tempdata, "status: ", status);
                 //     });
@@ -454,7 +454,7 @@
                 file: file_name
             }
             //console.log("File download req data: ", data);
-            $.post("http://localhost:3000/filedownload", data,
+            $.post("/filedownload", data,
                 function(data, status) {
                     //console.log(data);
                     //console.log("request status is :", status);
@@ -488,7 +488,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         const Http = new XMLHttpRequest();
-        const url = 'http://localhost:3000/getcustomers';
+        const url = '/getcustomers';
         Http.open("GET", url);
         Http.send();
         Http.onload = function() {
@@ -596,7 +596,7 @@
             //     business_name: businessname
             // }
             $("#business_name").css("pointer-events", "none");
-            // $.post("http://localhost:3000/getcustomer", data, function(data, status) {
+            // $.post("/getcustomer", data, function(data, status) {
             //     console.log("Data: ", data, "\nStatus: ", status);
             //     var files_list = findValueByPrefix(data[0], "file_");
             //     // console.log("files list :", files_list);
@@ -624,7 +624,7 @@
             data = {
                 business_name: businessname
             }
-            $.post("http://localhost:3000/deletecustomer", data,
+            $.post("/deletecustomer", data,
                 function(data, status) {
                     console.log("request status is :", status);
                     alert(businessname + "'s record is deleted !");
@@ -638,7 +638,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#open_page_nav").click(function() {
-            location.replace("http://localhost:3000/home");
+            location.replace("/home");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -646,7 +646,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#completed_page_nav").click(function() {
-            location.replace("http://localhost:3000/home/completed");
+            location.replace("/home/completed");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -654,7 +654,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#graph_btn").click(function() {
-            location.replace("http://localhost:3000/graph");
+            location.replace("/graph");
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -662,7 +662,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $("#logout_btn").click(function() {
-            location.replace("http://localhost:3000/logout");
+            location.replace("/logout");
         });
     </script>
 </body>

@@ -4,6 +4,7 @@ const Express = require('express');
 const os = require('os');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload')
+const cookieSession = require('cookie-session');
 
 //const errorHandler = require('../middleware/errorhandler')
 
@@ -16,6 +17,9 @@ class ExpressServer {
         app.use(Express.urlencoded({ extended: true }));
         app.use(Express.static(__dirname + '/../../client_end/')); // Setting directory for css and js
         app.use(fileUpload());
+        app.use(cookieSession({
+            keys: ['secret']
+        }));
         console.log("Constructor running");
     }
 
