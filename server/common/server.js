@@ -1,7 +1,8 @@
-const http = require('http');
+const https = require('http');
 const routes = require('../routes');
 const Express = require('express');
 const os = require('os');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload')
 const cookieSession = require('cookie-session');
@@ -9,6 +10,11 @@ const cookieSession = require('cookie-session');
 //const errorHandler = require('../middleware/errorhandler')
 
 const app = new Express();
+
+const httpsOptions = {
+    cert : fs.readFileSync('/../ssl/server.crt'),
+    key : fs.readFileSync('/../ssl/server.key')
+}
 
 class ExpressServer {
 
@@ -35,7 +41,7 @@ class ExpressServer {
             process.env.NODE_ENV || 'development'
             } @: ${os.hostname()} on port: ${p}}`
             );
-        http.createServer(app).listen(port, welcome(port));
+        https.createServer(httpsOptions,app).listen(port, welcome(port));
         return app;
     }
 }

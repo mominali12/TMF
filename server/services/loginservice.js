@@ -49,9 +49,9 @@ class UserDatabase
         req.session.ACTIVE_USER = user.toObject().username;
         req.session.ACTIVE_USER_ID = user.toObject().userid;
         req.session.ACTIVE_USER_LOGO = user.toObject().userlogo;
-        process.env.ACTIVE_USER = user.toObject().username;
-        process.env.ACTIVE_USER_ID = user.toObject().userid;
-        process.env.ACTIVE_USER_LOGO = user.toObject().userlogo;
+        // process.env.ACTIVE_USER = user.toObject().username;
+        // process.env.ACTIVE_USER_ID = user.toObject().userid;
+        // process.env.ACTIVE_USER_LOGO = user.toObject().userlogo;
         return bcrypt.compareSync(password_param , password_db); //compare with obj password
       }
       else
